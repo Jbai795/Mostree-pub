@@ -14,7 +14,7 @@ The repo includes the following application:
 - [x] And operation on boolean shared (Semi-honest/Malicious)
 - [x] Negate operation on boolean shared (Semi-honest/Malicious)
 
-A tutorial can be found [here](https://github.com/Jbai795/PDTE-Mostree/blob/master/ss3-dtree/main-dtree.cpp). It includes a description of how to use the API and a discussion at the end on how the framework is implemented.
+A tutorial can be found [here](https://github.com/Jbai795/Mostree-pub/blob/master/ss3-dtree/main-dtree.cpp). It includes a description of how to use the API and a discussion at the end on how the framework is implemented.
 
 ## Build
 
