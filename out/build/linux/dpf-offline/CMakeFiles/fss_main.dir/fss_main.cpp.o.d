@@ -1,7 +1,7 @@
 dpf-offline/CMakeFiles/fss_main.dir/fss_main.cpp.o: \
- /home/jbai795/Experiments/mostree/dpf-offline/fss_main.cpp \
+ /home/jbai795/Experiments/mostree-pub/dpf-offline/fss_main.cpp \
  /usr/include/stdc-predef.h \
- /home/jbai795/Experiments/mostree/dpf-offline/fss.h \
+ /home/jbai795/Experiments/mostree-pub/dpf-offline/fss.h \
  /usr/local/include/emp-tool/emp-tool.h /usr/include/c++/9/thread \
  /usr/include/c++/9/chrono /usr/include/c++/9/ratio \
  /usr/include/c++/9/type_traits \
@@ -360,4 +360,4 @@ dpf-offline/CMakeFiles/fss_main.dir/fss_main.cpp.o: \
  /usr/local/include/emp-tool/gc/privacy_free_gen.h \
  /usr/local/include/emp-tool/execution/plain_circ.h \
  /usr/local/include/emp-tool/execution/plain_prot.h \
- /home/jbai795/Experiments/mostree/dpf-offline/twokeyprp.h
+ /home/jbai795/Experiments/mostree-pub/dpf-offline/twokeyprp.h

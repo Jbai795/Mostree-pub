@@ -10,7 +10,7 @@ The output was:
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
 
-The C compiler identification is GNU, found in "/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/3.23.1/CompilerIdC/a.out"
+The C compiler identification is GNU, found in "/home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/3.23.1/CompilerIdC/a.out"
 
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
 Compiler: /usr/bin/c++ 
@@ -23,15 +23,15 @@ The output was:
 
 Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
 
-The CXX compiler identification is GNU, found in "/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/3.23.1/CompilerIdCXX/a.out"
+The CXX compiler identification is GNU, found in "/home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/3.23.1/CompilerIdCXX/a.out"
 
 Detecting C compiler ABI info compiled with the following output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
+Change Dir: /home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_2e595/fast && /usr/bin/make  -f CMakeFiles/cmTC_2e595.dir/build.make CMakeFiles/cmTC_2e595.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_2e595.dir/CMakeCCompilerABI.c.o
-/usr/bin/cc   -v -o CMakeFiles/cmTC_2e595.dir/CMakeCCompilerABI.c.o -c /usr/local/share/cmake-3.23/Modules/CMakeCCompilerABI.c
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_08853/fast && /usr/bin/make  -f CMakeFiles/cmTC_08853.dir/build.make CMakeFiles/cmTC_08853.dir/build
+make[1]: Entering directory '/home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_08853.dir/CMakeCCompilerABI.c.o
+/usr/bin/cc   -v -o CMakeFiles/cmTC_08853.dir/CMakeCCompilerABI.c.o -c /usr/local/share/cmake-3.23/Modules/CMakeCCompilerABI.c
 Using built-in specs.
 COLLECT_GCC=/usr/bin/cc
 OFFLOAD_TARGET_NAMES=nvptx-none:hsa
@@ -40,8 +40,8 @@ Target: x86_64-linux-gnu
 Configured with: ../src/configure -v --with-pkgversion='Ubuntu 9.4.0-1ubuntu1~20.04.2' --with-bugurl=file:///usr/share/doc/gcc-9/README.Bugs --enable-languages=c,ada,c++,go,brig,d,fortran,objc,obj-c++,gm2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-9 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-9-9QDOt0/gcc-9-9.4.0/debian/tmp-nvptx/usr,hsa --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
 Thread model: posix
 gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) 
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_2e595.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-linux-gnu/9/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/local/share/cmake-3.23/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_2e595.dir/CMakeCCompilerABI.c.o -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/cczOUJYW.s
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_08853.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/9/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/local/share/cmake-3.23/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_08853.dir/CMakeCCompilerABI.c.o -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccCZKQ3T.s
 GNU C17 (Ubuntu 9.4.0-1ubuntu1~20.04.2) version 9.4.0 (x86_64-linux-gnu)
 	compiled by GNU C version 9.4.0, GMP version 6.2.0, MPFR version 4.0.2, MPC version 1.1.0, isl version isl-0.22.1-GMP
 
@@ -61,15 +61,15 @@ GNU C17 (Ubuntu 9.4.0-1ubuntu1~20.04.2) version 9.4.0 (x86_64-linux-gnu)
 
 GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
 Compiler executable checksum: 01da938ff5dc2163489aa33cb3b747a7
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_2e595.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
- as -v --64 -o CMakeFiles/cmTC_2e595.dir/CMakeCCompilerABI.c.o /tmp/cczOUJYW.s
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_08853.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
+ as -v --64 -o CMakeFiles/cmTC_08853.dir/CMakeCCompilerABI.c.o /tmp/ccCZKQ3T.s
 GNU assembler version 2.34 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.34
 COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_2e595.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
-Linking C executable cmTC_2e595
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2e595.dir/link.txt --verbose=1
-/usr/bin/cc  -v CMakeFiles/cmTC_2e595.dir/CMakeCCompilerABI.c.o -o cmTC_2e595 
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_08853.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
+Linking C executable cmTC_08853
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_08853.dir/link.txt --verbose=1
+/usr/bin/cc  -v CMakeFiles/cmTC_08853.dir/CMakeCCompilerABI.c.o -o cmTC_08853 
 Using built-in specs.
 COLLECT_GCC=/usr/bin/cc
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper
@@ -81,10 +81,10 @@ Thread model: posix
 gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) 
 COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_2e595' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/cczgrmvo.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_2e595 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. CMakeFiles/cmTC_2e595.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_2e595' '-mtune=generic' '-march=x86-64'
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_08853' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccZFV5nl.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_08853 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. CMakeFiles/cmTC_08853.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_08853' '-mtune=generic' '-march=x86-64'
+make[1]: Leaving directory '/home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/CMakeTmp'
 
 
 
@@ -105,12 +105,12 @@ Parsed C implicit include dir info from above output: rv=done
 
 Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command(s):/usr/bin/make -f Makefile cmTC_2e595/fast && /usr/bin/make  -f CMakeFiles/cmTC_2e595.dir/build.make CMakeFiles/cmTC_2e595.dir/build]
-  ignore line: [make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp']
-  ignore line: [Building C object CMakeFiles/cmTC_2e595.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_2e595.dir/CMakeCCompilerABI.c.o -c /usr/local/share/cmake-3.23/Modules/CMakeCCompilerABI.c]
+  ignore line: [Run Build Command(s):/usr/bin/make -f Makefile cmTC_08853/fast && /usr/bin/make  -f CMakeFiles/cmTC_08853.dir/build.make CMakeFiles/cmTC_08853.dir/build]
+  ignore line: [make[1]: Entering directory '/home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/CMakeTmp']
+  ignore line: [Building C object CMakeFiles/cmTC_08853.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_08853.dir/CMakeCCompilerABI.c.o -c /usr/local/share/cmake-3.23/Modules/CMakeCCompilerABI.c]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/cc]
   ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:hsa]
@@ -119,8 +119,8 @@ Parsed C implicit link information from above output:
   ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 9.4.0-1ubuntu1~20.04.2' --with-bugurl=file:///usr/share/doc/gcc-9/README.Bugs --enable-languages=c ada c++ go brig d fortran objc obj-c++ gm2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-9 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-9-9QDOt0/gcc-9-9.4.0/debian/tmp-nvptx/usr hsa --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu]
   ignore line: [Thread model: posix]
   ignore line: [gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) ]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_2e595.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
-  ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/9/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/local/share/cmake-3.23/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_2e595.dir/CMakeCCompilerABI.c.o -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/cczOUJYW.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_08853.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
+  ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/9/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/local/share/cmake-3.23/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_08853.dir/CMakeCCompilerABI.c.o -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccCZKQ3T.s]
   ignore line: [GNU C17 (Ubuntu 9.4.0-1ubuntu1~20.04.2) version 9.4.0 (x86_64-linux-gnu)]
   ignore line: [	compiled by GNU C version 9.4.0  GMP version 6.2.0  MPFR version 4.0.2  MPC version 1.1.0  isl version isl-0.22.1-GMP]
   ignore line: []
@@ -140,15 +140,15 @@ Parsed C implicit link information from above output:
   ignore line: []
   ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
   ignore line: [Compiler executable checksum: 01da938ff5dc2163489aa33cb3b747a7]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_2e595.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
-  ignore line: [ as -v --64 -o CMakeFiles/cmTC_2e595.dir/CMakeCCompilerABI.c.o /tmp/cczOUJYW.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_08853.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
+  ignore line: [ as -v --64 -o CMakeFiles/cmTC_08853.dir/CMakeCCompilerABI.c.o /tmp/ccCZKQ3T.s]
   ignore line: [GNU assembler version 2.34 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.34]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_2e595.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
-  ignore line: [Linking C executable cmTC_2e595]
-  ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2e595.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/cc  -v CMakeFiles/cmTC_2e595.dir/CMakeCCompilerABI.c.o -o cmTC_2e595 ]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_08853.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
+  ignore line: [Linking C executable cmTC_08853]
+  ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_08853.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/cc  -v CMakeFiles/cmTC_08853.dir/CMakeCCompilerABI.c.o -o cmTC_08853 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/cc]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper]
@@ -160,13 +160,13 @@ Parsed C implicit link information from above output:
   ignore line: [gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_2e595' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/cczgrmvo.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_2e595 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. CMakeFiles/cmTC_2e595.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_08853' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccZFV5nl.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_08853 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. CMakeFiles/cmTC_08853.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/9/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/cczgrmvo.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccZFV5nl.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -184,7 +184,7 @@ Parsed C implicit link information from above output:
     arg [-znow] ==> ignore
     arg [-zrelro] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_2e595] ==> ignore
+    arg [cmTC_08853] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o]
@@ -196,7 +196,7 @@ Parsed C implicit link information from above output:
     arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/x86_64-linux-gnu/9/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/9/../../..]
-    arg [CMakeFiles/cmTC_2e595.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [CMakeFiles/cmTC_08853.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [-lgcc] ==> lib [gcc]
     arg [--push-state] ==> ignore
     arg [--as-needed] ==> ignore
@@ -228,12 +228,12 @@ Parsed C implicit link information from above output:
 
 
 Detecting CXX compiler ABI info compiled with the following output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
+Change Dir: /home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_62ad0/fast && /usr/bin/make  -f CMakeFiles/cmTC_62ad0.dir/build.make CMakeFiles/cmTC_62ad0.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_62ad0.dir/CMakeCXXCompilerABI.cpp.o
-/usr/bin/c++   -v -o CMakeFiles/cmTC_62ad0.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-3.23/Modules/CMakeCXXCompilerABI.cpp
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_26748/fast && /usr/bin/make  -f CMakeFiles/cmTC_26748.dir/build.make CMakeFiles/cmTC_26748.dir/build
+make[1]: Entering directory '/home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_26748.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/c++   -v -o CMakeFiles/cmTC_26748.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-3.23/Modules/CMakeCXXCompilerABI.cpp
 Using built-in specs.
 COLLECT_GCC=/usr/bin/c++
 OFFLOAD_TARGET_NAMES=nvptx-none:hsa
@@ -242,8 +242,8 @@ Target: x86_64-linux-gnu
 Configured with: ../src/configure -v --with-pkgversion='Ubuntu 9.4.0-1ubuntu1~20.04.2' --with-bugurl=file:///usr/share/doc/gcc-9/README.Bugs --enable-languages=c,ada,c++,go,brig,d,fortran,objc,obj-c++,gm2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-9 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-9-9QDOt0/gcc-9-9.4.0/debian/tmp-nvptx/usr,hsa --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
 Thread model: posix
 gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) 
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_62ad0.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-linux-gnu/9/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/local/share/cmake-3.23/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_62ad0.dir/CMakeCXXCompilerABI.cpp.o -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccrmlmTW.s
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_26748.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/9/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/local/share/cmake-3.23/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_26748.dir/CMakeCXXCompilerABI.cpp.o -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccHM4QgQ.s
 GNU C++14 (Ubuntu 9.4.0-1ubuntu1~20.04.2) version 9.4.0 (x86_64-linux-gnu)
 	compiled by GNU C version 9.4.0, GMP version 6.2.0, MPFR version 4.0.2, MPC version 1.1.0, isl version isl-0.22.1-GMP
 
@@ -267,15 +267,15 @@ GNU C++14 (Ubuntu 9.4.0-1ubuntu1~20.04.2) version 9.4.0 (x86_64-linux-gnu)
 
 GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
 Compiler executable checksum: 3d1eba838554fa2348dba760e4770469
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_62ad0.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- as -v --64 -o CMakeFiles/cmTC_62ad0.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccrmlmTW.s
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_26748.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ as -v --64 -o CMakeFiles/cmTC_26748.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccHM4QgQ.s
 GNU assembler version 2.34 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.34
 COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_62ad0.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
-Linking CXX executable cmTC_62ad0
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_62ad0.dir/link.txt --verbose=1
-/usr/bin/c++  -v CMakeFiles/cmTC_62ad0.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_62ad0 
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_26748.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+Linking CXX executable cmTC_26748
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_26748.dir/link.txt --verbose=1
+/usr/bin/c++  -v CMakeFiles/cmTC_26748.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_26748 
 Using built-in specs.
 COLLECT_GCC=/usr/bin/c++
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper
@@ -287,10 +287,10 @@ Thread model: posix
 gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) 
 COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_62ad0' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/cc5lTnml.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_62ad0 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. CMakeFiles/cmTC_62ad0.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_62ad0' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_26748' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/cc1chqzi.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_26748 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. CMakeFiles/cmTC_26748.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_26748' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+make[1]: Leaving directory '/home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/CMakeTmp'
 
 
 
@@ -317,12 +317,12 @@ Parsed CXX implicit include dir info from above output: rv=done
 
 Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command(s):/usr/bin/make -f Makefile cmTC_62ad0/fast && /usr/bin/make  -f CMakeFiles/cmTC_62ad0.dir/build.make CMakeFiles/cmTC_62ad0.dir/build]
-  ignore line: [make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp']
-  ignore line: [Building CXX object CMakeFiles/cmTC_62ad0.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_62ad0.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-3.23/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Run Build Command(s):/usr/bin/make -f Makefile cmTC_26748/fast && /usr/bin/make  -f CMakeFiles/cmTC_26748.dir/build.make CMakeFiles/cmTC_26748.dir/build]
+  ignore line: [make[1]: Entering directory '/home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/CMakeTmp']
+  ignore line: [Building CXX object CMakeFiles/cmTC_26748.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_26748.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-3.23/Modules/CMakeCXXCompilerABI.cpp]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/c++]
   ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:hsa]
@@ -331,8 +331,8 @@ Parsed CXX implicit link information from above output:
   ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 9.4.0-1ubuntu1~20.04.2' --with-bugurl=file:///usr/share/doc/gcc-9/README.Bugs --enable-languages=c ada c++ go brig d fortran objc obj-c++ gm2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-9 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-9-9QDOt0/gcc-9-9.4.0/debian/tmp-nvptx/usr hsa --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu]
   ignore line: [Thread model: posix]
   ignore line: [gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) ]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_62ad0.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/9/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/local/share/cmake-3.23/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_62ad0.dir/CMakeCXXCompilerABI.cpp.o -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccrmlmTW.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_26748.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/9/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/local/share/cmake-3.23/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_26748.dir/CMakeCXXCompilerABI.cpp.o -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccHM4QgQ.s]
   ignore line: [GNU C++14 (Ubuntu 9.4.0-1ubuntu1~20.04.2) version 9.4.0 (x86_64-linux-gnu)]
   ignore line: [	compiled by GNU C version 9.4.0  GMP version 6.2.0  MPFR version 4.0.2  MPC version 1.1.0  isl version isl-0.22.1-GMP]
   ignore line: []
@@ -356,15 +356,15 @@ Parsed CXX implicit link information from above output:
   ignore line: []
   ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
   ignore line: [Compiler executable checksum: 3d1eba838554fa2348dba760e4770469]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_62ad0.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  ignore line: [ as -v --64 -o CMakeFiles/cmTC_62ad0.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccrmlmTW.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_26748.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  ignore line: [ as -v --64 -o CMakeFiles/cmTC_26748.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccHM4QgQ.s]
   ignore line: [GNU assembler version 2.34 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.34]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_62ad0.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  ignore line: [Linking CXX executable cmTC_62ad0]
-  ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_62ad0.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/c++  -v CMakeFiles/cmTC_62ad0.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_62ad0 ]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_26748.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  ignore line: [Linking CXX executable cmTC_26748]
+  ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_26748.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/c++  -v CMakeFiles/cmTC_26748.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_26748 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/c++]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper]
@@ -376,13 +376,13 @@ Parsed CXX implicit link information from above output:
   ignore line: [gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_62ad0' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/cc5lTnml.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_62ad0 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. CMakeFiles/cmTC_62ad0.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_26748' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/cc1chqzi.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_26748 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. CMakeFiles/cmTC_26748.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/9/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/cc5lTnml.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/cc1chqzi.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -400,7 +400,7 @@ Parsed CXX implicit link information from above output:
     arg [-znow] ==> ignore
     arg [-zrelro] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_62ad0] ==> ignore
+    arg [cmTC_26748] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o]
@@ -412,7 +412,7 @@ Parsed CXX implicit link information from above output:
     arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/x86_64-linux-gnu/9/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/9/../../..]
-    arg [CMakeFiles/cmTC_62ad0.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [CMakeFiles/cmTC_26748.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
     arg [-lm] ==> lib [m]
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -440,30 +440,30 @@ Parsed CXX implicit link information from above output:
 
 
 Determining if the include file pthread.h exists passed with the following output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
+Change Dir: /home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_4734f/fast && /usr/bin/make  -f CMakeFiles/cmTC_4734f.dir/build.make CMakeFiles/cmTC_4734f.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_4734f.dir/CheckIncludeFile.c.o
-/usr/bin/cc   -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes   -o CMakeFiles/cmTC_4734f.dir/CheckIncludeFile.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/CheckIncludeFile.c
-Linking C executable cmTC_4734f
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4734f.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes   CMakeFiles/cmTC_4734f.dir/CheckIncludeFile.c.o -o cmTC_4734f 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_475e7/fast && /usr/bin/make  -f CMakeFiles/cmTC_475e7.dir/build.make CMakeFiles/cmTC_475e7.dir/build
+make[1]: Entering directory '/home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_475e7.dir/CheckIncludeFile.c.o
+/usr/bin/cc   -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes   -o CMakeFiles/cmTC_475e7.dir/CheckIncludeFile.c.o -c /home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_475e7
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_475e7.dir/link.txt --verbose=1
+/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes   CMakeFiles/cmTC_475e7.dir/CheckIncludeFile.c.o -o cmTC_475e7 
+make[1]: Leaving directory '/home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/CMakeTmp'
 
 
 
 Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD succeeded with the following output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
+Change Dir: /home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_e2082/fast && /usr/bin/make  -f CMakeFiles/cmTC_e2082.dir/build.make CMakeFiles/cmTC_e2082.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_e2082.dir/src.c.o
-/usr/bin/cc -DCMAKE_HAVE_LIBC_PTHREAD  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes   -o CMakeFiles/cmTC_e2082.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_e2082
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e2082.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes   CMakeFiles/cmTC_e2082.dir/src.c.o -o cmTC_e2082 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_751da/fast && /usr/bin/make  -f CMakeFiles/cmTC_751da.dir/build.make CMakeFiles/cmTC_751da.dir/build
+make[1]: Entering directory '/home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_751da.dir/src.c.o
+/usr/bin/cc -DCMAKE_HAVE_LIBC_PTHREAD  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes   -o CMakeFiles/cmTC_751da.dir/src.c.o -c /home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_751da
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_751da.dir/link.txt --verbose=1
+/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes   CMakeFiles/cmTC_751da.dir/src.c.o -o cmTC_751da 
+make[1]: Leaving directory '/home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/CMakeTmp'
 
 
 Source file was:
@@ -488,1144 +488,16 @@ int main(void)
 }
 
 Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_773f6/fast && /usr/bin/make  -f CMakeFiles/cmTC_773f6.dir/build.make CMakeFiles/cmTC_773f6.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_773f6.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_773f6.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_773f6
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_773f6.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_773f6.dir/src.c.o -o cmTC_773f6 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_21f0a/fast && /usr/bin/make  -f CMakeFiles/cmTC_21f0a.dir/build.make CMakeFiles/cmTC_21f0a.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_21f0a.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_21f0a.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_21f0a
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_21f0a.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_21f0a.dir/src.c.o -o cmTC_21f0a 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_a7975/fast && /usr/bin/make  -f CMakeFiles/cmTC_a7975.dir/build.make CMakeFiles/cmTC_a7975.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_a7975.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_a7975.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_a7975
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a7975.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_a7975.dir/src.c.o -o cmTC_a7975 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_a25b8/fast && /usr/bin/make  -f CMakeFiles/cmTC_a25b8.dir/build.make CMakeFiles/cmTC_a25b8.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_a25b8.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_a25b8.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_a25b8
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a25b8.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_a25b8.dir/src.c.o -o cmTC_a25b8 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_4f355/fast && /usr/bin/make  -f CMakeFiles/cmTC_4f355.dir/build.make CMakeFiles/cmTC_4f355.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_4f355.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_4f355.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_4f355
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4f355.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_4f355.dir/src.c.o -o cmTC_4f355 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_439fb/fast && /usr/bin/make  -f CMakeFiles/cmTC_439fb.dir/build.make CMakeFiles/cmTC_439fb.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_439fb.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_439fb.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_439fb
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_439fb.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_439fb.dir/src.c.o -o cmTC_439fb 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_86aa2/fast && /usr/bin/make  -f CMakeFiles/cmTC_86aa2.dir/build.make CMakeFiles/cmTC_86aa2.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_86aa2.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_86aa2.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_86aa2
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_86aa2.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_86aa2.dir/src.c.o -o cmTC_86aa2 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_79a81/fast && /usr/bin/make  -f CMakeFiles/cmTC_79a81.dir/build.make CMakeFiles/cmTC_79a81.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_79a81.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_79a81.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_79a81
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_79a81.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_79a81.dir/src.c.o -o cmTC_79a81 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_58920/fast && /usr/bin/make  -f CMakeFiles/cmTC_58920.dir/build.make CMakeFiles/cmTC_58920.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_58920.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_58920.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_58920
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_58920.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_58920.dir/src.c.o -o cmTC_58920 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_47ab4/fast && /usr/bin/make  -f CMakeFiles/cmTC_47ab4.dir/build.make CMakeFiles/cmTC_47ab4.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_47ab4.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_47ab4.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_47ab4
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_47ab4.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_47ab4.dir/src.c.o -o cmTC_47ab4 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_901d7/fast && /usr/bin/make  -f CMakeFiles/cmTC_901d7.dir/build.make CMakeFiles/cmTC_901d7.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_901d7.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_901d7.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_901d7
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_901d7.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_901d7.dir/src.c.o -o cmTC_901d7 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_1f45f/fast && /usr/bin/make  -f CMakeFiles/cmTC_1f45f.dir/build.make CMakeFiles/cmTC_1f45f.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_1f45f.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_1f45f.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_1f45f
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1f45f.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_1f45f.dir/src.c.o -o cmTC_1f45f 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_ba926/fast && /usr/bin/make  -f CMakeFiles/cmTC_ba926.dir/build.make CMakeFiles/cmTC_ba926.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_ba926.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_ba926.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_ba926
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ba926.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_ba926.dir/src.c.o -o cmTC_ba926 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_b5743/fast && /usr/bin/make  -f CMakeFiles/cmTC_b5743.dir/build.make CMakeFiles/cmTC_b5743.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_b5743.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_b5743.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_b5743
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b5743.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_b5743.dir/src.c.o -o cmTC_b5743 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_2d9b6/fast && /usr/bin/make  -f CMakeFiles/cmTC_2d9b6.dir/build.make CMakeFiles/cmTC_2d9b6.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_2d9b6.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_2d9b6.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_2d9b6
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2d9b6.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_2d9b6.dir/src.c.o -o cmTC_2d9b6 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_3fd5f/fast && /usr/bin/make  -f CMakeFiles/cmTC_3fd5f.dir/build.make CMakeFiles/cmTC_3fd5f.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_3fd5f.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_3fd5f.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_3fd5f
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3fd5f.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_3fd5f.dir/src.c.o -o cmTC_3fd5f 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_48f46/fast && /usr/bin/make  -f CMakeFiles/cmTC_48f46.dir/build.make CMakeFiles/cmTC_48f46.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_48f46.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_48f46.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_48f46
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_48f46.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_48f46.dir/src.c.o -o cmTC_48f46 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_7075a/fast && /usr/bin/make  -f CMakeFiles/cmTC_7075a.dir/build.make CMakeFiles/cmTC_7075a.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_7075a.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_7075a.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_7075a
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7075a.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_7075a.dir/src.c.o -o cmTC_7075a 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_a8dbb/fast && /usr/bin/make  -f CMakeFiles/cmTC_a8dbb.dir/build.make CMakeFiles/cmTC_a8dbb.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_a8dbb.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_a8dbb.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_a8dbb
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a8dbb.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_a8dbb.dir/src.c.o -o cmTC_a8dbb 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_aa1e2/fast && /usr/bin/make  -f CMakeFiles/cmTC_aa1e2.dir/build.make CMakeFiles/cmTC_aa1e2.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_aa1e2.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_aa1e2.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_aa1e2
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_aa1e2.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_aa1e2.dir/src.c.o -o cmTC_aa1e2 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_e1699/fast && /usr/bin/make  -f CMakeFiles/cmTC_e1699.dir/build.make CMakeFiles/cmTC_e1699.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_e1699.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_e1699.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_e1699
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e1699.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_e1699.dir/src.c.o -o cmTC_e1699 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_230d8/fast && /usr/bin/make  -f CMakeFiles/cmTC_230d8.dir/build.make CMakeFiles/cmTC_230d8.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_230d8.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_230d8.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_230d8
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_230d8.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_230d8.dir/src.c.o -o cmTC_230d8 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_355b7/fast && /usr/bin/make  -f CMakeFiles/cmTC_355b7.dir/build.make CMakeFiles/cmTC_355b7.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_355b7.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_355b7.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_355b7
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_355b7.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_355b7.dir/src.c.o -o cmTC_355b7 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_ab6ca/fast && /usr/bin/make  -f CMakeFiles/cmTC_ab6ca.dir/build.make CMakeFiles/cmTC_ab6ca.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_ab6ca.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_ab6ca.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_ab6ca
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ab6ca.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_ab6ca.dir/src.c.o -o cmTC_ab6ca 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_6440c/fast && /usr/bin/make  -f CMakeFiles/cmTC_6440c.dir/build.make CMakeFiles/cmTC_6440c.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_6440c.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_6440c.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_6440c
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6440c.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_6440c.dir/src.c.o -o cmTC_6440c 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_87c9a/fast && /usr/bin/make  -f CMakeFiles/cmTC_87c9a.dir/build.make CMakeFiles/cmTC_87c9a.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_87c9a.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_87c9a.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_87c9a
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_87c9a.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_87c9a.dir/src.c.o -o cmTC_87c9a 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_8f38e/fast && /usr/bin/make  -f CMakeFiles/cmTC_8f38e.dir/build.make CMakeFiles/cmTC_8f38e.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_8f38e.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_8f38e.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_8f38e
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8f38e.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_8f38e.dir/src.c.o -o cmTC_8f38e 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_d0d01/fast && /usr/bin/make  -f CMakeFiles/cmTC_d0d01.dir/build.make CMakeFiles/cmTC_d0d01.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_d0d01.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_d0d01.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_d0d01
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d0d01.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_d0d01.dir/src.c.o -o cmTC_d0d01 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_0a4e9/fast && /usr/bin/make  -f CMakeFiles/cmTC_0a4e9.dir/build.make CMakeFiles/cmTC_0a4e9.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_0a4e9.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_0a4e9.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_0a4e9
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0a4e9.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_0a4e9.dir/src.c.o -o cmTC_0a4e9 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_eb927/fast && /usr/bin/make  -f CMakeFiles/cmTC_eb927.dir/build.make CMakeFiles/cmTC_eb927.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_eb927.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_eb927.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_eb927
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_eb927.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_eb927.dir/src.c.o -o cmTC_eb927 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_b9eaf/fast && /usr/bin/make  -f CMakeFiles/cmTC_b9eaf.dir/build.make CMakeFiles/cmTC_b9eaf.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_b9eaf.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_b9eaf.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_b9eaf
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b9eaf.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_b9eaf.dir/src.c.o -o cmTC_b9eaf 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_55f1f/fast && /usr/bin/make  -f CMakeFiles/cmTC_55f1f.dir/build.make CMakeFiles/cmTC_55f1f.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_55f1f.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_55f1f.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_55f1f
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_55f1f.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_55f1f.dir/src.c.o -o cmTC_55f1f 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_783e0/fast && /usr/bin/make  -f CMakeFiles/cmTC_783e0.dir/build.make CMakeFiles/cmTC_783e0.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_783e0.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_783e0.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_783e0
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_783e0.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_783e0.dir/src.c.o -o cmTC_783e0 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_08fa3/fast && /usr/bin/make  -f CMakeFiles/cmTC_08fa3.dir/build.make CMakeFiles/cmTC_08fa3.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_08fa3.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_08fa3.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_08fa3
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_08fa3.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_08fa3.dir/src.c.o -o cmTC_08fa3 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_4cf26/fast && /usr/bin/make  -f CMakeFiles/cmTC_4cf26.dir/build.make CMakeFiles/cmTC_4cf26.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_4cf26.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_4cf26.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_4cf26
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4cf26.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_4cf26.dir/src.c.o -o cmTC_4cf26 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_935f0/fast && /usr/bin/make  -f CMakeFiles/cmTC_935f0.dir/build.make CMakeFiles/cmTC_935f0.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_935f0.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_935f0.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_935f0
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_935f0.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_935f0.dir/src.c.o -o cmTC_935f0 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_d4832/fast && /usr/bin/make  -f CMakeFiles/cmTC_d4832.dir/build.make CMakeFiles/cmTC_d4832.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_d4832.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_d4832.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_d4832
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d4832.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_d4832.dir/src.c.o -o cmTC_d4832 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_fd94a/fast && /usr/bin/make  -f CMakeFiles/cmTC_fd94a.dir/build.make CMakeFiles/cmTC_fd94a.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_fd94a.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_fd94a.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_fd94a
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fd94a.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_fd94a.dir/src.c.o -o cmTC_fd94a 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_2d4ee/fast && /usr/bin/make  -f CMakeFiles/cmTC_2d4ee.dir/build.make CMakeFiles/cmTC_2d4ee.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_2d4ee.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_2d4ee.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_2d4ee
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2d4ee.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_2d4ee.dir/src.c.o -o cmTC_2d4ee 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_2d36f/fast && /usr/bin/make  -f CMakeFiles/cmTC_2d36f.dir/build.make CMakeFiles/cmTC_2d36f.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_2d36f.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_2d36f.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_2d36f
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2d36f.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_2d36f.dir/src.c.o -o cmTC_2d36f 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_48157/fast && /usr/bin/make  -f CMakeFiles/cmTC_48157.dir/build.make CMakeFiles/cmTC_48157.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_48157.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_48157.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_48157
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_48157.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_48157.dir/src.c.o -o cmTC_48157 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_19ba9/fast && /usr/bin/make  -f CMakeFiles/cmTC_19ba9.dir/build.make CMakeFiles/cmTC_19ba9.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_19ba9.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_19ba9.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_19ba9
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_19ba9.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_19ba9.dir/src.c.o -o cmTC_19ba9 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_da720/fast && /usr/bin/make  -f CMakeFiles/cmTC_da720.dir/build.make CMakeFiles/cmTC_da720.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_da720.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_da720.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_da720
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_da720.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_da720.dir/src.c.o -o cmTC_da720 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_3ae5e/fast && /usr/bin/make  -f CMakeFiles/cmTC_3ae5e.dir/build.make CMakeFiles/cmTC_3ae5e.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_3ae5e.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_3ae5e.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_3ae5e
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3ae5e.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_3ae5e.dir/src.c.o -o cmTC_3ae5e 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_e46de/fast && /usr/bin/make  -f CMakeFiles/cmTC_e46de.dir/build.make CMakeFiles/cmTC_e46de.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_e46de.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_e46de.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_e46de
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e46de.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_e46de.dir/src.c.o -o cmTC_e46de 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_a55d7/fast && /usr/bin/make  -f CMakeFiles/cmTC_a55d7.dir/build.make CMakeFiles/cmTC_a55d7.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_a55d7.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_a55d7.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_a55d7
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a55d7.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_a55d7.dir/src.c.o -o cmTC_a55d7 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_97824/fast && /usr/bin/make  -f CMakeFiles/cmTC_97824.dir/build.make CMakeFiles/cmTC_97824.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_97824.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_97824.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_97824
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_97824.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_97824.dir/src.c.o -o cmTC_97824 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-
-
-...and run output:
-
-Return value: 1
-Source file was:
-#include <x86intrin.h>
-int main(){
-unsigned long long r;
-_rdseed64_step(&r);
-return 0;
-}
-
-Performing C SOURCE FILE Test RDSEED_RUN_RESULT succeeded with the following compile output:
-Change Dir: /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_f0f36/fast && /usr/bin/make  -f CMakeFiles/cmTC_f0f36.dir/build.make CMakeFiles/cmTC_f0f36.dir/build
-make[1]: Entering directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_f0f36.dir/src.c.o
-/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_f0f36.dir/src.c.o -c /home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_f0f36
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f0f36.dir/link.txt --verbose=1
-/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_f0f36.dir/src.c.o -o cmTC_f0f36 
-make[1]: Leaving directory '/home/jbai795/Experiments/mostree/out/build/linux/CMakeFiles/CMakeTmp'
+Change Dir: /home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_a096a/fast && /usr/bin/make  -f CMakeFiles/cmTC_a096a.dir/build.make CMakeFiles/cmTC_a096a.dir/build
+make[1]: Entering directory '/home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_a096a.dir/src.c.o
+/usr/bin/cc -DRDSEED_RUN_RESULT  -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed -o CMakeFiles/cmTC_a096a.dir/src.c.o -c /home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_a096a
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a096a.dir/link.txt --verbose=1
+/usr/bin/cc -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes  -pthread -Wall -funroll-loops -Wno-ignored-attributes -Wno-unused-result -march=native -maes -mrdseed -mrdseed CMakeFiles/cmTC_a096a.dir/src.c.o -o cmTC_a096a 
+make[1]: Leaving directory '/home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles/CMakeTmp'
 
 
 ...and run output:

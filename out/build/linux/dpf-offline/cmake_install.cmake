@@ -1,4 +1,4 @@
-# Install script for directory: /home/jbai795/Experiments/mostree/dpf-offline
+# Install script for directory: /home/jbai795/Experiments/mostree-pub/dpf-offline
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

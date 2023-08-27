@@ -1,4 +1,4 @@
-# Install script for directory: /home/jbai795/Experiments/mostree/ss3-dtree
+# Install script for directory: /home/jbai795/Experiments/mostree-pub/ss3-dtree
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

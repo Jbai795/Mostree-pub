@@ -1,7 +1,7 @@
 ss3-dtree/CMakeFiles/mostree-main.dir/common/tree_read_from_file.cpp.o: \
- /home/jbai795/Experiments/mostree/ss3-dtree/common/tree_read_from_file.cpp \
+ /home/jbai795/Experiments/mostree-pub/ss3-dtree/common/tree_read_from_file.cpp \
  /usr/include/stdc-predef.h \
- /home/jbai795/Experiments/mostree/ss3-dtree/common/tree_read_from_file.h \
+ /home/jbai795/Experiments/mostree-pub/ss3-dtree/common/tree_read_from_file.h \
  /usr/include/c++/9/iostream \
  /usr/include/x86_64-linux-gnu/c++/9/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/os_defines.h \

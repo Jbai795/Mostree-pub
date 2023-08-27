@@ -1,7 +1,7 @@
 ss3-dtree/CMakeFiles/mostree-main.dir/common/tree_feature.cpp.o: \
- /home/jbai795/Experiments/mostree/ss3-dtree/common/tree_feature.cpp \
+ /home/jbai795/Experiments/mostree-pub/ss3-dtree/common/tree_feature.cpp \
  /usr/include/stdc-predef.h \
- /home/jbai795/Experiments/mostree/ss3-dtree/common/tree_feature.h \
+ /home/jbai795/Experiments/mostree-pub/ss3-dtree/common/tree_feature.h \
  /usr/include/c++/9/iostream \
  /usr/include/x86_64-linux-gnu/c++/9/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/os_defines.h \
@@ -167,7 +167,7 @@ ss3-dtree/CMakeFiles/mostree-main.dir/common/tree_feature.cpp.o: \
  /usr/include/c++/9/bits/algorithmfwd.h \
  /usr/include/c++/9/bits/stl_heap.h /usr/include/c++/9/bits/stl_tempbuf.h \
  /usr/include/c++/9/bits/uniform_int_dist.h \
- /home/jbai795/Experiments/mostree/ss3-dtree/common/tree_read_from_file.h \
+ /home/jbai795/Experiments/mostree-pub/ss3-dtree/common/tree_read_from_file.h \
  /usr/lib/gcc/x86_64-linux-gnu/9/include/limits.h \
  /usr/lib/gcc/x86_64-linux-gnu/9/include/syslimits.h \
  /usr/include/limits.h /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \

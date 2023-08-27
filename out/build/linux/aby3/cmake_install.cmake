@@ -1,4 +1,4 @@
-# Install script for directory: /home/jbai795/Experiments/mostree/aby3
+# Install script for directory: /home/jbai795/Experiments/mostree-pub/aby3
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

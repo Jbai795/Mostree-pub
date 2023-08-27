@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DBOOST_SYSTEM_DYN_LINK -DBOOST_SYSTEM_NO_LIB -DBOOST_THREAD_DYN_LINK -DBOOST_THREAD_NO_LIB
 
-CXX_INCLUDES = -I/home/jbai795/Experiments/mostree/ss3-dtree -I/home/jbai795/Experiments/mostree/aby3/.. -isystem /home/jbai795/Experiments/mostree/deps/build/include
+CXX_INCLUDES = -I/home/jbai795/Experiments/mostree-pub/ss3-dtree -I/home/jbai795/Experiments/mostree-pub/aby3/.. -isystem /home/jbai795/Experiments/mostree-pub/deps/build/include
 
 CXX_FLAGS = -Wall  -maes -msse2 -msse4.1 -msse3 -mavx -mavx2 -mpclmul -Wfatal-errors -pthread -Wno-ignored-attributes   -std=c++14 -Ofast -DNDEBUG -std=c++14 -pthread -maes -msse2 -msse3 -mssse3 -msse4.1 -mpclmul
 
