@@ -18,7 +18,7 @@ A tutorial can be found [here](https://github.com/Jbai795/Mostree-pub/blob/maste
 
 ## Build
 
-The library is *cross platform* and has been tested on Linux 20.04. The dependencies are:
+This project is has been tested on Ubuntu 20.04. The dependencies are:
 
  * [libOTe](https://github.com/osu-crypto/libOTe)
  * [Boost](http://www.boost.org/) ( _networking_ Boost 1.75.0)
@@ -31,7 +31,53 @@ The library is *cross platform* and has been tested on Linux 20.04. The dependen
  * python 3
 
 ### Step 1
-- Complete the above third-party dependency and be installed in _deps/build/_. More details, refer to https://github.com/ladnir/aby3#build
+Complete the above third-party dependency and be installed in _deps/build/_.
+
+- Install libraries from apt-get
+```
+[sudo] apt-get update 
+[sudo] apt-get install git python3 wget build-essential libssl-dev g++ python-dev autotools-dev libicu-dev libbz2-dev libboost-all-dev libgmp-dev
+```
+
+- Install Cmake 
+```
+wget https://github.com/Kitware/CMake/releases/download/v3.27.3/cmake-3.27.3.tar.gz
+tar -zxvf cmake-3.27.3.tar.gz 
+cd cmake-3.27.3 
+./bootstrap 
+make
+make install 
+```
+
+- install boost
+```
+wget https://boostorg.jfrog.io/artifactory/main/release/1.75.0/source/boost_1_75_0.tar.bz2
+tar -xvf boost_1_75_0.tar.bz2
+./bootstrap.sh --prefix=/usr/
+./b2 install
+```
+
+- install NTL
+```
+wget https://libntl.org/ntl-11.5.1.tar.gz
+gunzip ntl-11.5.1.tar.gz
+tar xf ntl-11.5.1.tar.gz 
+cd ntl-xxx/src
+./configure 
+make
+make install
+```
+
+- ABY3 
+```
+git clone https://github.com/ladnir/aby3.git
+cd aby3 
+python3 build.py --setup 
+python3 build.py 
+```
+
+<!-- ### Step 1
+- Complete the above third-party dependency and be installed in _deps/build/_. More details, refer to https://github.com/ladnir/aby3#build -->
 
 ### Step 2
 - In short, this will build the project
@@ -75,6 +121,10 @@ cd bin
 ./dpf_batch_gen 1 12345 20 13 # terminal 1
 ./dpf_batch_gen 2 12345 20 13 # terminal 2
 ```
+
+## Disclaimer
+This code is just a proof-of-concept for benchmarking purposes. It has not had any security review, has a number of implementational TODOs, and thus, should not be directly used in any real-world applications.
+
 
 ## Help
 
