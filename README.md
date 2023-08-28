@@ -34,6 +34,9 @@ The library is *cross platform* and has been tested on Linux 20.04. The dependen
 - Complete the above third-party dependency and be installed in _deps/build/_. More details, refer to https://github.com/ladnir/aby3#build
 
 ### Step 2
+
+*Build*
+
 - In short, this will build the project
 
 ```
@@ -44,6 +47,15 @@ cmake -DCMAKE_BUILD_TYPE=Release ..
 cd ../bin
 make mostree-main
 ```
+
+- Build use a short one
+
+```
+cd Mostree-pub
+python build.py
+```
+
+*Run*
 
 To see all the command line options, execute the program 
 
@@ -59,6 +71,28 @@ cd bin
 ./mostree-main -travel -p 1  # machine 1
 ./mostree-main -travel -p 2  # machine 2
 ```
+
+## Network Settings
+
+LAN, RTT:0.1ms, 1Gbps
+
+`sudo tc qdisc add dev lo root netem delay 0.04ms rate 1024mbit`
+
+MAN, RTT:6ms, 100Mbps
+
+`sudo tc qdisc add dev lo root netem delay 3ms rate 100mbit`
+
+WAN, RTT:80ms, 40Mbps
+
+`sudo tc qdisc add dev lo root netem delay 40ms rate 40mbit`
+
+ping localhost to see RTT
+
+`ping localhost -c 6`
+
+delete simulated configuration: (must delete the old one before setting new simulation)
+
+`sudo tc qdisc delete dev lo root netem delay 0.04ms rate 1024mbit`
 
 ## Help
 

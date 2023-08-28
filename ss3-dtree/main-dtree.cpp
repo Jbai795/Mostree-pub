@@ -24,9 +24,8 @@ const Decimal Dec(Decimal::D8);
 // Parameters setting
 int DTREE_DEPTH = 3;
 const int PARTY_NUM = 3;
-int NUM_POLY_TRIPLES = 20;
 
-bool MALICIOUS = 1; // 1 is malicious, 0 means semi-honest
+bool MALICIOUS = 0; // 1 is malicious, 0 means semi-honest
 bool MACSHARE = 0; // 1 means MAC key is generated randomly, 0 means MAC key is selected.
 
 int mostree_bin_3pc(int pIdx, CLP &cmd, Session &chlPrev, Session &chlNext) {
@@ -47,7 +46,7 @@ int mostree_bin_3pc(int pIdx, CLP &cmd, Session &chlPrev, Session &chlNext) {
 
 
 	//modify here if testing other trees
-	int modelid = 4;
+	int modelid = 0;
     if(modelid > 6 || modelid < 0){
         LOG(INFO) << "* Please give a correct model id: [0, 6]";
         return 0;
