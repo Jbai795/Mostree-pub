@@ -142,24 +142,10 @@ ss3-dtree/CMakeFiles/mostree-main.dir/common/tree_read_from_file.cpp.s: cmake_fo
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mostree-main.dir/common/tree_read_from_file.cpp.s"
 	cd /home/jbai795/Experiments/mostree-pub/out/build/linux/ss3-dtree && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jbai795/Experiments/mostree-pub/ss3-dtree/common/tree_read_from_file.cpp -o CMakeFiles/mostree-main.dir/common/tree_read_from_file.cpp.s
 
-ss3-dtree/CMakeFiles/mostree-main.dir/main-dtree-scalability.cpp.o: ss3-dtree/CMakeFiles/mostree-main.dir/flags.make
-ss3-dtree/CMakeFiles/mostree-main.dir/main-dtree-scalability.cpp.o: ../../../ss3-dtree/main-dtree-scalability.cpp
-ss3-dtree/CMakeFiles/mostree-main.dir/main-dtree-scalability.cpp.o: ss3-dtree/CMakeFiles/mostree-main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object ss3-dtree/CMakeFiles/mostree-main.dir/main-dtree-scalability.cpp.o"
-	cd /home/jbai795/Experiments/mostree-pub/out/build/linux/ss3-dtree && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT ss3-dtree/CMakeFiles/mostree-main.dir/main-dtree-scalability.cpp.o -MF CMakeFiles/mostree-main.dir/main-dtree-scalability.cpp.o.d -o CMakeFiles/mostree-main.dir/main-dtree-scalability.cpp.o -c /home/jbai795/Experiments/mostree-pub/ss3-dtree/main-dtree-scalability.cpp
-
-ss3-dtree/CMakeFiles/mostree-main.dir/main-dtree-scalability.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mostree-main.dir/main-dtree-scalability.cpp.i"
-	cd /home/jbai795/Experiments/mostree-pub/out/build/linux/ss3-dtree && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jbai795/Experiments/mostree-pub/ss3-dtree/main-dtree-scalability.cpp > CMakeFiles/mostree-main.dir/main-dtree-scalability.cpp.i
-
-ss3-dtree/CMakeFiles/mostree-main.dir/main-dtree-scalability.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mostree-main.dir/main-dtree-scalability.cpp.s"
-	cd /home/jbai795/Experiments/mostree-pub/out/build/linux/ss3-dtree && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jbai795/Experiments/mostree-pub/ss3-dtree/main-dtree-scalability.cpp -o CMakeFiles/mostree-main.dir/main-dtree-scalability.cpp.s
-
 ss3-dtree/CMakeFiles/mostree-main.dir/main-dtree.cpp.o: ss3-dtree/CMakeFiles/mostree-main.dir/flags.make
 ss3-dtree/CMakeFiles/mostree-main.dir/main-dtree.cpp.o: ../../../ss3-dtree/main-dtree.cpp
 ss3-dtree/CMakeFiles/mostree-main.dir/main-dtree.cpp.o: ss3-dtree/CMakeFiles/mostree-main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object ss3-dtree/CMakeFiles/mostree-main.dir/main-dtree.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object ss3-dtree/CMakeFiles/mostree-main.dir/main-dtree.cpp.o"
 	cd /home/jbai795/Experiments/mostree-pub/out/build/linux/ss3-dtree && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT ss3-dtree/CMakeFiles/mostree-main.dir/main-dtree.cpp.o -MF CMakeFiles/mostree-main.dir/main-dtree.cpp.o.d -o CMakeFiles/mostree-main.dir/main-dtree.cpp.o -c /home/jbai795/Experiments/mostree-pub/ss3-dtree/main-dtree.cpp
 
 ss3-dtree/CMakeFiles/mostree-main.dir/main-dtree.cpp.i: cmake_force
@@ -177,7 +163,6 @@ mostree__main_OBJECTS = \
 "CMakeFiles/mostree-main.dir/common/fss_read.cpp.o" \
 "CMakeFiles/mostree-main.dir/common/tree_feature.cpp.o" \
 "CMakeFiles/mostree-main.dir/common/tree_read_from_file.cpp.o" \
-"CMakeFiles/mostree-main.dir/main-dtree-scalability.cpp.o" \
 "CMakeFiles/mostree-main.dir/main-dtree.cpp.o"
 
 # External object files for target mostree-main
@@ -188,7 +173,6 @@ bin/mostree-main: ss3-dtree/CMakeFiles/mostree-main.dir/SS3Dtree.cpp.o
 bin/mostree-main: ss3-dtree/CMakeFiles/mostree-main.dir/common/fss_read.cpp.o
 bin/mostree-main: ss3-dtree/CMakeFiles/mostree-main.dir/common/tree_feature.cpp.o
 bin/mostree-main: ss3-dtree/CMakeFiles/mostree-main.dir/common/tree_read_from_file.cpp.o
-bin/mostree-main: ss3-dtree/CMakeFiles/mostree-main.dir/main-dtree-scalability.cpp.o
 bin/mostree-main: ss3-dtree/CMakeFiles/mostree-main.dir/main-dtree.cpp.o
 bin/mostree-main: ss3-dtree/CMakeFiles/mostree-main.dir/build.make
 bin/mostree-main: lib/libaby3.a
@@ -198,7 +182,7 @@ bin/mostree-main: ../../../deps/build/lib/libcryptoTools.a
 bin/mostree-main: /usr/lib/libboost_system.so.1.79.0
 bin/mostree-main: /usr/lib/libboost_thread.so.1.79.0
 bin/mostree-main: ss3-dtree/CMakeFiles/mostree-main.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable ../bin/mostree-main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable ../bin/mostree-main"
 	cd /home/jbai795/Experiments/mostree-pub/out/build/linux/ss3-dtree && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/mostree-main.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

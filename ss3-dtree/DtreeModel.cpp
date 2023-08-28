@@ -239,9 +239,9 @@ namespace mostree {
             fss_read(fssp0k1,k0,FN());
             std::vector<u64> k1;
             fss_read(fssp0k2,k1,FN());
-            LOG(INFO) << "mFssGenFeature.k.rows(): \n" << mFssGenFeature.k.rows();
-            LOG(INFO) << "k0.size(): \n" << k0.size();
-            LOG(INFO) << "_feature_num: \n" << _feature_num;
+            // LOG(INFO) << "mFssGenFeature.k.rows(): \n" << mFssGenFeature.k.rows();
+            // LOG(INFO) << "k0.size(): \n" << k0.size();
+            // LOG(INFO) << "_feature_num: \n" << _feature_num;
             if ( mFssGenFeature.k.rows() != k0.size()|| (mFssGenFeature.k.rows() != FN()))
                 throw std::invalid_argument("P0 mFssGenFeature.k number invalid!");
             std::copy_n(k0.data(), k0.size(), mFssGenFeature.k.mShares[0].data());
@@ -288,9 +288,9 @@ namespace mostree {
             fss_read(fssp0k1,k0,NN());
             std::vector<u64> k1;
             fss_read(fssp0k2,k1,NN());
-            LOG(INFO) << "mFssGenNodes.k.rows(): \n" << mFssGenNodes.k.rows();
-            LOG(INFO) << "k0.size(): \n" << k0.size();
-            LOG(INFO) << "_nodes_num: \n" << NN();
+            // LOG(INFO) << "mFssGenNodes.k.rows(): \n" << mFssGenNodes.k.rows();
+            // LOG(INFO) << "k0.size(): \n" << k0.size();
+            // LOG(INFO) << "_nodes_num: \n" << NN();
             if ( mFssGenNodes.k.rows() != k0.size()|| (mFssGenNodes.k.rows() != NN()))
                 throw std::invalid_argument("P0 mFssGenNodes.k number invalid!");
             std::copy_n(k0.data(), k0.size(), mFssGenNodes.k.mShares[0].data());

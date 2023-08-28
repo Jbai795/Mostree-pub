@@ -28,11 +28,11 @@ namespace mostree {
     public:
         SS3Dtree(int polyDegree = 64) : _poly_degree(polyDegree) {
             GF2X p;
-            cout << p << "\n";
+            // cout << p << "\n";
             BuildIrred(p, _poly_degree);
             GF2E::init(p);
-            cout << p << "\n";
-            LOG(INFO) << "Poly degree: " << GF2E::degree() << '\n';
+            // cout << p << "\n";
+            // LOG(INFO) << "Poly degree: " << GF2E::degree() << '\n';
         }
 
     public:
@@ -279,8 +279,6 @@ namespace mostree {
 
         std::array<sb64, 2> compare_process(int partIdx, sb64 &gt, sb64 &eq, int size, sb64 *as, sb64 *bs, sb64 *cs, int val, int incr);
 
-
-        sb64 shareDelta(int partIdx, DtreeModel &model);
 
         sb64 semi_ob_selection_y(int partIdx, sb64 &ssSelectedIdx, sbMatrix &X, FssGen &fssgen);
 

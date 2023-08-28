@@ -357,9 +357,10 @@ namespace mostree {
         }
 
         if (reveal(rec) == 0){
-            LOG(INFO) << "****** Multiplication check in AND_SS passed! ******";
+            // LOG(INFO) << "****** Multiplication check in AND_SS passed! ******";
         }else{
-            LOG(INFO) << "****** Multiplication check in AND_SS not passed! ******"; // terminate
+            // abort
+            // LOG(INFO) << "****** Multiplication check in AND_SS not passed! ******";
         }
     }
 
@@ -527,17 +528,17 @@ namespace mostree {
         sb64 r1 = getCovertP2NBinary(data1);
         sb64 r2 = getCovertN2PBinary(data2);
 
-        LOG(INFO) << "P" << partIdx << " data1 is " << data1;
-        LOG(INFO) << "P" << partIdx << " r1 is " << r1;
-        LOG(INFO) << "P" << partIdx << " r2 is " << r2;
+        // LOG(INFO) << "P" << partIdx << " data1 is " << data1;
+        // LOG(INFO) << "P" << partIdx << " r1 is " << r1;
+        // LOG(INFO) << "P" << partIdx << " r2 is " << r2;
 
         sb64 ssDelta;
         ssDelta[0] = r1[0] ^ r2[0] ^ d02;
         ssDelta[1] = r1[1] ^ r2[1] ^ d01;
-        LOG(INFO) << "P" << partIdx << " d02 is " << d02;
+        // LOG(INFO) << "P" << partIdx << " d02 is " << d02;
 
-        LOG(INFO) << "P" << partIdx << " ssDelta is " << ssDelta;
-        LOG(INFO) << "P" << partIdx << " ssDelta is " << reveal(ssDelta);
+        // LOG(INFO) << "P" << partIdx << " ssDelta is " << ssDelta;
+        // LOG(INFO) << "P" << partIdx << " ssDelta is " << reveal(ssDelta);
 
         u64 n = X.rows();
         i64Matrix y01(1, X.i64Cols());
@@ -618,32 +619,17 @@ namespace mostree {
         sb64 r1 = getCovertP2NBinary(data1);
         sb64 r2 = getCovertN2PBinary(data2);
 
-        LOG(INFO) << "P" << partIdx << " data1 is " << data1;
-        LOG(INFO) << "P" << partIdx << " r1 is " << r1;
-        LOG(INFO) << "P" << partIdx << " r2 is " << r2;
-
-
-
-
-        // i64 d02 = ssSelectedIdx[0] ^ ssSelectedIdx[1] ^ fssgen.r[0];
-        // mNext.asyncSendCopy(d02);
-
-        // i64 d01 = ssSelectedIdx[0] ^ fssgen.r[1];
-        // mPrev.asyncSendCopy(d01);
-
-        // i64 d12 = 0;
-        // mNext.asyncRecv(d12);
-
-        // i64 d21 = 0;
-        // mPrev.asyncRecv(d21);  
+        // LOG(INFO) << "P" << partIdx << " data1 is " << data1;
+        // LOG(INFO) << "P" << partIdx << " r1 is " << r1;
+        // LOG(INFO) << "P" << partIdx << " r2 is " << r2;
 
         sb64 ssDelta;
         ssDelta[0] = r1[0] ^ r2[0] ^ d02;
         ssDelta[1] = r1[1] ^ r2[1] ^ d01;
-        LOG(INFO) << "P" << partIdx << " d02 is " << d02;
+        // LOG(INFO) << "P" << partIdx << " d02 is " << d02;
 
-        LOG(INFO) << "P" << partIdx << " ssDelta is " << ssDelta;
-        LOG(INFO) << "P" << partIdx << " ssDelta is " << reveal(ssDelta);
+        // LOG(INFO) << "P" << partIdx << " ssDelta is " << ssDelta;
+        // LOG(INFO) << "P" << partIdx << " ssDelta is " << reveal(ssDelta);
 
         u64 n = X.rows();
         i64 y01 = 0;
@@ -660,53 +646,6 @@ namespace mostree {
 
         // Reshare
         sb64 ssY = localBinary(selectedY);
-        return ssY;
-    }
-
-    // (x0, x1, x2): (x1, x0) (x2, x1) (x0, x2)
-    sb64 SS3Dtree::shareDelta(int partIdx, DtreeModel &model) {
-        int real_idx = DtreeModel::realIdx(partIdx);
-        i64 d02 = model.ssSelectedIdx[0] ^ model.ssSelectedIdx[1] ^ model.mFssGenFeature.r[0];
-        mNext.asyncSendCopy(d02);
-        //LOG(INFO) << "p" << partIdx << " send d02: " << d02;
-
-        i64 d01 = model.ssSelectedIdx[0] ^ model.mFssGenFeature.r[1];
-        mPrev.asyncSendCopy(d01);
-        //LOG(INFO) << "p" << partIdx << " send d01: " << d02;
-
-        i64 d12 = 0;
-        mNext.recv(d12);
-        //LOG(INFO) << "p" << partIdx << " recv d12: " << d02;
-
-        i64 d21 = 0;
-        mPrev.recv(d21);
-        //LOG(INFO) << "p" << partIdx << " recv d21: " << d02;
-
-        //share_delta_protocol(mRt.noDependencies(), d02, d01, model.ssDelta).get();
-
-        model.ssDelta[0] = d02 ^ d12;
-        model.ssDelta[1] = d21 ^ d01;
-        LOG(INFO) << "P" << real_idx << " ssDelta: " << model.ssDelta;
-
-        sbMatrix X = model.getSSFeatureSchema();
-        u64 n = X.rows();
-        i64 y01 = 0;
-        for (i64 i = 0; i < n; ++i) {
-            y01 ^= (X.mShares[0](i ^ model.ssDelta[0]) * model.mFssGenFeature.k.mShares[0](i));
-        }
-
-        i64 y00 = 0;
-        for (i64 i = 0; i < n; ++i) {
-            y00 ^= X.mShares[1](i ^ model.ssDelta[1]) * model.mFssGenFeature.k.mShares[1](i);
-        }
-
-        model.selectedY = y01 ^ y00;
-        LOG(INFO) << "P" << real_idx << " selectedY: " << model.selectedY;
-
-        // Reshare
-
-        sb64 ssY = localBinary(model.selectedY);
-        // LOG(INFO) << "P" << real_idx << " ssY: " <<  ssY;
         return ssY;
     }
 
@@ -737,11 +676,11 @@ namespace mostree {
         */
         if (isFss) {
             realTreeFssPreprocess(partIdx, model);
-            if (partIdx == 0) {
-                LOG(INFO) << "Model share fss r partyIdx: " << partIdx << " " << model.mFssGenNodes.r;
-                LOG(INFO) << "Model share fss k partyIdx: " << partIdx;
-                model.mFssGenNodes.k.printAllShareBits();
-            }
+            // if (partIdx == 0) {
+            //     LOG(INFO) << "Model share fss r partyIdx: " << partIdx << " " << model.mFssGenNodes.r;
+            //     LOG(INFO) << "Model share fss k partyIdx: " << partIdx;
+            //     model.mFssGenNodes.k.printAllShareBits();
+            // }
         }
         /*
          * Semi-honest oblivious selection protocol
@@ -819,11 +758,11 @@ namespace mostree {
         }
 
         if (reveal(z) == 0){
-            LOG(INFO) << "****** Multiplication check in getChildNodeIndex passed! ******";
+            // LOG(INFO) << "****** Multiplication check in getChildNodeIndex passed! ******";
             return sb64(right ^ tmp);
         }else{
-            LOG(INFO) << "****** Multiplication check in getChildNodeIndex not passed! ******";
-            return sb64(right ^ tmp); // terminate
+            // LOG(INFO) << "****** Multiplication check in getChildNodeIndex not passed! ******";
+            return sb64(right ^ tmp); // should abort
         }
         
     }
@@ -836,82 +775,6 @@ namespace mostree {
         return reveal(tmp2);
     }
 
-
-    // malicious
-    sb64 SS3Dtree::travelTree(int pIdx, int depth, SSNode &root, DtreeModel &model, sbMatrix &ss_model_data, sbMatrix &ss_mac_model_data,
-                              sbMatrix &ssFeatureSchema, sb64 &ss_mac_key, sb64 gamma, sb64 *rho, sb64 *a,sb64 *b,sb64 *c, sb64 *as,sb64 *bs,sb64 *cs) {
-        SSNode cur_node = root;
-        SSMACNode cur_mac_node;
-        //save for mac checking
-        sb64 sum_model_data({0, 0});
-        sb64 sum_mac_model_data({0, 0});
-
-        for (int i = 0; i < depth; ++i) {
-            if (pIdx == 0)
-                LOG(INFO) << "****** Travel Decision Tree Layer: [ " << i << " ] ******";
-            sb64 ssSelectedIdx = cur_node.getVIdx();
-            LOG(INFO) << "P" << pIdx << " selected feature V index: " << reveal(ssSelectedIdx);
-            sb64 ssY = semi_ob_selection_feature(pIdx, ssFeatureSchema, ssSelectedIdx, model, false);
-            
-            LOG(INFO) << "P" << pIdx << " selected feature V index: " << reveal(ssSelectedIdx) << " -> X: " << reveal(ssY);
-
-            sb64 threshold = cur_node.getThreshold();
-            sb64 left = cur_node.getLeft();
-            sb64 right = cur_node.getRight();
-
-            LOG(INFO) << "P" << pIdx << " right: " << right << " reveal " << reveal(right);
-            LOG(INFO) << "P" << pIdx << " left: " << left << " reveal " << reveal(left);
-            // 0: right child;  1: left child
-            LOG(INFO) << "P" << pIdx << " ssY: " << ssY;
-            LOG(INFO) << "P" << pIdx << " threshold: " << threshold;
-            LOG(INFO) << "P" << pIdx << " compare: (" << reveal(ssY) << ", " << reveal(threshold) << ")";
-            sb64 ssb = compare_threshold(pIdx, ssY, threshold, as, bs, cs, i);
-            LOG(INFO) << "P" << pIdx << " compare_result: " << ssb << " -> X: " << reveal(ssb);
-            sb64 ssNextNodeIdx = getChildNodeIndex(pIdx, ssb, left, right, a[i], b[i], c[i]);
-            LOG(INFO) << "P" << pIdx << " ssb: " << ssb << " -> expect NextNodeIdx: " << ssNextNodeIdx << " reveal " << reveal(ssNextNodeIdx);
-
-            //selection of model
-            sbMatrix next_node = semi_ob_selection_node(pIdx, ss_model_data, ssNextNodeIdx, model, false);
-            i64Matrix plain_ssnode = reveal(next_node);
-            
-                LOG(INFO) << "P" << pIdx << " real selected node [" << reveal(ssNextNodeIdx) << "] : " << plain_ssnode;
-            
-            //selection of maced model
-            sbMatrix next_mac_node = semi_ob_selection_mac_node(pIdx, ss_mac_model_data, ssNextNodeIdx, model, false);
-            i64Matrix plain_mac_ssnode = reveal(next_mac_node);
-            
-                LOG(INFO) << "P" << pIdx << " real selected mac node [" << reveal(ssNextNodeIdx) << "] : " << plain_mac_ssnode;
-            
-
-            // i64Matrix plain_ssnode = reveal(next_node);
-            cur_node.setSSData(next_node);
-            cur_mac_node.setSSMACData(next_mac_node);
-            // LOG(INFO) << "P" << pIdx << " real selected node [" << reveal(ssNextNodeIdx) << "] : " << plain_ssnode;
-
-            //sum selected model node
-            // sum_model_data = sum_model_data ^ cur_node.getThreshold() ^ cur_node.getLeft() ^ cur_node.getRight() ^ cur_node.getVIdx() ^ cur_node.getLabel();
-            sum_model_data = sum_model_data ^ poly_mul(rho[i], cur_node.getThreshold() ^ cur_node.getLeft() ^ cur_node.getRight() ^ cur_node.getVIdx() ^ cur_node.getLabel());
-
-            //sum selected mac model node
-            sum_mac_model_data = sum_mac_model_data ^ poly_mul(rho[i], cur_mac_node.getMACThreshold() ^ cur_mac_node.getMACLeft() ^ cur_mac_node.getMACRight() ^ cur_mac_node.getMACVIdx() ^ cur_mac_node.getMACLabel());
-        
-        }
-        //mac checking
-        sum_model_data = sum_model_data ^ gamma;
-        sum_mac_model_data = poly_mul(ss_mac_key, gamma) ^ sum_mac_model_data;
-        int rec = mac_check(pIdx, sum_model_data, sum_mac_model_data, ss_mac_key);
-        LOG(INFO) << "mac checking result is " << rec;
-
-        if (rec == 0){
-            LOG(INFO) << "Batch mac checking passed! ";
-            return cur_node.getLabel();
-        }else{
-            //should terminate the protocol in real application
-            LOG(INFO) << "Batch mac checking not passed! ";
-            return cur_node.getLabel();   
-        }
-        
-    }
 
     // semi-honest
     sb64 SS3Dtree::travelTree(int pIdx, int depth, SSNode &root, DtreeModel &model, sbMatrix &ss_model_data, sbMatrix &ssFeatureSchema) {
@@ -954,6 +817,86 @@ namespace mostree {
 
             LOG(INFO) << "Semi-honest tree travel success! ";
             return cur_node.getLabel();    
+    }
+
+
+    // malicious
+    sb64 SS3Dtree::travelTree(int pIdx, int depth, SSNode &root, DtreeModel &model, sbMatrix &ss_model_data, sbMatrix &ss_mac_model_data,
+                              sbMatrix &ssFeatureSchema, sb64 &ss_mac_key, sb64 gamma, sb64 *rho, sb64 *a,sb64 *b,sb64 *c, sb64 *as,sb64 *bs,sb64 *cs) {
+        SSNode cur_node = root;
+        SSMACNode cur_mac_node;
+        //save for mac checking
+        sb64 sum_model_data({0, 0});
+        sb64 sum_mac_model_data({0, 0});
+
+        for (int i = 0; i < depth; ++i) {
+            // if (pIdx == 0)
+            //     LOG(INFO) << "****** Travel Decision Tree Layer: [ " << i << " ] ******";
+            sb64 ssSelectedIdx = cur_node.getVIdx();
+            // LOG(INFO) << "P" << pIdx << " selected feature V index: " << reveal(ssSelectedIdx);
+            sb64 ssY = semi_ob_selection_feature(pIdx, ssFeatureSchema, ssSelectedIdx, model, false);
+            
+            // LOG(INFO) << "P" << pIdx << " selected feature V index: " << reveal(ssSelectedIdx) << " -> X: " << reveal(ssY);
+
+            sb64 threshold = cur_node.getThreshold();
+            sb64 left = cur_node.getLeft();
+            sb64 right = cur_node.getRight();
+
+            // LOG(INFO) << "P" << pIdx << " right: " << right << " reveal " << reveal(right);
+            // LOG(INFO) << "P" << pIdx << " left: " << left << " reveal " << reveal(left);
+             
+            /*
+            0: right child;  1: left child
+            */
+            // LOG(INFO) << "P" << pIdx << " ssY: " << ssY;
+            // LOG(INFO) << "P" << pIdx << " threshold: " << threshold;
+            // LOG(INFO) << "P" << pIdx << " compare: (" << reveal(ssY) << ", " << reveal(threshold) << ")";
+            sb64 ssb = compare_threshold(pIdx, ssY, threshold, as, bs, cs, i);
+            // LOG(INFO) << "P" << pIdx << " compare_result: " << ssb << " -> X: " << reveal(ssb);
+            sb64 ssNextNodeIdx = getChildNodeIndex(pIdx, ssb, left, right, a[i], b[i], c[i]);
+            // LOG(INFO) << "P" << pIdx << " ssb: " << ssb << " -> expect NextNodeIdx: " << ssNextNodeIdx << " reveal " << reveal(ssNextNodeIdx);
+
+            //selection of model
+            sbMatrix next_node = semi_ob_selection_node(pIdx, ss_model_data, ssNextNodeIdx, model, false);
+            i64Matrix plain_ssnode = reveal(next_node);
+            
+            // LOG(INFO) << "P" << pIdx << " real selected node [" << reveal(ssNextNodeIdx) << "] : " << plain_ssnode;
+            
+            //selection of maced model
+            sbMatrix next_mac_node = semi_ob_selection_mac_node(pIdx, ss_mac_model_data, ssNextNodeIdx, model, false);
+            i64Matrix plain_mac_ssnode = reveal(next_mac_node);
+            
+            // LOG(INFO) << "P" << pIdx << " real selected mac node [" << reveal(ssNextNodeIdx) << "] : " << plain_mac_ssnode;
+            
+
+            // i64Matrix plain_ssnode = reveal(next_node);
+            cur_node.setSSData(next_node);
+            cur_mac_node.setSSMACData(next_mac_node);
+            // LOG(INFO) << "P" << pIdx << " real selected node [" << reveal(ssNextNodeIdx) << "] : " << plain_ssnode;
+
+            //sum selected model node
+            // sum_model_data = sum_model_data ^ cur_node.getThreshold() ^ cur_node.getLeft() ^ cur_node.getRight() ^ cur_node.getVIdx() ^ cur_node.getLabel();
+            sum_model_data = sum_model_data ^ poly_mul(rho[i], cur_node.getThreshold() ^ cur_node.getLeft() ^ cur_node.getRight() ^ cur_node.getVIdx() ^ cur_node.getLabel());
+
+            //sum selected mac model node
+            sum_mac_model_data = sum_mac_model_data ^ poly_mul(rho[i], cur_mac_node.getMACThreshold() ^ cur_mac_node.getMACLeft() ^ cur_mac_node.getMACRight() ^ cur_mac_node.getMACVIdx() ^ cur_mac_node.getMACLabel());
+        
+        }
+        //mac checking
+        sum_model_data = sum_model_data ^ gamma;
+        sum_mac_model_data = poly_mul(ss_mac_key, gamma) ^ sum_mac_model_data;
+        int rec = mac_check(pIdx, sum_model_data, sum_mac_model_data, ss_mac_key);
+        // LOG(INFO) << "mac checking result is " << rec;
+
+        if (rec == 0){
+            LOG(INFO) << "Batch mac checking passed! ";
+            return cur_node.getLabel();
+        }else{
+            //should terminate the protocol in real application
+            LOG(INFO) << "Batch mac checking not passed! ";
+            return cur_node.getLabel();   
+        }
+        
     }
 
     /***

@@ -11,8 +11,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/mostree-main.dir/common/tree_feature.cpp.o.d"
   "CMakeFiles/mostree-main.dir/common/tree_read_from_file.cpp.o"
   "CMakeFiles/mostree-main.dir/common/tree_read_from_file.cpp.o.d"
-  "CMakeFiles/mostree-main.dir/main-dtree-scalability.cpp.o"
-  "CMakeFiles/mostree-main.dir/main-dtree-scalability.cpp.o.d"
   "CMakeFiles/mostree-main.dir/main-dtree.cpp.o"
   "CMakeFiles/mostree-main.dir/main-dtree.cpp.o.d"
 )

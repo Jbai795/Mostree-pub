@@ -161,12 +161,12 @@ aby3/CMakeFiles/aby3.dir/clean:
 ss3-dtree/CMakeFiles/mostree-main.dir/all: aby3/CMakeFiles/aby3.dir/all
 	$(MAKE) $(MAKESILENT) -f ss3-dtree/CMakeFiles/mostree-main.dir/build.make ss3-dtree/CMakeFiles/mostree-main.dir/depend
 	$(MAKE) $(MAKESILENT) -f ss3-dtree/CMakeFiles/mostree-main.dir/build.make ss3-dtree/CMakeFiles/mostree-main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles --progress-num=18,19,20,21,22,23,24,25 "Built target mostree-main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles --progress-num=18,19,20,21,22,23,24 "Built target mostree-main"
 .PHONY : ss3-dtree/CMakeFiles/mostree-main.dir/all
 
 # Build rule for subdir invocation for target.
 ss3-dtree/CMakeFiles/mostree-main.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles 23
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles 22
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ss3-dtree/CMakeFiles/mostree-main.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/jbai795/Experiments/mostree-pub/out/build/linux/CMakeFiles 0
 .PHONY : ss3-dtree/CMakeFiles/mostree-main.dir/rule

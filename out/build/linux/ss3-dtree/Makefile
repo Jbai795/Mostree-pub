@@ -253,30 +253,6 @@ common/tree_read_from_file.cpp.s:
 	cd /home/jbai795/Experiments/mostree-pub/out/build/linux && $(MAKE) $(MAKESILENT) -f ss3-dtree/CMakeFiles/mostree-main.dir/build.make ss3-dtree/CMakeFiles/mostree-main.dir/common/tree_read_from_file.cpp.s
 .PHONY : common/tree_read_from_file.cpp.s
 
-main-dtree-scalability.o: main-dtree-scalability.cpp.o
-.PHONY : main-dtree-scalability.o
-
-# target to build an object file
-main-dtree-scalability.cpp.o:
-	cd /home/jbai795/Experiments/mostree-pub/out/build/linux && $(MAKE) $(MAKESILENT) -f ss3-dtree/CMakeFiles/mostree-main.dir/build.make ss3-dtree/CMakeFiles/mostree-main.dir/main-dtree-scalability.cpp.o
-.PHONY : main-dtree-scalability.cpp.o
-
-main-dtree-scalability.i: main-dtree-scalability.cpp.i
-.PHONY : main-dtree-scalability.i
-
-# target to preprocess a source file
-main-dtree-scalability.cpp.i:
-	cd /home/jbai795/Experiments/mostree-pub/out/build/linux && $(MAKE) $(MAKESILENT) -f ss3-dtree/CMakeFiles/mostree-main.dir/build.make ss3-dtree/CMakeFiles/mostree-main.dir/main-dtree-scalability.cpp.i
-.PHONY : main-dtree-scalability.cpp.i
-
-main-dtree-scalability.s: main-dtree-scalability.cpp.s
-.PHONY : main-dtree-scalability.s
-
-# target to generate assembly for a file
-main-dtree-scalability.cpp.s:
-	cd /home/jbai795/Experiments/mostree-pub/out/build/linux && $(MAKE) $(MAKESILENT) -f ss3-dtree/CMakeFiles/mostree-main.dir/build.make ss3-dtree/CMakeFiles/mostree-main.dir/main-dtree-scalability.cpp.s
-.PHONY : main-dtree-scalability.cpp.s
-
 main-dtree.o: main-dtree.cpp.o
 .PHONY : main-dtree.o
 
@@ -325,9 +301,6 @@ help:
 	@echo "... common/tree_read_from_file.o"
 	@echo "... common/tree_read_from_file.i"
 	@echo "... common/tree_read_from_file.s"
-	@echo "... main-dtree-scalability.o"
-	@echo "... main-dtree-scalability.i"
-	@echo "... main-dtree-scalability.s"
 	@echo "... main-dtree.o"
 	@echo "... main-dtree.i"
 	@echo "... main-dtree.s"
