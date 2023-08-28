@@ -14,6 +14,7 @@ using namespace emp;
 typedef struct DPFKEY
 {
     uint32_t depth;
+    uint32_t rdx_share;
     block s;
     bool t;
     block *s_CW;
@@ -23,10 +24,20 @@ typedef struct DPFKEY
 
     DPFKEY(uint32_t bit_len)
     {
-        depth = bit_len;
+        depth = bit_len - 7; // NOTE: log2(128)
         s_CW = new block[depth + 1];
         t_L_CW = new bool[depth];
         t_R_CW = new bool[depth];
+    }
+
+    void set_share(uint32_t share)
+    {
+        rdx_share = share;
+    }
+
+    uint32_t get_share()
+    {
+        return rdx_share;
     }
 
     uint32_t get_depth()
@@ -91,7 +102,7 @@ typedef struct DPFKEY
 
     uint32_t get_buf_size()
     {
-        uint32_t dpf_key_size = sizeof(uint32_t) + sizeof(block) * (depth + 2) + sizeof(bool) * (2 * depth + 1);
+        uint32_t dpf_key_size = 2 * sizeof(uint32_t) + sizeof(block) * (depth + 2) + sizeof(bool) * (2 * depth + 1);
 #ifdef VERIFIABLE_DPF
         dpf_key_size += 2 * sizeof(block);
 #endif
@@ -111,6 +122,8 @@ void serialization(DPFKEY *key, char *buf)
     uint32_t buf_len = key->get_buf_size();
     uint32_t count = 0;
     memcpy(buf + count, &key->depth, sizeof(uint32_t));
+    count += sizeof(uint32_t);
+    memcpy(buf + count, &key->rdx_share, sizeof(uint32_t));
     count += sizeof(uint32_t);
     memcpy(buf + count, &key->s, sizeof(block));
     count += sizeof(block);
@@ -133,6 +146,8 @@ void deserialization(const char *buf, DPFKEY *key)
     // from buf to key
     uint32_t count = 0;
     memcpy(&key->depth, buf + count, sizeof(uint32_t));
+    count += sizeof(uint32_t);
+    memcpy(&key->rdx_share, buf + count, sizeof(uint32_t));
     count += sizeof(uint32_t);
     memcpy(&key->s, buf + count, sizeof(block));
     count += sizeof(block);
@@ -158,7 +173,7 @@ bool get_bit(uint32_t rdx, uint len, uint32_t i)
     return (result == 0) ? false : true;
 }
 
-void gen_dpf_key_pair(const uint32_t rdx, const uint32_t len, const block beta, DPFKEY *key0, DPFKEY *key1)
+void gen_dpf_key_pair(const uint32_t real_rdx, const uint32_t real_len, const block beta, DPFKEY *key0, DPFKEY *key1)
 {
     PRG prg;
     block s0, s1;
@@ -175,7 +190,7 @@ void gen_dpf_key_pair(const uint32_t rdx, const uint32_t len, const block beta, 
 
     TwoKeyPRP *prp = new TwoKeyPRP(zero_block, makeBlock(0, 1));
 
-    for (uint32_t i = 1; i <= len; i++)
+    for (uint32_t i = 1; i <= real_len; i++)
     {
         block children0[2], children1[2];
         prp->node_expand_1to2(children0, s0);
@@ -186,7 +201,7 @@ void gen_dpf_key_pair(const uint32_t rdx, const uint32_t len, const block beta, 
         bool t_L_1 = getLSB(children1[0]);
         bool t_R_1 = getLSB(children1[1]);
 
-        bool alpha = get_bit(rdx, len, i);
+        bool alpha = get_bit(real_rdx, real_len, i);
         block s_CW = children0[1 - alpha] ^ children1[1 - alpha];
 
         bool t_L_CW = t_L_0 ^ t_L_1 ^ alpha ^ true;
@@ -212,17 +227,17 @@ void gen_dpf_key_pair(const uint32_t rdx, const uint32_t len, const block beta, 
         t0 = t_keep_0 ^ (t0 & t_keep_CW);
         t1 = t_keep_1 ^ (t1 & t_keep_CW);
     }
-    delete prp; 
+    
+    delete prp;
 
     block CW = beta ^ s0 ^ s1; // NOTE: This only works for F_{2^k}
-    key0->set_s_CW(len + 1, CW);
-    key1->set_s_CW(len + 1, CW);
-    
+    key0->set_s_CW(real_len + 1, CW);
+    key1->set_s_CW(real_len + 1, CW);
 
 #ifdef VERIFIABLE_DPF
     Hash hash;
     block data[2], digest[2];
-    data[0] = makeBlock(0, rdx);
+    data[0] = makeBlock(0, real_rdx);
     data[1] = s0;                                           // rdx || s0
     hash.hash_once(key0->hash_CW, data, sizeof(block) * 2); // P0's hash
     data[1] = s1;                                           // rdx || s1
@@ -233,6 +248,33 @@ void gen_dpf_key_pair(const uint32_t rdx, const uint32_t len, const block beta, 
     key1->hash_CW[0] = key0->hash_CW[0];
     key1->hash_CW[1] = key0->hash_CW[1];
 #endif
+}
+
+// NOTE: this function returns idx
+uint32_t gen_dpf_key_pair_with_index_share(const uint32_t len, DPFKEY *key0, DPFKEY *key1)
+{
+
+    // gen rdx shares
+    PRG prg;
+    uint32_t rdx, rdx_share0, rdx_share1;
+    prg.random_data(&rdx, sizeof(uint32_t));
+    prg.random_data(&rdx_share0, sizeof(uint32_t));
+    rdx = rdx % (1 << len);
+    rdx_share0 = rdx_share0 % (1 << len);
+    rdx_share1 = rdx_share0 ^ rdx;
+
+    // gen dpf key
+    key0->set_share(rdx_share0);
+    key1->set_share(rdx_share1);
+
+    uint32_t real_rdx = rdx >> 7; // log2(128) = 7
+    block beta = zero_block;
+    set_bit(beta, rdx % 128);
+
+    gen_dpf_key_pair(real_rdx, len - 7, beta, key0, key1);
+
+    // return rdx
+    return rdx;
 }
 
 block dpf_eval(uint32_t party, DPFKEY *key, uint32_t idx, block *hash_out = nullptr)
@@ -263,7 +305,7 @@ block dpf_eval(uint32_t party, DPFKEY *key, uint32_t idx, block *hash_out = null
         s = (bit == true ? s_R : s_L);
         t = (bit == true ? t_R : t_L);
     }
-    delete prp; 
+    delete prp;
 
 #ifdef VERIFIABLE_DPF
     Hash hash;
@@ -366,6 +408,7 @@ void dpf_batch_eval(uint32_t party, DPFKEY *key, block *vec, block *proof = null
             t_vec[2 * i + 1] = t_R;
         }
     }
+    delete prp;
 
 #ifdef VERIFIABLE_DPF
     block *proof_vec = new block[2 * 1 << key->get_depth()];
@@ -381,7 +424,7 @@ void dpf_batch_eval(uint32_t party, DPFKEY *key, block *vec, block *proof = null
         tag_leaf[1] = vec[i];
 
         hash.hash_once(s_digest, tag_leaf, 2 * sizeof(block));
-        proof_vec[2 * i] = (t_vec[i] == true ? s_digest[0] ^ key->hash_CW[0] : s_digest[0]);             // the first half of hash tag for leaf i
+        proof_vec[2 * i] = (t_vec[i] == true ? s_digest[0] ^ key->hash_CW[0] : s_digest[0]);     // the first half of hash tag for leaf i
         proof_vec[2 * i + 1] = (t_vec[i] == true ? s_digest[1] ^ key->hash_CW[1] : s_digest[1]); // the second half of hash tag for leaf i
 #endif
         if (t_vec[i] == true)
@@ -395,7 +438,7 @@ void dpf_batch_eval(uint32_t party, DPFKEY *key, block *vec, block *proof = null
         hash.hash_once(proof, proof_vec, 2 * 1 << key->get_depth());
     delete[] proof_vec;
 #endif
-    delete prp; 
+    
     delete[] t_vec;
 }
 
