@@ -60,6 +60,22 @@ cd bin
 ./mostree-main -travel -p 2  # machine 2
 ```
 
+## Batch FSS generation benchmark
+```
+cd bin
+./dpf_batch_gen 0 [port] [number of DPF instances] [depth of tree] # terminal 0
+./dpf_batch_gen 1 [port] [number of DPF instances] [depth of tree] # terminal 1
+./dpf_batch_gen 2 [port] [number of DPF instances] [depth of tree] # terminal 2
+```
+For example, the decision tree for MINIST dataset is with depth=20 and padded nodes = 8192 = 2^13, then we can run the following:
+
+```
+cd bin
+./dpf_batch_gen 0 12345 20 13 # terminal 0
+./dpf_batch_gen 1 12345 20 13 # terminal 1
+./dpf_batch_gen 2 12345 20 13 # terminal 2
+```
+
 ## Help
 
 Contact Jianli Bai(_jbai795@aucklanduni.ac.nz_), Xiaowu Zhang(_muou55555@gmail.com_) or Xiangfu Song(_bintasong@amail.com_) for any assistance on building or running the library.
