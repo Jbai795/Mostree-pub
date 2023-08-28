@@ -25,7 +25,9 @@ const Decimal Dec(Decimal::D8);
 int DTREE_DEPTH = 3;
 const int PARTY_NUM = 3;
 int NUM_POLY_TRIPLES = 20;
-bool MALICIOUS = 1; // 1 is malicious, others means semi-honest
+
+bool MALICIOUS = 1; // 1 is malicious, 0 means semi-honest
+bool MACSHARE = 0; // 1 means MAC key is generated randomly, 0 means MAC key is selected.
 
 int mostree_bin_3pc(int pIdx, CLP &cmd, Session &chlPrev, Session &chlNext) {
     
@@ -117,32 +119,51 @@ int mostree_bin_3pc(int pIdx, CLP &cmd, Session &chlPrev, Session &chlNext) {
     /*
      * Step 2  Init dtree model/maced model and share model/maced model
      */
-    model.load_model(&tree,nodesMax);
-
-
-    /*
-    share model
-    */
-    // if (pIdx == 0)
-    //     LOG(INFO) << "Plain Model: \n" << model.getPlainModel();
-    sbMatrix ss_model_data = ss3dtree.getShareModelBinData(pIdx, model);
+    // Init for a selected MAC key
+    i64 mac_key = 2;
 
     // mac key
     sb64 ss_mac_key;
+    sbMatrix ss_model_data;
+    sbMatrix ss_mac_model_data;
 
-    if(MALICIOUS == 1){
-        /*
-        get a shared random mac key
-        */
-        ss_mac_key = ss3dtree.getShareRandBinData();
-        // LOG(INFO) <<"************ " << ss_mac_key;
-        // LOG(INFO) <<"************ " << ss3dtree.reveal(ss_mac_key);
-        
-        /*
-        use mac key to encrypt model and share maced model
-        */
-        ss3dtree.getShareMACModelBinData(pIdx, ss_model_data, model.ssMACModel, ss_mac_key);
+    if(MACSHARE == 0){
+        if(MALICIOUS == 1){
+            LOG(INFO) <<"malicious mac key not share";
+            // Init mac related data
+            model.load_mac_model(&tree,nodesMax,mac_key);
+            ss_model_data = ss3dtree.getShareModelBinData(pIdx, model);
+            ss_mac_model_data = ss3dtree.getShareMACModelBinData(pIdx, model);
+            ss_mac_key = ss3dtree.getShareMACKeyBinData(pIdx, mac_key);
+
+        }else{
+            LOG(INFO) <<"semi mac key not share";
+            model.load_model(&tree,nodesMax);
+            ss_model_data = ss3dtree.getShareModelBinData(pIdx, model);
+        } 
+    }else{
+        if(MALICIOUS == 1){
+            LOG(INFO) <<"malicious mac key share";
+            model.load_model(&tree,nodesMax);
+            ss_model_data = ss3dtree.getShareModelBinData(pIdx, model);
+            /*
+            get a shared random mac key
+            */
+            ss_mac_key = ss3dtree.getShareRandBinData();
+            // LOG(INFO) <<"************ " << ss_mac_key;
+            // LOG(INFO) <<"************ " << ss3dtree.reveal(ss_mac_key);
+            
+            /*
+            use mac key to encrypt model and share maced model
+            */
+            ss_mac_model_data = ss3dtree.getShareMACModelBinData(pIdx, model.ssModel, model.ssMACModel, ss_mac_key);
+        }else{
+            LOG(INFO) <<"malicious mac key not share";
+            model.load_model(&tree,nodesMax);
+            ss_model_data = ss3dtree.getShareModelBinData(pIdx, model);
+        }
     }
+
 
     /*
      * Step 3  Init feature and share feature
@@ -181,13 +202,13 @@ int mostree_bin_3pc(int pIdx, CLP &cmd, Session &chlPrev, Session &chlNext) {
         gamma = ss3dtree.getShareRandBinData();
         // LOG(INFO) <<"************ " << gamma;
         // LOG(INFO) <<"************ " << ss3dtree.reveal(gamma);
-        
+
         for(int i = 0; i < DTREE_DEPTH; i++){
             rho[i] = ss3dtree.getShareRandBinData();
             // LOG(INFO) <<"************ " << rho[i];
             // LOG(INFO) <<"************ " << ss3dtree.reveal(rho[i]);
         }
-        
+
         //generate triples for poly_mul
         for(int i = 0; i < DTREE_DEPTH; i++){
             a[i] = ss3dtree.getShareRandBinData();
@@ -195,12 +216,34 @@ int mostree_bin_3pc(int pIdx, CLP &cmd, Session &chlPrev, Session &chlNext) {
             c[i] = ss3dtree.poly_mul(a[i], b[i]);
         }
 
-        //generate triples for and_ss
-        for(int i = 0; i < DTREE_DEPTH*140; i++){
-            as[i] = ss3dtree.getShareRandBinData();
-            bs[i] = ss3dtree.getShareRandBinData();
-            cs[i] = ss3dtree.and_ss(as[i], bs[i]);
-        }
+        // if(modelid < 4 ){
+            //generate triples for and_ss
+            for(int i = 0; i < DTREE_DEPTH*140; i++){
+                as[i] = ss3dtree.getShareRandBinData();
+                bs[i] = ss3dtree.getShareRandBinData();
+                cs[i] = ss3dtree.and_ss(as[i], bs[i]);
+            }
+        // }
+        
+        
+        // generate one triples, test for big trees including diabetes, Boston, MNIST
+        // if(modelid == 4 || modelid == 5 || modelid == 6){
+        //     sb64 at;
+        //     sb64 bt;
+        //     sb64 ct;
+
+        //     at = ss3dtree.getShareRandBinData();
+        //     bt = ss3dtree.getShareRandBinData();
+        //     ct = ss3dtree.and_ss(at, bt);
+        //     //generate triples for and_ss
+        //     for(int i = 0; i < DTREE_DEPTH*140; i++){
+        //         as[i] = at;
+        //         bs[i] = bt;
+        //         cs[i] = ct;
+        //     }
+        // }
+
+
         if(pIdx==0)
             LOG(INFO) << "**********************Offline******************** ";
         auto end_para = std::chrono::steady_clock::now();
@@ -235,7 +278,7 @@ int mostree_bin_3pc(int pIdx, CLP &cmd, Session &chlPrev, Session &chlNext) {
     if(pIdx==0)
         LOG(INFO) << "**********************Online******************** ";
     if(MALICIOUS == 1){
-        ssLabel = ss3dtree.travelTree(pIdx, DTREE_DEPTH, ssRootNode, model, ss_model_data, model.ssMACModel, ssFeatureSchema, ss_mac_key, gamma, rho, a, b, c, as, bs, cs);
+        ssLabel = ss3dtree.travelTree(pIdx, DTREE_DEPTH, ssRootNode, model, ss_model_data, ss_mac_model_data, ssFeatureSchema, ss_mac_key, gamma, rho, a, b, c, as, bs, cs);
     }else{
         ssLabel = ss3dtree.travelTree(pIdx, DTREE_DEPTH, ssRootNode, model, ss_model_data, ssFeatureSchema);
     }

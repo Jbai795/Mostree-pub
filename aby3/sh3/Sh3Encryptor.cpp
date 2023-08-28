@@ -93,6 +93,11 @@ namespace aby3
         return localBinary(dep, val, dest);
     }
 
+    Sh3Task Sh3Encryptor::remoteZeroBinary(Sh3Task dep, sb64 & dest)
+    {
+        return localBinary(dep, 0, dest);
+    }
+
     //part of FSS delta reveal: p0 the first data to p1 the second data
     Sh3Task Sh3Encryptor::CovertP2NBinary(Sh3Task dep, sb64 &sour, sb64 & dest)
     {

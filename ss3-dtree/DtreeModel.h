@@ -443,7 +443,7 @@ namespace mostree {
         void setPlainModel(const i64Matrix &data);
         void setPlainMACModel(const i64Matrix &data);
 
-        // void load_mac_model(DecTree* tree, int nodesMax, int x);
+        void load_mac_model(DecTree* tree, int nodesMax, int x);
         
         u64 rows() const { return plainModel.rows(); }
 

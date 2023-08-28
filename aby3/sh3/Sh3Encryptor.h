@@ -36,6 +36,7 @@ namespace aby3
 
         Sh3Task localBinary(Sh3Task dep, i64 val, sb64& dest);
         Sh3Task remoteBinary(Sh3Task dep, sb64& dest);
+        Sh3Task remoteZeroBinary(Sh3Task dep, sb64& dest);
 
         // Sh3Task CovertP2NBinary(Sh3Task dep, sb64 & ret);
         // Sh3Task CovertN2PBinary(Sh3Task dep, sb64 & ret);

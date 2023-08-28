@@ -122,6 +122,12 @@ namespace mostree {
             return dest;
         }
 
+        sb64 remoteZeroBinary() {
+            sb64 dest;
+            mEnc.remoteZeroBinary(mRt, dest).get();
+            return dest;
+        }
+
         void CovertP2NBinary(sb64 &sour, sb64 &dest) {
             mEnc.CovertP2NBinary(mRt, sour, dest).get();
         }

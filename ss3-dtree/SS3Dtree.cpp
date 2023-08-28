@@ -78,7 +78,7 @@ namespace mostree {
         if (partIdx == 0) {
             ret = localBinary(MAC_KEY);
         } else {
-            ret = remoteBinary();
+            ret = remoteZeroBinary();
         }
         return ret;
     }

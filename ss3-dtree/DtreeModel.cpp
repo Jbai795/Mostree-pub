@@ -25,7 +25,7 @@ namespace mostree {
     }
 
     void DtreeModel::setPlainMACModel(const i64Matrix &data) {
-        // plainMACModel = data;
+        plainMACModel = data;
         // std::cout << "data.rows(): " << data.rows() << "\n";
         // std::cout << "data.cols(): " << data.cols() << "\n";
         ssMACModel.resize(data.rows(), data.cols()*L_BITS);
@@ -108,75 +108,75 @@ namespace mostree {
         setPlainMACModel(model);
     }
 
-    // /*
-    //  * Load real tree(the tree is padded as a complete tree)
-    //  * Use vector
-    //  */
-    // void DtreeModel::load_model(DecTree* tree, int nodesMax, int x) {
-    //     int totalNum = tree->num_dec_nodes + tree->num_of_leaves;
-    //     //if the total nodes number is 2^(k-1)<n<2^k, we pad the tree to be an array with size of nearest 2^k, which saves significant storage
-    //     // int nodesMax = pow(2, ceil(log(totalNum)/log(2)));
-    //     int n = nodesMax*6;
-    //     //u64 *test_model = new u64[n];
-    //     // padded:wine:192
-    //     GF2E alpha = I642POLY(x);
-    //     GF2E temp;
-    //     vector <u64> test_model;
-    //     vector <i64> mac_model;
-    //     for(int i = 0; i < totalNum*6; i=i+6){
-    //         test_model.push_back(i/6);
-    //         temp = I642POLY(i/6);
-    //         mac_model.push_back(POLY2I64(temp));
+    /*
+     * Load real tree(the tree is padded as a complete tree)
+     * Use vector
+     */
+    void DtreeModel::load_mac_model(DecTree* tree, int nodesMax, int x) {
+        int totalNum = tree->num_dec_nodes + tree->num_of_leaves;
+        //if the total nodes number is 2^(k-1)<n<2^k, we pad the tree to be an array with size of nearest 2^k, which saves significant storage
+        // int nodesMax = pow(2, ceil(log(totalNum)/log(2)));
+        int n = nodesMax*6;
+        //u64 *test_model = new u64[n];
+        // padded:wine:192
+        GF2E alpha = I642POLY(x);
+        GF2E temp;
+        vector <u64> test_model;
+        vector <i64> mac_model;
+        for(int i = 0; i < totalNum*6; i=i+6){
+            test_model.push_back(i/6);
+            temp = I642POLY(i/6);
+            mac_model.push_back(POLY2I64(temp));
 
-    //         test_model.push_back(tree->thres[i/6]);
-    //         temp = alpha*I642POLY(tree->thres[i/6]);
-    //         mac_model.push_back(POLY2I64(temp));
+            test_model.push_back(tree->thres[i/6]);
+            temp = alpha*I642POLY(tree->thres[i/6]);
+            mac_model.push_back(POLY2I64(temp));
 
-    //         test_model.push_back(tree->left[i/6]);
-    //         temp = alpha*I642POLY(tree->left[i/6]);
-    //         mac_model.push_back(POLY2I64(temp));
+            test_model.push_back(tree->left[i/6]);
+            temp = alpha*I642POLY(tree->left[i/6]);
+            mac_model.push_back(POLY2I64(temp));
 
-    //         test_model.push_back(tree->right[i/6]);
-    //         temp = alpha*I642POLY(tree->right[i/6]);
-    //         mac_model.push_back(POLY2I64(temp));
+            test_model.push_back(tree->right[i/6]);
+            temp = alpha*I642POLY(tree->right[i/6]);
+            mac_model.push_back(POLY2I64(temp));
 
-    //         test_model.push_back(tree->map[i/6]);
-    //         temp = alpha*I642POLY(tree->map[i/6]);
-    //         mac_model.push_back(POLY2I64(temp));
+            test_model.push_back(tree->map[i/6]);
+            temp = alpha*I642POLY(tree->map[i/6]);
+            mac_model.push_back(POLY2I64(temp));
 
-    //         test_model.push_back(tree->label[i/6]);
-    //         temp = alpha*I642POLY(tree->label[i/6]);
-    //         mac_model.push_back(POLY2I64(temp));
-    //     }
-    //     //pad 0
-    //     for (int i = totalNum*6; i < n; i=i+6){
-    //         test_model.push_back(i/6);
-    //         temp = I642POLY(i/6);
-    //         mac_model.push_back(POLY2I64(temp));
+            test_model.push_back(tree->label[i/6]);
+            temp = alpha*I642POLY(tree->label[i/6]);
+            mac_model.push_back(POLY2I64(temp));
+        }
+        //pad 0
+        for (int i = totalNum*6; i < n; i=i+6){
+            test_model.push_back(i/6);
+            temp = I642POLY(i/6);
+            mac_model.push_back(POLY2I64(temp));
 
-    //         test_model.push_back(0);
-    //         mac_model.push_back(0);
+            test_model.push_back(0);
+            mac_model.push_back(0);
 
-    //         test_model.push_back(0);
-    //         mac_model.push_back(0);
+            test_model.push_back(0);
+            mac_model.push_back(0);
 
-    //         test_model.push_back(0);
-    //         mac_model.push_back(0);
+            test_model.push_back(0);
+            mac_model.push_back(0);
 
-    //         test_model.push_back(0);
-    //         mac_model.push_back(0);
+            test_model.push_back(0);
+            mac_model.push_back(0);
 
-    //         test_model.push_back(0);
-    //         mac_model.push_back(0);
-    //     }
+            test_model.push_back(0);
+            mac_model.push_back(0);
+        }
 
-    //     i64Matrix model(nodesMax, 6);
-    //     std::copy_n(test_model.data(), test_model.size(), model.data());
-    //     setPlainModel(model);
-    //     i64Matrix macmodel(nodesMax, 6);
-    //     std::copy_n(mac_model.data(), mac_model.size(), macmodel.data());
-    //     setPlainMACModel(macmodel);
-    // }
+        i64Matrix model(nodesMax, 6);
+        std::copy_n(test_model.data(), test_model.size(), model.data());
+        setPlainModel(model);
+        i64Matrix macmodel(nodesMax, 6);
+        std::copy_n(mac_model.data(), mac_model.size(), macmodel.data());
+        setPlainMACModel(macmodel);
+    }
 
 
 
