@@ -96,7 +96,7 @@ To see all the command line options, execute the program
 - Standalone
 ```
 cd bin
-./mostree-main -travel`
+./mostree-main -travel
 ```
 - Multi server 
 ```
