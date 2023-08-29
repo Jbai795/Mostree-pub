@@ -141,21 +141,25 @@ delete simulated configuration: (must delete the old one before setting new simu
 `sudo tc qdisc delete dev lo root netem delay 0.04ms rate 1024mbit`
 
 ## Batch FSS generation benchmark
+This part is about running time and communication performance from offline DPF generation and verification. So far, we do not merge DPF into Mostree (Mostree assuems the one-hot vectors are already generated when running online evaluation phase).
+
+You can run batch DPF generation performance as follows.
 
 ```
 cd bin
-./dpf_batch_gen 0 [port] [number of DPF instances] [depth of tree] # terminal 0
-./dpf_batch_gen 1 [port] [number of DPF instances] [depth of tree] # terminal 1
-./dpf_batch_gen 2 [port] [number of DPF instances] [depth of tree] # terminal 2
+./dpf_batch_gen 0 [port] [decision tree depth] [number of tree nodes] # terminal 0
+./dpf_batch_gen 1 [port] [decision tree depth] [number of tree nodes] # terminal 1
+./dpf_batch_gen 2 [port] [decision tree depth] [number of tree nodes] # terminal 2
 ```
-For example, the decision tree for MINIST dataset is with depth=20 and padded nodes = 8192 = 2^13, then we can run the following:
+For example, for the MINIST dataset (depth = 20, #nodes = 4179): 
 
 ```
 cd bin
-./dpf_batch_gen 0 12345 20 13 # terminal 0
-./dpf_batch_gen 1 12345 20 13 # terminal 1
-./dpf_batch_gen 2 12345 20 13 # terminal 2
+./dpf_batch_gen 0 12345 20 4179 # terminal 0
+./dpf_batch_gen 1 12345 20 4179 # terminal 1
+./dpf_batch_gen 2 12345 20 4179 # terminal 2
 ```
+We also privide benchmark file `benchmark_dpf.sh` and `benchmark_dpf_scale.sh`. You can run in the main dictory to check running time and communicaiton overhead for different decision trees.  
 
 ## Disclaimer
 This code is just a proof-of-concept for benchmarking purposes. It has not had any security review, has a number of implementational TODOs, and thus, should not be directly used in any real-world applications.
