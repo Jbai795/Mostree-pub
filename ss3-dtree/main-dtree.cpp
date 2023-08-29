@@ -25,9 +25,10 @@ const Decimal Dec(Decimal::D8);
 int DTREE_DEPTH = 3;
 const int PARTY_NUM = 3;
 
-bool MALICIOUS = 0; // 1 is malicious, 0 means semi-honest
+bool MALICIOUS = 1; // 1 is malicious, 0 means semi-honest
 bool MACSHARE = 0; // 1 means MAC key is generated randomly, 0 means MAC key is selected.
-
+bool SCALABILITY = 1; // 1 means testing for scalability using fake data, 0 means testing real datasets
+//  set modelid = 2 if SCALABILITY = 1 !!!!
 int mostree_bin_3pc(int pIdx, CLP &cmd, Session &chlPrev, Session &chlNext) {
     
     //set trees(7 selections)
@@ -46,36 +47,66 @@ int mostree_bin_3pc(int pIdx, CLP &cmd, Session &chlPrev, Session &chlNext) {
 
 
 	//modify here if testing other trees
-	int modelid = 0;
+	int modelid = 2;
+
+    if(SCALABILITY == 1){
+        if( modelid != 2){
+            cout << "Set modelid = 2 if you set SCALABILITY = 1 !!!" << endl;
+            return 0;
+        }    
+    }
+
     if(modelid > 6 || modelid < 0){
         LOG(INFO) << "* Please give a correct model id: [0, 6]";
         return 0;
     }
-	if(MALICIOUS == 1){
-        cout << "Testing..." << filename[modelid] << " in Malicious model" << endl;
-    }else{
-        cout << "Testing..." << filename[modelid] << " in Semi-honest model" << endl;
-    }
 
+    if(SCALABILITY == 1){
+        // performing scalability test, we use digits as the base tree. 
+        if(MALICIOUS == 1){
+        cout << "Performing scalability test in Malicious model" << endl;
+        }else{
+        cout << "Performing scalability test in Semi-honest model" << endl;
+        }
+    }else{
+        if(MALICIOUS == 1){
+        cout << "Testing..." << filename[modelid] << " in Malicious model" << endl;
+        }else{
+        cout << "Testing..." << filename[modelid] << " in Semi-honest model" << endl;
+        }
+    }
+	
 	//use to hide the real depth of tree
 	uint32_t depthHide = 0;//not use
 
 	uint64_t featureDim[7] = {7, 12, 47, 57, 10, 13, 784};
 
-	/*tree nodes and depth(n,d)
-	{wine, 7,5}
-	{breast:12,7}
-	{digits: 47,15}
-	{spambase:57,17}
-	{diabetes: 10, 28}
-	{boston:13, 30}
-	{mnist:784, 20}
+	/*tree nodes, feature numbers and depth(m,n,d)
+	{wine, 23,7,5}
+	{breast:43,12,7}
+	{digits: 337,47,15}
+	{spambase:171,57,17}
+	{diabetes: 787,10, 28}
+	{boston:851,13, 30}
+	{mnist:4179,784, 20}
 	*/
+
+    // change here for scalablity tree depth ranges from 20 to 50
+    int scal_depth = 50;
 
     //read selected tree from a file
     DecTree tree;
     tree.read_from_file_pack(dectree_rootdir + filename[modelid]);
-    int totalNum = tree.num_dec_nodes + tree.num_of_leaves;
+    int totalNum;
+    if(SCALABILITY == 1){
+        totalNum = 25 * scal_depth;
+        DTREE_DEPTH = scal_depth;
+        if(pIdx==0)
+            LOG(INFO) << "Tested Tree Depth is " << scal_depth;
+    }else{
+        totalNum = tree.num_dec_nodes + tree.num_of_leaves;
+        DTREE_DEPTH = tree.depth + depthHide;
+    }
     //uint64_t featureMax = pow(2, ceil(log(featureDim) / log(2)));
 
 
@@ -91,7 +122,7 @@ int mostree_bin_3pc(int pIdx, CLP &cmd, Session &chlPrev, Session &chlNext) {
     const Decimal D = D0;
     const u64 FEATURE_NUM = featureDim[modelid];
     const u64 ROOT_NODE = 0;
-    DTREE_DEPTH = tree.depth + depthHide;
+
 
     /*
     output trees' information
@@ -136,7 +167,7 @@ int mostree_bin_3pc(int pIdx, CLP &cmd, Session &chlPrev, Session &chlNext) {
             ss_mac_key = ss3dtree.getShareMACKeyBinData(pIdx, mac_key);
 
         }else{
-            LOG(INFO) <<"semi mac key not share";
+            LOG(INFO) <<"semi no mac key";
             model.load_model(&tree,nodesMax);
             ss_model_data = ss3dtree.getShareModelBinData(pIdx, model);
         } 
@@ -157,7 +188,7 @@ int mostree_bin_3pc(int pIdx, CLP &cmd, Session &chlPrev, Session &chlNext) {
             */
             ss_mac_model_data = ss3dtree.getShareMACModelBinData(pIdx, model.ssModel, model.ssMACModel, ss_mac_key);
         }else{
-            LOG(INFO) <<"malicious mac key not share";
+            LOG(INFO) <<"semi no mac key";
             model.load_model(&tree,nodesMax);
             ss_model_data = ss3dtree.getShareModelBinData(pIdx, model);
         }
@@ -292,7 +323,7 @@ int mostree_bin_3pc(int pIdx, CLP &cmd, Session &chlPrev, Session &chlNext) {
 
     double bytes = ss3dtree.mNext.getTotalDataSent() + ss3dtree.mPrev.getTotalDataSent();
     if(pIdx==0)
-        LOG(INFO) << "Party " << pIdx << " communication: " << bytes << " bytes";
+        LOG(INFO) << "Party " << pIdx << " online communication is : " << bytes << " bytes";
     // std::stringstream ss;
     // ss << "Party " << pIdx << " communication: " << bytes << " bytes";
     // LOG(INFO) << ss.str() << std::flush;

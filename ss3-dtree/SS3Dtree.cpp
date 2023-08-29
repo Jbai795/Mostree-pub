@@ -784,31 +784,31 @@ namespace mostree {
             if (pIdx == 0)
                 LOG(INFO) << "****** Travel Decision Tree Layer: [ " << i << " ] ******";
             sb64 ssSelectedIdx = cur_node.getVIdx();
-            LOG(INFO) << "P" << pIdx << " selected feature V index: " << reveal(ssSelectedIdx);
+            // LOG(INFO) << "P" << pIdx << " selected feature V index: " << reveal(ssSelectedIdx);
             sb64 ssY = semi_ob_selection_feature(pIdx, ssFeatureSchema, ssSelectedIdx, model, false);
             
-            LOG(INFO) << "P" << pIdx << " selected feature V index: " << reveal(ssSelectedIdx) << " -> X: " << reveal(ssY);
+            // LOG(INFO) << "P" << pIdx << " selected feature V index: " << reveal(ssSelectedIdx) << " -> X: " << reveal(ssY);
 
             sb64 threshold = cur_node.getThreshold();
             sb64 left = cur_node.getLeft();
             sb64 right = cur_node.getRight();
 
-            LOG(INFO) << "P" << pIdx << " right: " << right << " reveal " << reveal(right);
-            LOG(INFO) << "P" << pIdx << " left: " << left << " reveal " << reveal(left);
+            // LOG(INFO) << "P" << pIdx << " right: " << right << " reveal " << reveal(right);
+            // LOG(INFO) << "P" << pIdx << " left: " << left << " reveal " << reveal(left);
             // 0: right child;  1: left child
-            LOG(INFO) << "P" << pIdx << " ssY: " << ssY;
-            LOG(INFO) << "P" << pIdx << " threshold: " << threshold;
-            LOG(INFO) << "P" << pIdx << " compare: (" << reveal(ssY) << ", " << reveal(threshold) << ")";
+            // LOG(INFO) << "P" << pIdx << " ssY: " << ssY;
+            // LOG(INFO) << "P" << pIdx << " threshold: " << threshold;
+            // LOG(INFO) << "P" << pIdx << " compare: (" << reveal(ssY) << ", " << reveal(threshold) << ")";
             sb64 ssb = compare_threshold(pIdx, ssY, threshold);
-            LOG(INFO) << "P" << pIdx << " compare_result: " << ssb << " -> X: " << reveal(ssb);
+            // LOG(INFO) << "P" << pIdx << " compare_result: " << ssb << " -> X: " << reveal(ssb);
             sb64 ssNextNodeIdx = getChildNodeIndex(ssb, left, right);
-            LOG(INFO) << "P" << pIdx << " ssb: " << ssb << " -> expect NextNodeIdx: " << ssNextNodeIdx << " reveal " << reveal(ssNextNodeIdx);
+            // LOG(INFO) << "P" << pIdx << " ssb: " << ssb << " -> expect NextNodeIdx: " << ssNextNodeIdx << " reveal " << reveal(ssNextNodeIdx);
 
             //selection of model
             sbMatrix next_node = semi_ob_selection_node(pIdx, ss_model_data, ssNextNodeIdx, model, false);
             i64Matrix plain_ssnode = reveal(next_node);
             
-                LOG(INFO) << "P" << pIdx << " real selected node [" << reveal(ssNextNodeIdx) << "] : " << plain_ssnode;
+            // LOG(INFO) << "P" << pIdx << " real selected node [" << reveal(ssNextNodeIdx) << "] : " << plain_ssnode;
 
 
             // i64Matrix plain_ssnode = reveal(next_node);
