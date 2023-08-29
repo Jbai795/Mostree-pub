@@ -248,30 +248,13 @@ int mostree_bin_3pc(int pIdx, CLP &cmd, Session &chlPrev, Session &chlNext) {
 
         // if(modelid < 4 ){
             //generate triples for and_ss
-            for(int i = 0; i < DTREE_DEPTH*140; i++){
-                as[i] = ss3dtree.getShareRandBinData();
-                bs[i] = ss3dtree.getShareRandBinData();
-                cs[i] = ss3dtree.and_ss(as[i], bs[i]);
-            }
+        for(int i = 0; i < DTREE_DEPTH*140; i++){
+            as[i] = ss3dtree.getShareRandBinData();
+            bs[i] = ss3dtree.getShareRandBinData();
+            cs[i] = ss3dtree.and_ss(as[i], bs[i]);
+        }
         // }
         
-        
-        // generate one triples, test for big trees including diabetes, Boston, MNIST
-        // if(modelid == 4 || modelid == 5 || modelid == 6){
-        //     sb64 at;
-        //     sb64 bt;
-        //     sb64 ct;
-
-        //     at = ss3dtree.getShareRandBinData();
-        //     bt = ss3dtree.getShareRandBinData();
-        //     ct = ss3dtree.and_ss(at, bt);
-        //     //generate triples for and_ss
-        //     for(int i = 0; i < DTREE_DEPTH*140; i++){
-        //         as[i] = at;
-        //         bs[i] = bt;
-        //         cs[i] = ct;
-        //     }
-        // }
 
 
         if(pIdx==0)

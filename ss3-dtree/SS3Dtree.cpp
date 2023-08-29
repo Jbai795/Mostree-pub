@@ -830,8 +830,8 @@ namespace mostree {
         sb64 sum_mac_model_data({0, 0});
 
         for (int i = 0; i < depth; ++i) {
-            // if (pIdx == 0)
-            //     LOG(INFO) << "****** Travel Decision Tree Layer: [ " << i << " ] ******";
+            if (pIdx == 0)
+                LOG(INFO) << "****** Travel Decision Tree Layer: [ " << i << " ] ******";
             sb64 ssSelectedIdx = cur_node.getVIdx();
             // LOG(INFO) << "P" << pIdx << " selected feature V index: " << reveal(ssSelectedIdx);
             sb64 ssY = semi_ob_selection_feature(pIdx, ssFeatureSchema, ssSelectedIdx, model, false);
