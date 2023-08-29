@@ -1,28 +1,8 @@
-#include "dpf_dealer.h"
+#include "ohv_dealer.h"
 // #include "tree-doram/client.h"
 // #include "tree-doram/server.h"
 
 // DO USE & in order to asign new value
-void init_network_dpf(NetIO *&io_pre, NetIO *&io_next, int party, int port)
-{
-    // this is for client
-    if (party == 0)
-    {
-        io_pre = new NetIO(nullptr, port);          // p2 <-> p0 server
-        io_next = new NetIO("127.0.0.1", port + 1); // p0 <-> p1 client
-    }
-    if (party == 1)
-    {
-        io_pre = new NetIO(nullptr, port + 1);      // p0 <-> p1 server
-        io_next = new NetIO("127.0.0.1", port + 2); // p1 <-> p2 client
-    }
-    if (party == 2)
-    {
-        io_next = new NetIO("127.0.0.1", port); // p2 <-> p0 client
-        io_pre = new NetIO(nullptr, port + 2);  // p1 <-> p2 server
-    }
-}
-
 int main(int argc, char **argv)
 {
     /*
@@ -83,30 +63,23 @@ int main(int argc, char **argv)
     init_network(io_pre, io_next, party, port);
     // std::cout << "io setted up" << std::endl;
 
-    uint32_t depth = atoi(argv[3]);
+    uint32_t num = atoi(argv[3]);
     uint32_t dimension = atoi(argv[4]);
-    if (dimension <= 128)
+    if (dimension > 128)
     {
-        std::cout << "NOTE: dimension > 128" << std::endl;
+        std::cout << "NOTE: please use DPF benchmark" << std::endl;
         return 0;
     }
 
     uint32_t bits = ceil(log2(dimension));
-
-    // run batch DPF generation 
-    DPFPlayer player(party, depth, bits, io_pre, io_next);
+    
+    OHVlayer player(party, num, dimension, io_pre, io_next);
 
     auto t1 = clock_start();
-    bool valid = player.DPF_gen_send_recv();
+    player.OHV_gen_send_recv();
     if(party == 0){
-        std::cout<< "[" << depth << ", " << bits << "] " << "Times: " << time_from(t1)<< " microseconds"<<std::endl;
-        std::cout<< "[" << depth << ", " << bits << "] " << "Sent data: " << (io_next->counter + io_pre->counter) << " bytes" <<std::endl;
-    }
-
-    if (!valid)
-    {
-        std::cout << "Check fails!" << std::endl;
-        return 0;
+        std::cout<< "[" << num << ", " << dimension << "] " << "Times: " << time_from(t1)<< " microseconds"<<std::endl;
+        std::cout<< "[" << num << ", " << dimension << "] " << "Sent data: " << (io_next->counter + io_pre->counter) << " bytes" <<std::endl;
     }
 
     delete io_pre;

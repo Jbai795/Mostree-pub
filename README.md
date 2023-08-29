@@ -6,7 +6,7 @@ This library provides the semi-honest and malicious implementation for Mostree (
 
 The repo includes the following application:
 - [x] Decision tree (inference)
-- [x] FSS keys generation and verification
+- [x] DPF keys generation and verification
 - [x] Oblivious selection protocol (Semi-honest/Malicious)
 - [x] Multiplication operation on GF2E (Semi-honest/Malicious)
 - [x] MUX (Semi-honest/Malicious)
@@ -140,10 +140,13 @@ delete simulated configuration: (must delete the old one before setting new simu
 
 `sudo tc qdisc delete dev lo root netem delay 0.04ms rate 1024mbit`
 
-## Batch FSS generation benchmark
-This part is about running time and communication performance from offline DPF generation and verification. So far, we do not merge DPF into Mostree (Mostree assuems the one-hot vectors are already generated when running online evaluation phase).
+## Offline correlation generation benchmark 
+This part is about running time and communication performance from offline correlation generation for oblivious selection. We note that DPF-based preprocessing is suitable for oblivious selection over vectors of large dimensions. Therefore, the dealer uses DPF-based preproprocessing for `digits`, `spambase`, `diabetes`, `Boston`, and `MINIST`. For `wine` and `breast`. For small models `wine` and `breast`, the dealer simply distributes random one-hot vectors in the offline phase.
 
-You can run batch DPF generation performance as follows.
+Note: Currently we have not merged this preprocessing into Mostree (Mostree assumes the one-hot vectors are already generated when running the online evaluation phase). Nevertheless, this part is sufficient for benchmark purposes.
+
+#### 1. DPF-based preprocessing
+One can run batch DPF generation performance as follows.
 
 ```
 cd bin
@@ -151,7 +154,7 @@ cd bin
 ./dpf_batch_gen 1 [port] [decision tree depth] [number of tree nodes] # terminal 1
 ./dpf_batch_gen 2 [port] [decision tree depth] [number of tree nodes] # terminal 2
 ```
-For example, for the MINIST dataset (depth = 20, #nodes = 4179): 
+For example, for the `MINIST` dataset with a tree depth of 20 and 4179 nodes:  
 
 ```
 cd bin
@@ -159,7 +162,28 @@ cd bin
 ./dpf_batch_gen 1 12345 20 4179 # terminal 1
 ./dpf_batch_gen 2 12345 20 4179 # terminal 2
 ```
-We also privide benchmark file `benchmark_dpf.sh` and `benchmark_dpf_scale.sh`. You can run in the main dictory to check running time and communicaiton overhead for different decision trees.  
+We also provide benchmark files `benchmark_dpf.sh` and `benchmark_dpf_scale.sh`. One can run in the main directory to check the running time and communication overhead for different decision trees. 
+
+#### 2. One-Hot-Vector-based preprocessing
+
+One can run One-Hot-Vector-based preprocessing as follows.
+
+```
+cd bin
+./dpf_batch_gen 0 [port] [decision tree depth] [number of tree nodes] # terminal 0
+./dpf_batch_gen 1 [port] [decision tree depth] [number of tree nodes] # terminal 1
+./dpf_batch_gen 2 [port] [decision tree depth] [number of tree nodes] # terminal 2
+```
+For example, for the `breast` dataset with tree depth of 7 and 43 nodes:  
+
+```
+cd bin
+./dpf_batch_gen 0 12345 7 43 # terminal 0
+./dpf_batch_gen 1 12345 7 43 # terminal 1
+./dpf_batch_gen 2 12345 7 43 # terminal 2
+```
+We also provide benchmark file `benchmark_ohv.sh`. One can run in the main directory to check the running time and communication overhead for `wine` and `breast`. 
+
 
 ## Disclaimer
 This code is just a proof-of-concept for benchmarking purposes. It has not had any security review, has a number of implementational TODOs, and thus, should not be directly used in any real-world applications.
