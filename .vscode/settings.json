@@ -1,5 +1,8 @@
 {
     "files.associations": {
+        "*.oc": "c",
+        "*.oh": "c",
+        "*.mpc": "python",
         "cmath": "cpp",
         "cctype": "cpp",
         "clocale": "cpp",
@@ -66,6 +69,17 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "bit": "cpp",
-        "*.ipp": "cpp"
+        "*.ipp": "cpp",
+        "strstream": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "forward_list": "cpp",
+        "hash_map": "cpp",
+        "numbers": "cpp",
+        "ranges": "cpp",
+        "semaphore": "cpp",
+        "stop_token": "cpp",
+        "cfenv": "cpp",
+        "valarray": "cpp"
     }
 }

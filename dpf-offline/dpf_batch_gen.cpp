@@ -81,23 +81,27 @@ int main(int argc, char **argv)
     parse_party_and_port(argv, &party, &port);
     NetIO *io_pre, *io_next;
     init_network_dpf(io_pre, io_next, party, port);
-    std::cout << "io setted up" << std::endl;
+    // std::cout << "io setted up" << std::endl;
 
-    uint32_t num = atoi(argv[3]);
-    uint32_t bits = atoi(argv[4]);
-    if (bits <= 7)
+    uint32_t depth = atoi(argv[3]);
+    uint32_t dimension = atoi(argv[4]);
+    if (dimension <= 128)
     {
-        std::cout << "NOTE: bits > 7" << std::endl;
+        std::cout << "NOTE: dimension > 128" << std::endl;
         return 0;
     }
 
+    uint32_t bits = ceil(log2(dimension+1));
+
     // run batch DPF generation 
-    DPFPlayer player(party, num, bits, io_pre, io_next);
+    DPFPlayer player(party, depth, bits, io_pre, io_next);
 
     auto t1 = clock_start();
     bool valid = player.DPF_gen_send_recv();
-    std::cout<< "Times: " << time_from(t1)<< " microseconds"<<std::endl;
-    std::cout<< "Sent data: " << io_next->counter + io_pre->counter << " bytes" <<std::endl;
+    if(party == 0){
+        std::cout<< "[" << depth << ", " << bits << "] " << "Times: " << time_from(t1)<< " microseconds"<<std::endl;
+        std::cout<< "[" << depth << ", " << bits << "] " << "Sent data: " << (io_next->counter + io_pre->counter) << " bytes" <<std::endl;
+    }
 
     if (!valid)
     {
@@ -108,7 +112,7 @@ int main(int argc, char **argv)
     delete io_pre;
     delete io_next;
 
-    std::cout << "ALL GOD :)" << std::endl;
+    // std::cout << "ALL GOD :)" << std::endl;
 
     return 0;
 }
