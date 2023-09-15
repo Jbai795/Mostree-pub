@@ -53,6 +53,7 @@ make install
 ```
 wget https://boostorg.jfrog.io/artifactory/main/release/1.75.0/source/boost_1_75_0.tar.bz2
 tar -xvf boost_1_75_0.tar.bz2
+cd boost_1_75_0
 ./bootstrap.sh --prefix=/usr/
 ./b2 install
 ```
@@ -61,8 +62,8 @@ tar -xvf boost_1_75_0.tar.bz2
 ```
 wget https://libntl.org/ntl-11.5.1.tar.gz
 gunzip ntl-11.5.1.tar.gz
-tar xf ntl-11.5.1.tar.gz 
-cd ntl-xxx/src
+tar xf ntl-11.5.1.tar
+cd ntl-11.5.1/src
 ./configure 
 make
 make install
@@ -74,6 +75,12 @@ git clone https://github.com/ladnir/aby3.git
 cd aby3 
 python3 build.py --setup 
 python3 build.py 
+```
+
+- [emp-toolkit](https://github.com/emp-toolkit/emp-tool): this is requried for DPF processing
+```
+wget https://raw.githubusercontent.com/emp-toolkit/emp-readme/master/scripts/install.py
+python install.py --deps --tool
 ```
 
 <!-- ### Step 1
