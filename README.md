@@ -105,15 +105,16 @@ make mostree-main
 - Build use a short one -->
 
 ```
+git clone https://github.com/Jbai795/Mostree-pub
 cd Mostree-pub
 python3 build.py
 ```
 
 *Run*
 
-NOTE: Run any program within the diectory `./out/build/linux/bin/` under the main directory `Mostree-pub/`, otherwise you will encounter open errors.
+NOTE: Run programs within the diectory `./out/build/linux/bin/` in the main directory `Mostree-pub/`, otherwise you will encounter open errors.
 
-- Standalone
+- Standalone: log benchmark info in one terminal
 ```
 cd ./out/build/linux/bin
 ./mostree-main -travel
@@ -127,11 +128,9 @@ cd ./out/build/linux/bin
 ```
 
 ## Configuration
-One can check benchmark performance of mostree over different datasets and settings. To configure mostree concretely, you need to modify configuration in `Mostree-pub/ss3-tree/main-dtree.cpp`.
+One can check benchmark performance of mostree over different datasets and settings. To configure mostree concretely, modify configuration in `Mostree-pub/ss3-tree/main-dtree.cpp`.
 
-TODO: add detailed configuration. 
-
-
+#### 1. Setting decision trees
 The arrary `filename` shows seven trees.   
 ```c++
 const char *filename[7] = {
@@ -144,16 +143,30 @@ const char *filename[7] = {
     "mnist"
 };
 ```
-
-To benchmarn mostree over different tress, you can configure `modelid` at line 50. For example, if you want to run mostree over `boston`, set
+To benchmarn mostree over different tress, configure `modelid` at line 50. For example, if one want to run mostree over `digits`, set
 ```c++ 
 //modify here if testing other trees
 int modelid = 2;
 ```
 
+#### 2. Semi-honest security vs. malicious security
+Our implementation supports both semi-honest and malicious security. To evaluate malicious security, set `bool MALICIOUS = 1` at line 28. If one set `bool MALICIOUS = 0`, then Mostree will run the code with semi-honest security. 
+
+#### 3. Test scalability of Mostree
+Besiding evaluating Mostree over real datasets, one can also check scalability of Mostree using fake datasets. One can set `SCALABILITY` at line 30. In particular, setting `SCALABILITY=0` will use the real UCI dataset and setting `SCALABILITY=1` will use the fake datasets to test scalability of Mostree. 
+```c++
+bool SCALABILITY = 1; // 1 means testing for scalability using fake data, 0 means testing real datasets
+//  set modelid if SCALABILITY = 1
+```
+
+#### 4. Summary
+One can set `MALICIOUS`, `SCALABILITY` and `modelid` to test Mostree's performance under different settings. For example, if one want to check performance of Mostree for `minist` with malicious security, then just set `MALICIOUS=1`, `SCALABILITY=0`, and `modelid=6`.  
+If one want to check scalibility of mostree in the semi-honest setting, then just set `MALICIOUS=0`, `SCALABILITY=1`; in this case `modelid` doesn't function. 
 
 
 ## Network Settings
+
+To text mostree under different network setting, we use the following `tc` commands to simulate different network settings.  
 
 LAN, RTT:0.1ms, 1Gbps
 
