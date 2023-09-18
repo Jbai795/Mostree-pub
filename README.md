@@ -25,6 +25,7 @@ This project is has been tested on Ubuntu 20.04. The dependencies are:
  * [function2](https://github.com/Naios/function2)
  * [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page)
  * [NTL](https://github.com/libntl/ntl) ( _Polynomial_ )
+ * [emp-tool](https://github.com/emp-toolkit/emp-tool) (for offline preprocessing benchmark)
  * [aby3](https://github.com/ladnir/aby3)  [ _options_ ]
  * [backward](https://github.com/bombela/backward-cpp)  [ _options_ ]
  * gcc 9.4.0
@@ -77,7 +78,7 @@ python3 build.py --setup
 python3 build.py 
 ```
 
-- [emp-toolkit](https://github.com/emp-toolkit/emp-tool): this is requried for DPF processing
+- [emp-toolkit](https://github.com/emp-toolkit/emp-tool) (for offline DPF preprocessing)
 ```
 wget https://raw.githubusercontent.com/emp-toolkit/emp-readme/master/scripts/install.py
 python install.py --deps --tool
@@ -90,10 +91,10 @@ python install.py --deps --tool
 
 *Build*
 
-- In short, this will build the project
+<!-- - In short, this will build the project
 
 ```
-git clone https://github.com/Jbai795/PDTE-Mostree.git
+git clone https://github.com/Jbai795/Mostree-pub
 mkdir bin
 cd bin/
 cmake -DCMAKE_BUILD_TYPE=Release ..
@@ -101,29 +102,56 @@ cd ../bin
 make mostree-main
 ```
 
-- Build use a short one
+- Build use a short one -->
 
 ```
 cd Mostree-pub
-python build.py
+python3 build.py
 ```
 
 *Run*
 
-To see all the command line options, execute the program 
+NOTE: Run any program within the diectory `./out/build/linux/bin/` under the main directory `Mostree-pub/`, otherwise you will encounter open errors.
 
 - Standalone
 ```
-cd bin
+cd ./out/build/linux/bin
 ./mostree-main -travel
 ```
-- Multi server 
+- Multi terminals 
 ```
-cd bin
-./mostree-main -travel -p 0  # machine 0
-./mostree-main -travel -p 1  # machine 1
-./mostree-main -travel -p 2  # machine 2
+cd ./out/build/linux/bin
+./mostree-main -travel -p 0  # terminal 0
+./mostree-main -travel -p 1  # terminal 1
+./mostree-main -travel -p 2  # terminal 2
 ```
+
+## Configuration
+One can check benchmark performance of mostree over different datasets and settings. To configure mostree concretely, you need to modify configuration in `Mostree-pub/ss3-tree/main-dtree.cpp`.
+
+TODO: add detailed configuration. 
+
+
+The arrary `filename` shows seven trees.   
+```c++
+const char *filename[7] = {
+    "wine",
+    "breast",
+    "digits",
+    "spambase",
+    "diabetes",
+    "boston",
+    "mnist"
+};
+```
+
+To benchmarn mostree over different tress, you can configure `modelid` at line 50. For example, if you want to run mostree over `boston`, set
+```c++ 
+//modify here if testing other trees
+int modelid = 2;
+```
+
+
 
 ## Network Settings
 
@@ -148,15 +176,14 @@ delete simulated configuration: (must delete the old one before setting new simu
 `sudo tc qdisc delete dev lo root netem delay 0.04ms rate 1024mbit`
 
 ## Offline correlation generation benchmark 
-This part is about running time and communication performance from offline correlation generation for oblivious selection. We note that DPF-based preprocessing is suitable for oblivious selection over vectors of large dimensions. Therefore, the dealer uses DPF-based preproprocessing for `digits`, `spambase`, `diabetes`, `Boston`, and `MINIST`. For `wine` and `breast`. For small models `wine` and `breast`, the dealer simply distributes random one-hot vectors in the offline phase.
+This part is about running time and communication performance from offline correlation generation for oblivious selection. We note that DPF-based preprocessing is suitable for oblivious selection over vectors of large dimension. Therefore, the dealer uses DPF-based preproprocessing for `digits`, `spambase`, `diabetes`, `Boston`, and `MINIST`. For small models `wine` and `breast`, the dealer simply distributes random one-hot vectors in the offline phase.
 
-Note: Currently we have not merged this preprocessing into Mostree (Mostree assumes the one-hot vectors are already generated when running the online evaluation phase). Nevertheless, this part is sufficient for benchmark purposes.
+NOTE: Currently we have not merged this preprocessing into Mostree (Mostree assumes the one-hot vectors are already generated when running the online evaluation phase). Nevertheless, this part is sufficient for benchmark purposes.
 
 #### 1. DPF-based preprocessing
-One can run batch DPF generation performance as follows.
-
+One can run batch DPF generation performance as follows. 
 ```
-cd bin
+cd ./out/build/linux/bin
 ./dpf_batch_gen 0 [port] [decision tree depth] [number of tree nodes] # terminal 0
 ./dpf_batch_gen 1 [port] [decision tree depth] [number of tree nodes] # terminal 1
 ./dpf_batch_gen 2 [port] [decision tree depth] [number of tree nodes] # terminal 2
@@ -164,7 +191,7 @@ cd bin
 For example, for the `MINIST` dataset with a tree depth of 20 and 4179 nodes:  
 
 ```
-cd bin
+cd ./out/build/linux/bin 
 ./dpf_batch_gen 0 12345 20 4179 # terminal 0
 ./dpf_batch_gen 1 12345 20 4179 # terminal 1
 ./dpf_batch_gen 2 12345 20 4179 # terminal 2
@@ -176,7 +203,7 @@ We also provide benchmark files `benchmark_dpf.sh` and `benchmark_dpf_scale.sh`.
 One can run One-Hot-Vector-based preprocessing as follows.
 
 ```
-cd bin
+cd ./out/build/linux/bin
 ./dpf_batch_gen 0 [port] [decision tree depth] [number of tree nodes] # terminal 0
 ./dpf_batch_gen 1 [port] [decision tree depth] [number of tree nodes] # terminal 1
 ./dpf_batch_gen 2 [port] [decision tree depth] [number of tree nodes] # terminal 2
@@ -184,13 +211,12 @@ cd bin
 For example, for the `breast` dataset with tree depth of 7 and 43 nodes:  
 
 ```
-cd bin
+cd ./out/build/linux/bin
 ./dpf_batch_gen 0 12345 7 43 # terminal 0
 ./dpf_batch_gen 1 12345 7 43 # terminal 1
 ./dpf_batch_gen 2 12345 7 43 # terminal 2
 ```
 We also provide benchmark file `benchmark_ohv.sh`. One can run in the main directory to check the running time and communication overhead for `wine` and `breast`. 
-
 
 ## Disclaimer
 This code is just a proof-of-concept for benchmarking purposes. It has not had any security review, has a number of implementational TODOs, and thus, should not be directly used in any real-world applications.
