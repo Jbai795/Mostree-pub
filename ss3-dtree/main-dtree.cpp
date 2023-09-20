@@ -25,9 +25,9 @@ const Decimal Dec(Decimal::D8);
 int DTREE_DEPTH = 3;
 const int PARTY_NUM = 3;
 
-bool MALICIOUS = 1; // 1 is malicious, 0 means semi-honest
+bool MALICIOUS = 0; // 1 is malicious, 0 means semi-honest
 bool MACSHARE = 0; // 1 means MAC key is generated randomly, 0 means MAC key is selected.
-bool SCALABILITY = 1; // 1 means testing for scalability using fake data, 0 means testing real datasets
+bool SCALABILITY = 0; // 1 means testing for scalability using fake data, 0 means testing real datasets
 //  set modelid = 2 if SCALABILITY = 1 !!!!
 int mostree_bin_3pc(int pIdx, CLP &cmd, Session &chlPrev, Session &chlNext) {
     
@@ -45,9 +45,21 @@ int mostree_bin_3pc(int pIdx, CLP &cmd, Session &chlPrev, Session &chlNext) {
 	//------------Tree path way(currently, we only use dectree_rootdir)-------------
 	string dectree_rootdir = "../../../../ss3-dtree/UCI_dectrees/";//according to exe's location
 
-
 	//modify here if testing other trees
-	int modelid = 2;
+	int modelid = 2; 
+
+    // `-mid id` will set `modelid=id`
+    // `-s` will set `SCALABILITY = 1`
+    // `-mal` will set `MALICIOUS = 1`
+    if(cmd.isSet("mid") == true) {
+        modelid = cmd.get<int>("mid"); 
+    }
+    if(cmd.isSet("s") == true) {
+        SCALABILITY = 1;
+    }
+    if(cmd.isSet("mal") == true) {
+        MALICIOUS = 1;
+    }
 
     if(SCALABILITY == 1){
         if( modelid != 2){
