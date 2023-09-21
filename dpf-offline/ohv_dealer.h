@@ -1,5 +1,5 @@
-#ifndef DPF_DEALER
-#define DPF_DEALER
+#ifndef OHV_DEALER
+#define OHV_DEALER
 
 #include <emp-tool/emp-tool.h>
 #include <iostream>

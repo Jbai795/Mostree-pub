@@ -115,7 +115,7 @@ typedef struct DPFKEY
         hash_CW[1] = gen_proof[1];
     }
 
-    block get_proof(block *ret_proof)
+    void get_proof(block *ret_proof)
     {
         ret_proof[0] = hash_CW[0];
         ret_proof[1] = hash_CW[1];
@@ -140,7 +140,7 @@ typedef struct DPFKEY
 void serialization(DPFKEY *key, char *buf)
 {
     // from key to buf
-    uint32_t buf_len = key->get_buf_size();
+    // uint32_t buf_len = key->get_buf_size();
     uint32_t count = 0;
     memcpy(buf + count, &key->depth, sizeof(uint32_t));
     count += sizeof(uint32_t);

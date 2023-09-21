@@ -71,7 +71,7 @@ int main(int argc, char **argv)
         return 0;
     }
 
-    uint32_t bits = ceil(log2(dimension));
+    //uint32_t bits = ceil(log2(dimension));
     
     OHVlayer player(party, num, dimension, io_pre, io_next);
 

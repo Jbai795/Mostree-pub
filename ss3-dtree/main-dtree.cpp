@@ -48,16 +48,17 @@ int mostree_bin_3pc(int pIdx, CLP &cmd, Session &chlPrev, Session &chlNext) {
 	//modify here if testing other trees
 	int modelid = 2; 
 
-    // `-mid id` will set `modelid=id`
+    // `-i id` will set `modelid=id`
     // `-s` will set `SCALABILITY = 1`
-    // `-mal` will set `MALICIOUS = 1`
-    if(cmd.isSet("mid") == true) {
-        modelid = cmd.get<int>("mid"); 
+    // `-m` will set `MALICIOUS = 1`
+    if(cmd.isSet("i") == true) {
+        modelid = cmd.get<int>("i"); 
     }
     if(cmd.isSet("s") == true) {
         SCALABILITY = 1;
+        modelid = 2;
     }
-    if(cmd.isSet("mal") == true) {
+    if(cmd.isSet("m") == true) {
         MALICIOUS = 1;
     }
 
@@ -383,7 +384,7 @@ int dtree_main_3pc(oc::CLP &cmd) {
 void help()
 {
     std::cerr << "+ Mostree-3pc Command Help" << std::endl;
-    std::cerr << "01) -travel [-p] [0 1 2]      ~~ to travel decision tree on party [-p n]" << std::endl;
+    std::cerr << "01) -travel [-p] [0 1 2] [-i modelid] [-s] [-m]     ~~ to travel decision tree on party [-p n]" << std::endl;
 }
 
 int main(int argc, char **argv) {

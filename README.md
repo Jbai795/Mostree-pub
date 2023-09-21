@@ -128,7 +128,7 @@ cd ./out/build/linux/bin
 ```
 
 ## Configuration
-One can check benchmark performance of mostree over different datasets and settings. To configure mostree concretely, modify configuration in `Mostree-pub/ss3-tree/main-dtree.cpp`.
+One can check benchmark performance of mostree over different datasets with different settings. 
 
 #### 1. Setting decision trees
 The arrary `filename` shows seven trees.   
@@ -159,14 +159,34 @@ bool SCALABILITY = 1; // 1 means testing for scalability using fake data, 0 mean
 //  set modelid if SCALABILITY = 1
 ```
 
-#### 4. Summary
-One can set `MALICIOUS`, `SCALABILITY` and `modelid` to test Mostree's performance under different settings. For example, if one want to check performance of Mostree for `minist` with malicious security, then just set `MALICIOUS=1`, `SCALABILITY=0`, and `modelid=6`.  
-If one want to check scalibility of mostree in the semi-honest setting, then just set `MALICIOUS=0`, `SCALABILITY=1`; in this case `modelid` doesn't function. 
 
+#### 4. Summary
+One can set `MALICIOUS`, `SCALABILITY` and `modelid` to test Mostree's performance under different settings. For example, if one wants to check performance of Mostree for `minist` with malicious security, then just set `MALICIOUS=1`, `SCALABILITY=0`, and `modelid=6`.  
+If one wants to check scalibility of mostree in the semi-honest setting, then just set `MALICIOUS=0`, `SCALABILITY=1`; in this case `modelid` doesn't function. 
+
+Indeed, all above configuration can be done by using command-line parameter when running `mostree-main` as follows:  
+```bash
+mostree-main -travel -p [pid] -i [mid] -s -m 
+    
+    -p [pid]: specifies the party running the propram;
+    -i [mid]: sets `modelid = mid`. If unset, the default value of `modelid` is 2;
+    -s : sets `SCALABILITY=1`. If unset, the defaule value of `SCALABILITY` is 0;
+    -m : sets `MALICIOUS=1`. If unset, the default values of `MALICIOUS` is 0. 
+```
+
+For example, to benchmark `mostree-main` with `MALICIOUS=1`, `SCALABILITY=0`, and `modelid=6` in one single terminal, just run 
+```bash
+mostree-main -travel -i 6 -m # `-i 6` specify `modelid = 6`, `-m` is set for setting `MALICIOUS=1`, and `-s` is unset for default `SCALABILITY=0`.
+```
+
+To check scalibility of mostree in the semi-honest setting with `MALICIOUS=0`, `SCALABILITY=1`, just run 
+```bash
+mostree-main -travel -s #-m is unset for MALICIOUS=0, and -i is unset since -s is set. 
+``` 
 
 ## Network Settings
 
-To text mostree under different network setting, we use the following `tc` commands to simulate different network settings.  
+To test mostree under different network setting, we use the following `tc` commands to simulate different network settings.  
 
 LAN, RTT:0.1ms, 1Gbps
 
@@ -217,17 +237,17 @@ One can run One-Hot-Vector-based preprocessing as follows.
 
 ```
 cd ./out/build/linux/bin
-./dpf_batch_gen 0 [port] [decision tree depth] [number of tree nodes] # terminal 0
-./dpf_batch_gen 1 [port] [decision tree depth] [number of tree nodes] # terminal 1
-./dpf_batch_gen 2 [port] [decision tree depth] [number of tree nodes] # terminal 2
+./ohv_batch_gen 0 [port] [decision tree depth] [number of tree nodes] # terminal 0
+./ohv_batch_gen 1 [port] [decision tree depth] [number of tree nodes] # terminal 1
+./ohv_batch_gen 2 [port] [decision tree depth] [number of tree nodes] # terminal 2
 ```
 For example, for the `breast` dataset with tree depth of 7 and 43 nodes:  
 
 ```
 cd ./out/build/linux/bin
-./dpf_batch_gen 0 12345 7 43 # terminal 0
-./dpf_batch_gen 1 12345 7 43 # terminal 1
-./dpf_batch_gen 2 12345 7 43 # terminal 2
+./ohv_batch_gen 0 12345 7 43 # terminal 0
+./ohv_batch_gen 1 12345 7 43 # terminal 1
+./ohv_batch_gen 2 12345 7 43 # terminal 2
 ```
 We also provide benchmark file `benchmark_ohv.sh`. One can run in the main directory to check the running time and communication overhead for `wine` and `breast`. 
 

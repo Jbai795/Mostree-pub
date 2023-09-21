@@ -7,6 +7,7 @@ set(NTL_ROOT "${CMAKE_SOURCE_DIR}/deps/build")
 message(STATUS "NTL_ROOT: ${NTL_ROOT}")
 file(GLOB_RECURSE SRCS *.cpp)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+message(STATUS "CMAKE_CURRENT_SOURCE_DIR: " ${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(${TARGET} ${SRCS})
 #add_backward(${TARGET})
 

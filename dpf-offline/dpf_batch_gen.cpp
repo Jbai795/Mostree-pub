@@ -2,27 +2,6 @@
 // #include "tree-doram/client.h"
 // #include "tree-doram/server.h"
 
-// DO USE & in order to asign new value
-void init_network_dpf(NetIO *&io_pre, NetIO *&io_next, int party, int port)
-{
-    // this is for client
-    if (party == 0)
-    {
-        io_pre = new NetIO(nullptr, port);          // p2 <-> p0 server
-        io_next = new NetIO("127.0.0.1", port + 1); // p0 <-> p1 client
-    }
-    if (party == 1)
-    {
-        io_pre = new NetIO(nullptr, port + 1);      // p0 <-> p1 server
-        io_next = new NetIO("127.0.0.1", port + 2); // p1 <-> p2 client
-    }
-    if (party == 2)
-    {
-        io_next = new NetIO("127.0.0.1", port); // p2 <-> p0 client
-        io_pre = new NetIO(nullptr, port + 2);  // p1 <-> p2 server
-    }
-}
-
 int main(int argc, char **argv)
 {
     /*
