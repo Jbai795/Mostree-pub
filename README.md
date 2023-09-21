@@ -78,7 +78,7 @@ python3 build.py --setup
 python3 build.py 
 ```
 
-- [emp-toolkit](https://github.com/emp-toolkit/emp-tool) (for offline DPF preprocessing)
+- [emp-toolkit](https://github.com/emp-toolkit/emp-tool) (for offline preprocessing)
 ```
 wget https://raw.githubusercontent.com/emp-toolkit/emp-readme/master/scripts/install.py
 python install.py --deps --tool
@@ -112,7 +112,7 @@ python3 build.py
 
 *Run*
 
-NOTE: Run programs within the diectory `./out/build/linux/bin/` in the main directory `Mostree-pub/`, otherwise you will encounter open errors.
+**NOTE**: Run programs within diectory `./out/build/linux/bin/` in the main directory `Mostree-pub/`, otherwise you will encounter errors.
 
 - Standalone: log benchmark info in one terminal
 ```
@@ -128,7 +128,7 @@ cd ./out/build/linux/bin
 ```
 
 ## Configuration
-One can check benchmark performance of mostree over different datasets with different settings. 
+We provide benchmark of Mostree over seven decision tree models from [UCI repository](https://archive.ics.uci.edu/ml). Benchmark configurations can be found in `Mostree-pub/ss3-dtree/main-dtree.cpp`. In the following, we first overview involved parameters and then show how to set these parameters from commanline, from which one can test Mostree in different settings.    
 
 #### 1. Setting decision trees
 The arrary `filename` shows seven trees.   
@@ -140,48 +140,47 @@ const char *filename[7] = {
     "spambase",
     "diabetes",
     "boston",
-    "mnist"
+    "MINIST"
 };
 ```
-To benchmarn mostree over different tress, configure `modelid` at line 50. For example, if one want to run mostree over `digits`, set
+To benchmarn Mostree over different tress, configure `modelid` at line 49. For example, if one want to run Mostree over `digits`, set
 ```c++ 
 //modify here if testing other trees
 int modelid = 2;
 ```
 
 #### 2. Semi-honest security vs. malicious security
-Our implementation supports both semi-honest and malicious security. To evaluate malicious security, set `bool MALICIOUS = 1` at line 28. If one set `bool MALICIOUS = 0`, then Mostree will run the code with semi-honest security. 
+Our implementation supports both semi-honest and malicious security. To evaluate Mostree with malicious security, just set `MALICIOUS = 1`. If `MALICIOUS = 0`, then Mostree will run with semi-honest security. 
 
 #### 3. Test scalability of Mostree
-Besiding evaluating Mostree over real datasets, one can also check scalability of Mostree using fake datasets. One can set `SCALABILITY` at line 30. In particular, setting `SCALABILITY=0` will use the real UCI dataset and setting `SCALABILITY=1` will use the fake datasets to test scalability of Mostree. 
+Besides evaluating Mostree over real UCI datasets, one can also check scalability of Mostree using fake datasets. This can be done by setting `SCALABILITY=1`. 
 ```c++
 bool SCALABILITY = 1; // 1 means testing for scalability using fake data, 0 means testing real datasets
-//  set modelid if SCALABILITY = 1
+//  set modelid = 2 if SCALABILITY = 1
 ```
 
 
-#### 4. Summary
-One can set `MALICIOUS`, `SCALABILITY` and `modelid` to test Mostree's performance under different settings. For example, if one wants to check performance of Mostree for `minist` with malicious security, then just set `MALICIOUS=1`, `SCALABILITY=0`, and `modelid=6`.  
-If one wants to check scalibility of mostree in the semi-honest setting, then just set `MALICIOUS=0`, `SCALABILITY=1`; in this case `modelid` doesn't function. 
-
-Indeed, all above configuration can be done by using command-line parameter when running `mostree-main` as follows:  
+#### 4. How to set above parameters from commandline?
+<!-- One can set `MALICIOUS`, `SCALABILITY` and `modelid` to test Mostree's performance under different settings. For example, if one wants to check performance of Mostree for `minist` with malicious security, then just set `MALICIOUS=1`, `SCALABILITY=0`, and `modelid=6`.  
+If one wants to check scalibility of mostree in the semi-honest setting, then just set `MALICIOUS=0`, `SCALABILITY=1`; in this case `modelid` doesn't function.  -->
+All above configuration can be done by using command-line parameters when running `mostree-main` as follows:  
 ```bash
-mostree-main -travel -p [pid] -i [mid] -s -m 
+mostree-main -travel [-p pid -i mid -s -m] 
     
-    -p [pid]: specifies the party running the propram;
-    -i [mid]: sets `modelid = mid`. If unset, the default value of `modelid` is 2;
-    -s : sets `SCALABILITY=1`. If unset, the defaule value of `SCALABILITY` is 0;
-    -m : sets `MALICIOUS=1`. If unset, the default values of `MALICIOUS` is 0. 
+    #-p pid: specifies the party running the propram. If you run mostree-main in one single terminal, do not use. 
+    #-i mid: sets `modelid = mid`. If unset, the default `modelid` value is 2;
+    #-s : run scalability benchmark. 
+    #-m : run with malcious security. If unset, the program will run with semi-honest security. 
 ```
 
-For example, to benchmark `mostree-main` with `MALICIOUS=1`, `SCALABILITY=0`, and `modelid=6` in one single terminal, just run 
+For example, to benchmark `mostree-main` with malicious security over `MINIST` in one terminal, run: 
 ```bash
-mostree-main -travel -i 6 -m # `-i 6` specify `modelid = 6`, `-m` is set for setting `MALICIOUS=1`, and `-s` is unset for default `SCALABILITY=0`.
+mostree-main -travel -i 6 -m # `-i 6` specify `modelid = 6`, `-m` is set for malicious security. 
 ```
 
-To check scalibility of mostree in the semi-honest setting with `MALICIOUS=0`, `SCALABILITY=1`, just run 
+To check scalibility of Mostree with semi-honest security in one terminal, run: 
 ```bash
-mostree-main -travel -s #-m is unset for MALICIOUS=0, and -i is unset since -s is set. 
+mostree-main -travel -s #-m is unset for semi-honest security, -s is set for testing scalibility. 
 ``` 
 
 ## Network Settings
@@ -208,12 +207,131 @@ delete simulated configuration: (must delete the old one before setting new simu
 
 `sudo tc qdisc delete dev lo root netem delay 0.04ms rate 1024mbit`
 
-## Offline correlation generation benchmark 
+## Offline preprocessing benchmark 
 This part is about running time and communication performance from offline correlation generation for oblivious selection. We note that DPF-based preprocessing is suitable for oblivious selection over vectors of large dimension. Therefore, the dealer uses DPF-based preproprocessing for `digits`, `spambase`, `diabetes`, `Boston`, and `MINIST`. For small models `wine` and `breast`, the dealer simply distributes random one-hot vectors in the offline phase.
 
-NOTE: Currently we have not merged this preprocessing into Mostree (Mostree assumes the one-hot vectors are already generated when running the online evaluation phase). Nevertheless, this part is sufficient for benchmark purposes.
+**NOTE**: Currently we have not merged this preprocessing into Mostree (Mostree assumes the one-hot vectors are already generated when running the online evaluation phase). Nevertheless, this part is sufficient for benchmark purposes.
 
-#### 1. DPF-based preprocessing
+
+The commandline parameters for `offline_batch_gen` are as follows:  
+```bash
+offline_batch_gen -offline [-p pid -i mid]  
+    # -p pid: specifies the party running the propram;
+    # -i mid: sets `modelid = mid`. If unset, the default value of `modelid` is 2;
+```
+
+One can run `offline_batch_gen`either in standalone or multi-terminal settins: 
+
+- Standalone: offline preprocessing for `MINIST` in one terminal
+```bash
+cd ./out/build/linux/bin
+./offline_batch_gen -offline -i 5 # setting `-i 5`` corresponses to runing `Boston` tree.
+```
+
+- Multi terminals: offline preprocessing for `MINIST` in multi terminals
+```
+cd ./out/build/linux/bin
+./offline_batch_gen -offline -p 0 -i 5  # terminal 0
+./offline_batch_gen -offline -p 1 -i 5  # terminal 1
+./offline_batch_gen -offline -p 2 -i 5  # terminal 2
+```
+
+We provide a bash script `\benchmark_offline.sh` to print all benchmark info for UCI tree models:
+```bash 
+./benchmark_offline.sh 
+
+--------------------------------- begin modelid = 0 -----------------------------------
+connected
+connected
+connected
+connected
+connected
+connected
+[09-21 23:31:32.623 offline_benchmark:61] Offline benchmark for Model: wine]
+[09-21 23:31:32.624 offline_benchmark:62] Party 0 preprocessing time is: 2604 microseconds
+[09-21 23:31:32.624 offline_benchmark:63] Party 0 sent data: 216 bytes
+--------------------------------- end modelid = 0 -------------------------------------
+
+
+--------------------------------- begin modelid = 1 -----------------------------------
+connected
+connected
+connected
+connected
+connected
+connected
+[09-21 23:31:32.663 offline_benchmark:61] Offline benchmark for Model: breast]
+[09-21 23:31:32.663 offline_benchmark:62] Party 0 preprocessing time is: 894 microseconds
+[09-21 23:31:32.663 offline_benchmark:63] Party 0 sent data: 296 bytes
+--------------------------------- end modelid = 1 -------------------------------------
+
+
+--------------------------------- begin modelid = 2 -----------------------------------
+connected
+connected
+connected
+connected
+connected
+connected
+[09-21 23:31:32.703 offline_benchmark:61] Offline benchmark for Model: digits]
+[09-21 23:31:32.704 offline_benchmark:62] Party 0 preprocessing time is: 3576 microseconds
+[09-21 23:31:32.704 offline_benchmark:63] Party 0 sent data: 3334 bytes
+--------------------------------- end modelid = 2 -------------------------------------
+
+
+--------------------------------- begin modelid = 3 -----------------------------------
+connected
+connected
+connected
+connected
+connected
+connected
+[09-21 23:31:32.745 offline_benchmark:61] Offline benchmark for Model: spambase]
+[09-21 23:31:32.745 offline_benchmark:62] Party 0 preprocessing time is: 2490 microseconds
+[09-21 23:31:32.746 offline_benchmark:63] Party 0 sent data: 3158 bytes
+--------------------------------- end modelid = 3 -------------------------------------
+
+
+--------------------------------- begin modelid = 4 -----------------------------------
+connected
+connected
+connected
+connected
+connected
+connected
+[09-21 23:31:32.787 offline_benchmark:61] Offline benchmark for Model: diabetes]
+[09-21 23:31:32.787 offline_benchmark:62] Party 0 preprocessing time is: 3543 microseconds
+[09-21 23:31:32.787 offline_benchmark:63] Party 0 sent data: 7176 bytes
+--------------------------------- end modelid = 4 -------------------------------------
+
+
+--------------------------------- begin modelid = 5 -----------------------------------
+connected
+connected
+connected
+connected
+connected
+connected
+[09-21 23:31:32.830 offline_benchmark:61] Offline benchmark for Model: boston]
+[09-21 23:31:32.831 offline_benchmark:62] Party 0 preprocessing time is: 4707 microseconds
+[09-21 23:31:32.831 offline_benchmark:63] Party 0 sent data: 7684 bytes
+--------------------------------- end modelid = 5 -------------------------------------
+
+
+--------------------------------- begin modelid = 6 -----------------------------------
+connected
+connected
+connected
+connected
+connected
+connected
+[09-21 23:31:32.878 offline_benchmark:61] Offline benchmark for Model: MINIST]
+[09-21 23:31:32.879 offline_benchmark:62] Party 0 preprocessing time is: 7084 microseconds
+[09-21 23:31:32.879 offline_benchmark:63] Party 0 sent data: 7304 bytes
+--------------------------------- end modelid = 6 -------------------------------------
+```
+
+<!-- #### 1. DPF-based preprocessing
 One can run batch DPF generation performance as follows. 
 ```
 cd ./out/build/linux/bin
@@ -249,7 +367,7 @@ cd ./out/build/linux/bin
 ./ohv_batch_gen 1 12345 7 43 # terminal 1
 ./ohv_batch_gen 2 12345 7 43 # terminal 2
 ```
-We also provide benchmark file `benchmark_ohv.sh`. One can run in the main directory to check the running time and communication overhead for `wine` and `breast`. 
+We also provide benchmark file `benchmark_ohv.sh`. One can run in the main directory to check the running time and communication overhead for `wine` and `breast`.  -->
 
 ## Disclaimer
 This code is just a proof-of-concept for benchmarking purposes. It has not had any security review, has a number of implementational TODOs, and thus, should not be directly used in any real-world applications.

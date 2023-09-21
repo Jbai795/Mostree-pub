@@ -10,6 +10,14 @@ using namespace std::chrono_literals;
 
 int offline_benchmark(oc::CLP &cmd, uint64_t party, NetIO *io_pre, NetIO *io_next)
 {
+    const char *filename[7] = {
+        "wine",
+        "breast",
+        "digits",
+        "spambase",
+        "diabetes",
+        "boston",
+        "MINIST"};
 
     uint64_t tree_depth[7] = {5, 7, 15, 17, 28, 30, 20};
     uint64_t tree_nodes[7] = {23, 43, 337, 171, 787, 851, 4179};
@@ -22,6 +30,11 @@ int offline_benchmark(oc::CLP &cmd, uint64_t party, NetIO *io_pre, NetIO *io_nex
     if (cmd.isSet("i") == true)
     {
         modelid = cmd.get<int>("i");
+    }
+    if (modelid < 0 || modelid > 6)
+    {
+        LOG(ERROR) << "* Please give a correct model id: [0, 6]";
+        return 0;
     }
 
     uint32_t depth = tree_depth[modelid];
@@ -45,8 +58,8 @@ int offline_benchmark(oc::CLP &cmd, uint64_t party, NetIO *io_pre, NetIO *io_nex
     }
     if (party == 0)
     {
-        LOG(INFO) << "[moddelid = " << modelid << "]";
-        LOG(INFO) << "Party " << party << " preprocessing time is: " << time_from(t1) << " microseconds";
+        LOG(INFO) << "Offline benchmark for Model: " << filename[modelid];
+        LOG(INFO) << "Party " << party << " preprocessing time: " << time_from(t1) << " microseconds";
         LOG(INFO) << "Party " << party << " sent data: " << (io_next->counter + io_pre->counter) << " bytes";
     }
 
