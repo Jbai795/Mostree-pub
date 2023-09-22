@@ -126,6 +126,20 @@ cd ./out/build/linux/bin
 ./mostree-main -travel -p 1  # terminal 1
 ./mostree-main -travel -p 2  # terminal 2
 ```
+## Build Mostree using Docker
+**Note**: This part, including the following commands and included Dockerfile in the main directory, is contributed from our anonymous reviewers. **A big thank to our anonymous reviewers!**
+
+To build the docker image (Docker version >=23.X.X.X) use the following command:
+ ```bash
+ docker build --no-cache -t mostree --load 
+ ```
+
+After building the docker image, one can use the command to run the image to test/simulate the linux `tc` command for the bandwidth.
+
+```bash
+docker run --cap-add=NET_ADMIN -it mostree
+``` 
+
 
 ## Configuration
 We provide benchmark of Mostree over seven decision tree models from [UCI repository](https://archive.ics.uci.edu/ml). Benchmark configurations can be found in `Mostree-pub/ss3-dtree/main-dtree.cpp`. In the following, we first overview involved parameters and then show how to set these parameters from commanline, from which one can test Mostree in different settings.    
