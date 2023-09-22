@@ -140,7 +140,7 @@ const char *filename[7] = {
     "spambase",
     "diabetes",
     "boston",
-    "MINIST"
+    "mnist"
 };
 ```
 To benchmarn Mostree over different tress, configure `modelid` at line 49. For example, if one want to run Mostree over `digits`, set
@@ -161,7 +161,7 @@ bool SCALABILITY = 1; // 1 means testing for scalability using fake data, 0 mean
 
 
 #### 4. How to set above parameters from commandline?
-<!-- One can set `MALICIOUS`, `SCALABILITY` and `modelid` to test Mostree's performance under different settings. For example, if one wants to check performance of Mostree for `minist` with malicious security, then just set `MALICIOUS=1`, `SCALABILITY=0`, and `modelid=6`.  
+<!-- One can set `MALICIOUS`, `SCALABILITY` and `modelid` to test Mostree's performance under different settings. For example, if one wants to check performance of Mostree for `mnist` with malicious security, then just set `MALICIOUS=1`, `SCALABILITY=0`, and `modelid=6`.  
 If one wants to check scalibility of mostree in the semi-honest setting, then just set `MALICIOUS=0`, `SCALABILITY=1`; in this case `modelid` doesn't function.  -->
 All above configuration can be done by using command-line parameters when running `mostree-main` as follows:  
 ```bash
@@ -173,7 +173,7 @@ mostree-main -travel [-p pid -i mid -s -m]
     #-m : run with malcious security. If unset, the program will run with semi-honest security. 
 ```
 
-For example, to benchmark `mostree-main` with malicious security over `MINIST` in one terminal, run: 
+For example, to benchmark `mostree-main` with malicious security over `mnist` in one terminal, run: 
 ```bash
 mostree-main -travel -i 6 -m # `-i 6` specify `modelid = 6`, `-m` is set for malicious security. 
 ```
@@ -183,32 +183,8 @@ To check scalibility of Mostree with semi-honest security in one terminal, run:
 mostree-main -travel -s #-m is unset for semi-honest security, -s is set for testing scalibility. 
 ``` 
 
-## Network Settings
-
-To test mostree under different network setting, we use the following `tc` commands to simulate different network settings.  
-
-LAN, RTT:0.1ms, 1Gbps
-
-`sudo tc qdisc add dev lo root netem delay 0.04ms rate 1024mbit`
-
-MAN, RTT:6ms, 100Mbps
-
-`sudo tc qdisc add dev lo root netem delay 3ms rate 100mbit`
-
-WAN, RTT:80ms, 40Mbps
-
-`sudo tc qdisc add dev lo root netem delay 40ms rate 40mbit`
-
-ping localhost to see RTT
-
-`ping localhost -c 6`
-
-delete simulated configuration: (must delete the old one before setting new simulation)
-
-`sudo tc qdisc delete dev lo root netem delay 0.04ms rate 1024mbit`
-
 ## Offline preprocessing benchmark 
-This part is about running time and communication performance from offline correlation generation for oblivious selection. We note that DPF-based preprocessing is suitable for oblivious selection over vectors of large dimension. Therefore, the dealer uses DPF-based preproprocessing for `digits`, `spambase`, `diabetes`, `Boston`, and `MINIST`. For small models `wine` and `breast`, the dealer simply distributes random one-hot vectors in the offline phase.
+This part is about running time and communication performance from offline correlation generation for oblivious selection. We note that DPF-based preprocessing is suitable for oblivious selection over vectors of large dimension. Therefore, the dealer uses DPF-based preproprocessing for `digits`, `spambase`, `diabetes`, `Boston`, and `mnist`. For small models `wine` and `breast`, the dealer simply distributes random one-hot vectors in the offline phase.
 
 **NOTE**: Currently we have not merged this preprocessing into Mostree (Mostree assumes the one-hot vectors are already generated when running the online evaluation phase). Nevertheless, this part is sufficient for benchmark purposes.
 
@@ -222,13 +198,13 @@ offline_batch_gen -offline [-p pid -i mid]
 
 One can run `offline_batch_gen`either in standalone or multi-terminal settins: 
 
-- Standalone: offline preprocessing for `MINIST` in one terminal
+- Standalone: offline preprocessing for `mnist` in one terminal
 ```bash
 cd ./out/build/linux/bin
 ./offline_batch_gen -offline -i 5 # setting `-i 5`` corresponses to runing `Boston` tree.
 ```
 
-- Multi terminals: offline preprocessing for `MINIST` in multi terminals
+- Multi terminals: offline preprocessing for `mnist` in multi terminals
 ```
 cd ./out/build/linux/bin
 ./offline_batch_gen -offline -p 0 -i 5  # terminal 0
@@ -325,7 +301,7 @@ connected
 connected
 connected
 connected
-[09-21 23:31:32.878 offline_benchmark:61] Offline benchmark for Model: MINIST]
+[09-21 23:31:32.878 offline_benchmark:61] Offline benchmark for Model: mnist]
 [09-21 23:31:32.879 offline_benchmark:62] Party 0 preprocessing time is: 7084 microseconds
 [09-21 23:31:32.879 offline_benchmark:63] Party 0 sent data: 7304 bytes
 --------------------------------- end modelid = 6 -------------------------------------
@@ -339,7 +315,7 @@ cd ./out/build/linux/bin
 ./dpf_batch_gen 1 [port] [decision tree depth] [number of tree nodes] # terminal 1
 ./dpf_batch_gen 2 [port] [decision tree depth] [number of tree nodes] # terminal 2
 ```
-For example, for the `MINIST` dataset with a tree depth of 20 and 4179 nodes:  
+For example, for the `mnist` dataset with a tree depth of 20 and 4179 nodes:  
 
 ```
 cd ./out/build/linux/bin 
@@ -368,6 +344,32 @@ cd ./out/build/linux/bin
 ./ohv_batch_gen 2 12345 7 43 # terminal 2
 ```
 We also provide benchmark file `benchmark_ohv.sh`. One can run in the main directory to check the running time and communication overhead for `wine` and `breast`.  -->
+
+
+## Network Settings
+
+To test mostree under different network setting, we use the following `tc` commands to simulate different network settings.  
+
+LAN, RTT:0.1ms, 1Gbps
+
+`sudo tc qdisc add dev lo root netem delay 0.04ms rate 1024mbit`
+
+MAN, RTT:6ms, 100Mbps
+
+`sudo tc qdisc add dev lo root netem delay 3ms rate 100mbit`
+
+WAN, RTT:80ms, 40Mbps
+
+`sudo tc qdisc add dev lo root netem delay 40ms rate 40mbit`
+
+ping localhost to see RTT
+
+`ping localhost -c 6`
+
+delete simulated configuration: (must delete the old one before setting new simulation)
+
+`sudo tc qdisc delete dev lo root netem delay 0.04ms rate 1024mbit`
+
 
 ## Disclaimer
 This code is just a proof-of-concept for benchmarking purposes. It has not had any security review, has a number of implementational TODOs, and thus, should not be directly used in any real-world applications.

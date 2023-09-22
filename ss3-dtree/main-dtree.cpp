@@ -39,7 +39,7 @@ int mostree_bin_3pc(int pIdx, CLP &cmd, Session &chlPrev, Session &chlNext) {
 		"spambase",
 		"diabetes",
 		"boston",
-		"MINIST"
+		"mnist"
 	};
 
 	//------------Tree path way(currently, we only use dectree_rootdir)-------------
