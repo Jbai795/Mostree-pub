@@ -131,7 +131,7 @@ cd ./out/build/linux/bin
 
 To build the docker image (Docker version >=23.X.X.X) use the following command:
  ```bash
- docker build --no-cache -t mostree --load 
+ docker build --no-cache -t mostree --load .
  ```
 
 After building the docker image, one can use the command to run the image to test/simulate the linux `tc` command for the bandwidth.
