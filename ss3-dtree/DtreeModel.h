@@ -419,6 +419,8 @@ namespace mostree {
             _featureSchema.resize(fn, 1);
             ssFeatureSchema.resize(fn, L_BITS);
             mFssGenFeature.setGenNum(fn);
+            // add by jianli
+            ssValueSchema.resize(MODEL_BITS,1);
 
             _nodesSchema.resize(nn, 1);
             ssNodesSchema.resize(nn, L_BITS);
@@ -537,6 +539,11 @@ namespace mostree {
             return ssFeatureSchema;
         }
 
+        //add by jianli
+        const su8Matrix &getSSValueSchema() const {
+            return ssValueSchema;
+        }
+
         void setSSNodesSchema(const sbMatrix &data) {
             ssNodesSchema = data;
         }
@@ -572,6 +579,7 @@ namespace mostree {
         sbMatrix ssModel;
         sbMatrix ssFeatureSchema;
         sbMatrix ssNodesSchema;
+        su8Matrix ssValueSchema; // add by jianli
         sb64 ssSelectedIdx;
         FssGen mFssGenFeature;
         FssGen mFssGenNodes;
@@ -584,6 +592,7 @@ namespace mostree {
         f64Matrix<D> plainFpModel; // not useful
         i64Matrix _featureSchema;
         i64Matrix _nodesSchema;
+        u8Matrix _valueSchema; // add by jianli
         u64 _feature_num;
         u64 _nodes_num;
         i64 _selectedIdx;

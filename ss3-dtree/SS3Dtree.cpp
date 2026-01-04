@@ -32,8 +32,8 @@ namespace mostree {
         mRt.init(partyIdx, c);
 
         oc::PRNG prng(seed);
-        mEnc.init(partyIdx, c, prng.get<block>());
-        mEval.init(partyIdx, c, prng.get<block>());
+        mEnc.init(partyIdx, c, prng.get<aby3::block>());
+        mEval.init(partyIdx, c, prng.get<aby3::block>());
         LOG(INFO) << "SS3Dtree idx: " << partyIdx << "  init ok!";
     }
 
@@ -72,14 +72,35 @@ namespace mostree {
         }
         return dest_data;
     }
-
-    const sb64 SS3Dtree::getShareMACKeyBinData(int partIdx, i64 MAC_KEY) {
+    //RSS binary share of MAC key
+    const sb64 SS3Dtree::getShareMACKeyBinData(int partIdx, i64 val) {
         sb64 ret;
         if (partIdx == 0) {
-            ret = localBinary(MAC_KEY);
+            ret = localBinary(val);
         } else {
             ret = remoteZeroBinary();
         }
+        return ret;
+    }
+
+    //64bit RSS binary share value
+    const sb64 SS3Dtree::getShareBinData(int partIdx, u64 val) {
+        sb64 ret = localBinary(val);
+        return ret;
+    }
+
+
+    //8bit RSS binary share value
+    const sb8 SS3Dtree::getShareBinData(int partIdx, u8 val) {
+        sb8 ret = localBinary(val);
+        return ret;
+    }
+
+
+
+    //RSS 64 bit arithmetic share value
+    const su64 SS3Dtree::getShareU64Data(int partIdx, u64 val) {
+        su64 ret = localU64(val);
         return ret;
     }
 
@@ -112,6 +133,15 @@ namespace mostree {
         }
         return model.ssFeatureSchema;
     }
+    
+    const su8Matrix SS3Dtree::shareValueSchema(int partIdx, u8Matrix plain, DtreeModel &model) {
+        if (partIdx == 0) {
+            localU8Matrix(plain, model.ssValueSchema);
+        } else {
+            remoteU8Matrix(model.ssValueSchema);
+        }
+        return model.ssValueSchema;
+    }
 
     const sb64 SS3Dtree::shareSelectedIndex(int partIdx, DtreeModel &model, i64 &idx) {
         sb64 ret({0, 0});
@@ -124,6 +154,64 @@ namespace mostree {
         model.setSSSelectedIdx(ret);
         return ret;
     }
+
+    const su8Matrix SS3Dtree::ssDGKFun(int partIdx, DtreeModel &model, u8Matrix& plain) {
+        u64 bitLength = MODEL_BITS;
+        su8Matrix ssValueSchema = model.getSSValueSchema();
+        su8Matrix f(bitLength,1);
+        su8Matrix t0(bitLength,1);
+        su8Matrix t1(bitLength,1);
+        su8Matrix t2(bitLength,1);
+
+        // t0_i = [x_i] - y_i + 1
+        // t1_i = [x_i] + y_i - [x_i] * y_i
+        // t2_i = sum_(j<i){t1_j} 
+        // f_i = [x_i] -y_i +1 + sum_(j<i){[x_i] + y_i - [x_i] * y_i} = t0_i + t2_i
+        // p0和p1做加法和减法相关的操作，如在x0上 只做 x0 - y或者 x0 + y
+        // 乘法每个元素都乘以 y
+        if (partIdx == 0) {
+            t0.mShares[0] = (ssValueSchema.mShares[0] - plain).array() + 1;
+            t0.mShares[1] = ssValueSchema.mShares[1];
+
+            t1.mShares[0] = ssValueSchema.mShares[0].array() + plain.array() - ssValueSchema.mShares[0].array() * plain.array();
+            t1.mShares[1] = ssValueSchema.mShares[1].array() - ssValueSchema.mShares[1].array() * plain.array();
+
+        }
+        if (partIdx == 1) {
+            t0.mShares[0] = ssValueSchema.mShares[0];
+            t0.mShares[1] = (ssValueSchema.mShares[1] - plain).array() + 1;
+            t1.mShares[0] = ssValueSchema.mShares[0].array() - ssValueSchema.mShares[0].array() * plain.array();
+            t1.mShares[1] = ssValueSchema.mShares[1].array() + plain.array() - ssValueSchema.mShares[1].array() * plain.array();
+        }
+
+        if (partIdx == 2) {
+            t0.mShares[0] = ssValueSchema.mShares[0];
+            t0.mShares[1] = ssValueSchema.mShares[1];
+
+            t1.mShares[0] = ssValueSchema.mShares[0].array() - ssValueSchema.mShares[0].array() * plain.array();
+            t1.mShares[1] = ssValueSchema.mShares[1].array() - ssValueSchema.mShares[1].array() * plain.array();
+        }
+        
+        //compute t2
+        t2.mShares[0](0,0) = 0;
+        t2.mShares[1](0,0) = 0;
+
+        for (u64 i = 1; i < bitLength; i++) {
+            t2.mShares[0](i,0) = t2.mShares[0](i-1,0) + t1.mShares[0](i-1,0);
+            t2.mShares[1](i,0) = t2.mShares[1](i-1,0) + t1.mShares[1](i-1,0);
+        
+        }
+
+        //compute f
+        for (u64 i = 0; i < bitLength; i++)
+        {
+            f.mShares[0](i,0) = t0.mShares[0](i,0) + t2.mShares[0](i,0);
+            f.mShares[1](i,0) = t0.mShares[1](i,0) + t2.mShares[1](i,0);
+        }
+        
+        return f;
+    }
+
 
     // Only test!!!
     // Note: b = (X[v] < t) ? 1 : 0
@@ -776,6 +864,119 @@ namespace mostree {
     }
 
 
+    void SS3Dtree::comparison_DGK(DtreeModel &model, su8Matrix ssValueScheme, u8Matrix y, int value_depth, int pIdx,
+                    su64 &compare_result, su64 &maced_compare_result, su64 ss_mac_key_for_2to3){
+        
+        /* compute DGK vector dgkScheme */
+        su8Matrix ssDGKSchema = ssDGKFun(pIdx, model, y);
+
+        //TODO make p0 sends DPF key pairs and p1.p2 receives DPF key pairs offline
+        /* BATCH DPF test offline phase
+        party0 sends 2^depth DPF keys to party1 and party2 respectively */
+        const uint32_t N = 1u << value_depth;  
+        // ================= party 0: keygen + send =================
+        if (pIdx == 0) {
+            sendDPFKeyBatchFromParty0(value_depth, ss_mac_key_for_2to3);//party0生成f(x) = (1,beta2) if x == alpha, else f(x) = (0,0) DPF keys，并发送给party1和party2
+        }
+
+        // ========= 接收 batch DPF keys + rdx shares =========
+        if (pIdx == 1 || pIdx == 2) recvDPFKeyBatch();
+        std::cout << "[BATCH-TEST] party" << pIdx << " batch received.\n";
+
+        #ifdef SET_MALICIOUS 
+        //BATCH DPF test online phase
+        // ================= party 0: send batch =================
+        if(pIdx == 0){
+            sendMaskedRdxBatch(ssDGKResult); // u8 vector
+        }
+        #endif
+
+
+        // ================= party 1/2: recv batch =================
+        if (pIdx == 1 || pIdx == 2) {
+            #ifdef SET_MALICIOUS 
+            // ========= step 接收来自party0的 masked rdx batch =========
+            recvMaskedRdxBatch(); // u8 vector
+            std::cout << "[BATCH-TEST] party" << pIdx << " masked rdx batch received.\n";
+            #endif
+            // ========= step 1: 本地准备 masked rdx batch =========
+            std::vector<u8> my_to_peer;
+            prepareMaskedRdxBatch(ssDGKSchema, my_to_peer);    // su8Matrix
+
+            // ========= step 2: 一次性交换 masked rdx =========
+            std::vector<u8> peer_to_me;
+            exchangeMaskedRdxBatch(
+                my_to_peer,
+                peer_to_me
+            );
+
+            #ifdef SET_MALICIOUS
+            maskedRdxCheck(peer_to_me);
+            #endif
+
+            // ========= step 3: 本地 batch eval =========
+            vector <uint64_t> dpfShares;
+            dpfShares.resize(getDPFN());
+            vector <uint64_t> dpfMACShares;
+            dpfMACShares.resize(getDPFN());
+            DpfEvalInt2 dpfOutput;
+            uint64_t dpfSharesSum = 0;
+            uint64_t dpfMACSharesSum = 0;
+            for (size_t i = 0; i < getDPFN(); ++i) {
+                dpfOutput = evalDPFBatchWithMAC(i, peer_to_me, ssDGKSchema); // 对应 peer_to_me 的 index
+                dpfShares[i] = dpfOutput.v1;
+                dpfMACShares[i] = dpfOutput.v2;
+                dpfSharesSum += dpfShares[i];
+                dpfMACSharesSum += dpfMACShares[i];
+            }
+
+            if(pIdx==1)
+                dpfMACSharesSum = dpfSharesSum * ss_mac_key_for_2to3[0] + dpfMACSharesSum;
+            else//pIdx==2
+                dpfMACSharesSum = dpfSharesSum * ss_mac_key_for_2to3[1] + dpfMACSharesSum;
+            
+            //p1 and p2 reshare comparison result and maced comparison result
+            compare_result = getShareU64Data(pIdx, dpfSharesSum);
+            maced_compare_result = getShareU64Data(pIdx, dpfMACSharesSum);    
+        }
+
+        if(pIdx == 0){
+            //p0 reshare
+            compare_result = getShareU64Data(pIdx, u64(0));
+            maced_compare_result = getShareU64Data(pIdx, u64(0));
+        }
+    }
+
+
+    sb8 SS3Dtree::bin_xor(sb8 &a, sb8 &b){
+        sb8 res;
+        res[0] = a[0] ^ b[0];
+        res[1] = a[1] ^ b[1];
+        return res;
+    }
+
+    // convert an RSS bit (0/1) to RSS u64
+    // x \xor y = x + y -2xy iff x y \in {0,1}
+    su64 SS3Dtree::bit2A(sb8 b_r, su64 a_r, sb8 b_x, int pIdx){
+        sb8 tem;
+        su64 res;
+        tem = bin_xor(b_r, b_x);
+        u8 reveal_c = reveal(tem);
+        if(pIdx == 0){
+            res[0] = a_r[0] + reveal_c - 2 * a_r[0] * reveal_c;
+            res[1] = a_r[1] - 2 * a_r[1] * reveal_c;
+        }else if(pIdx == 1){
+            res[0] = a_r[0] - 2 * a_r[0] * reveal_c;
+            res[1] = a_r[1] + reveal_c - 2 * a_r[1] * reveal_c;
+        }else if(pIdx == 2){
+            res[0] = a_r[0] - 2 * a_r[0] * reveal_c;
+            res[1] = a_r[1] - 2 * a_r[1] * reveal_c;
+        }
+        return res;
+        
+    }
+
+
     // semi-honest
     sb64 SS3Dtree::travelTree(int pIdx, int depth, SSNode &root, DtreeModel &model, sbMatrix &ss_model_data, sbMatrix &ssFeatureSchema) {
         SSNode cur_node = root;
@@ -828,6 +1029,213 @@ namespace mostree {
         //save for mac checking
         sb64 sum_model_data({0, 0});
         sb64 sum_mac_model_data({0, 0});
+        u64 selected_part_mac_key = 3;
+        su64 ss_mac_key_for_2to3 = getShareU64Data(pIdx, selected_part_mac_key);
+        //depth is tree depth, value_depth is bit length of model value
+        uint32_t value_depth = (uint32_t)std::ceil(std::log2((double)MODEL_BITS));
+
+
+        // suppose a pre-shared r^A and r^B between parties
+        //TODO A2B conversion
+        u64 r1;
+        su64 a_r;
+        if (pIdx == 0) {// 1 = -4+2+3
+            r1 = -4;
+            a_r = getShareU64Data(pIdx, r1);
+        }else if(pIdx == 1){
+            r1 = 2;
+            a_r = getShareU64Data(pIdx, r1);
+        }else{
+            r1 = 3;
+            a_r = getShareU64Data(pIdx, r1);
+        }
+        
+        u8 r2;
+        sb8 b_r;
+
+        if (pIdx == 0) {// 1 = 6 xor 11 xor 12
+            r2 = 6;
+            b_r = getShareBinData(pIdx, r2);
+        }else if(pIdx == 1){
+            r2 = 11;
+            b_r = getShareBinData(pIdx, r2);
+        }else{
+            r2 = 12;
+            b_r = getShareBinData(pIdx, r2);
+        }
+
+        sb8 b_s;
+        u64 thre = 214;
+        sb64 ss_thre = getShareBinData(pIdx, thre);// u64 RSS shared
+        su64 tem = su64::zero();
+        for(int i = 0; i < MODEL_BITS; i++){
+            b_s = ss_thre.getBitShare(i);
+            tem = tem + (1ULL << i) * bit2A(b_r, a_r, b_s, pIdx);
+        }
+
+        u64 attri = 150;
+        sb64 ss_attri = getShareBinData(pIdx, attri);// u64 RSS shared
+        su64 tem2 = su64::zero();
+        for(int i = 0; i < MODEL_BITS; i++){
+            b_s = ss_attri.getBitShare(i);
+            tem2 = tem2 + (1ULL << i) * bit2A(b_r, a_r, b_s, pIdx);
+        }
+        auto result = reveal(tem2);
+        if (pIdx == 0) {
+            LOG(INFO) << "converted value in arithematic is : " << result;
+        }
+
+        su64 delta = tem - tem2;
+        auto delta_reveal = reveal(delta);
+        if (pIdx == 0) {
+            LOG(INFO) << "converted delta value in arithematic is : " << delta_reveal;
+        }
+        
+        
+        // given su64 value s, compute msb(s)
+        // prepare su64 r
+        // compute m = x + r, open m
+        // compute msb(s) = msb(m) \xor msb(2^{\ell} - r) \xor {m' + r' > 2^{\ell -1} -1} 
+        // where m' = m mod 2^{\ell -1}, r' = (2^{\ell} - r) mod 2^{\ell -1}
+
+        u64 s;
+        su64 ss_s;
+        if (pIdx == 0) {// 1 = -4+2+3
+            s = -4;
+            ss_s = getShareU64Data(pIdx, s);
+        }else if(pIdx == 1){
+            s = 2;
+            ss_s = getShareU64Data(pIdx, s);
+        }else{
+            s = 3;
+            ss_s = getShareU64Data(pIdx, s);
+        }
+
+        // offline
+        // share r in su64
+        u64 r;//define rand1 = 2
+        su64 ss_r;
+        if (pIdx == 0) {// 2 = -4+1+5
+            r = -4;
+            ss_r = getShareU64Data(pIdx, r);
+        }else if(pIdx == 1){
+            r = 1;
+            ss_r = getShareU64Data(pIdx, r);
+        }else{
+            r = 5;
+            ss_r = getShareU64Data(pIdx, r);
+        }
+
+        // offline
+        // share msb(2^ell - r) in sb64
+        u64 msb_neg_rand = ((1ULL << 64) - 2 > (1ULL << 63)) ? 1 : 0;
+        sb64 ss_msb_neg_rand;
+        if (pIdx == 0) {// 2 = -4+1+5
+            ss_msb_neg_rand = getShareBinData(pIdx, msb_neg_rand);
+        }else if(pIdx == 1){
+            ss_msb_neg_rand = getShareBinData(pIdx, u64(1));
+        }else{
+            ss_msb_neg_rand = getShareBinData(pIdx, u64(1));
+        }
+
+        // open the difference m in sb64
+        su64 m = ss_s + ss_r;
+        auto m_reveal = reveal(m);
+        if (pIdx == 0) {
+            LOG(INFO) << "opened m is : " << m_reveal;
+        }
+
+        // decompose m' = m mod 2^(\ell -1) and share each bit in su8
+        u64 m_prime = m_reveal % (1ULL << 63);
+        u8Matrix m_prime_bits(MODEL_BITS, 1);
+        for (u64 i = 0; i < MODEL_BITS; ++i) {
+            m_prime_bits(i, 0) = static_cast<u8>((m_prime >> i) & 1ULL);
+        }
+
+        // offline
+        // decompose and share 2^(\ell -1) - r' -1 where r' = (2^{\ell} - r) mod 2^{\ell -1}, each bit share in su8
+        u64 r_prime = ((1ULL << 64) - r) % (1ULL << 63);
+        u64 r_prime_complement = (1ULL << 63) - r_prime - 1;
+        u8Matrix r_prime_complement_bits(MODEL_BITS, 1);
+        for (u64 i = 0; i < MODEL_BITS; ++i) {
+            r_prime_complement_bits(i, 0) = static_cast<u8>((r_prime_complement >> i) & 1ULL);
+        }
+        // 现在是假设p0分发2^(\ell -1) - r' -1 
+        // TODO 改为三方共享计算
+        su8Matrix ss_r_prime_complement_bits = shareValueSchema(pIdx, r_prime_complement_bits, model);
+
+        // local compute msb(m) in sb64
+        u64 msb_m = (m_reveal > (1ULL << 63)) ? 1 : 0;
+        sb64 ss_msb_m;
+        if (pIdx == 0) {
+            ss_msb_m[0] = msb_m;
+            ss_msb_m[1] = 0;
+        }else if(pIdx == 1){
+            ss_msb_m[0] = 0;
+            ss_msb_m[1] = msb_m;
+        }else{
+            ss_msb_m[0] = 0;
+            ss_msb_m[1] = 0;
+        }
+
+        // compute the thrid term: {m' + r' > 2^{\ell -1} -1}
+        su64 compare_result;
+        su64 maced_compare_result;
+        comparison_DGK(model, ss_r_prime_complement_bits, m_prime_bits, value_depth, pIdx,
+                        compare_result, maced_compare_result, ss_mac_key_for_2to3);
+
+        //check reshare
+        su64 mac_multi_compare_result;
+        mac_multi_compare_result = rss_u64_mul(ss_mac_key_for_2to3, compare_result);
+
+
+        su64 ret = mac_multi_compare_result - maced_compare_result;
+        auto revealed = reveal(compare_result);
+        if (pIdx == 0) {
+            LOG(INFO) << "Comparison result revealed: \n" << revealed;
+        }
+
+        
+
+
+
+
+
+        // //newly added
+        // /*
+        // * test steps, to see how to share a 64*1 matrix, each element is 8 bits. 
+        // * x < y
+        // */
+
+        // //  假设party0 准备 value x
+        // u8Matrix x;
+        // if (pIdx == 0) {
+        //     x.resize(MODEL_BITS, 1);
+        //     for (u64 i = 0; i < x.size(); ++i) x(i) = 0;
+        // }
+        // su8Matrix ssValueScheme = shareValueSchema(pIdx, x, model);
+
+        // // prepare a plaintext value y
+        // u8Matrix y;
+        // y.resize(MODEL_BITS, 1);
+        // for (u64 i = 0; i < y.size(); ++i) y(i) = 1;
+
+        // su64 compare_result;
+        // su64 maced_compare_result;
+        // comparison_DGK(model, ssValueScheme, y, value_depth, pIdx,
+        //                 compare_result, maced_compare_result, ss_mac_key_for_2to3);
+
+        // //check reshare
+        // su64 mac_multi_compare_result;
+        // mac_multi_compare_result = rss_u64_mul(ss_mac_key_for_2to3, compare_result);
+
+
+        // su64 ret = mac_multi_compare_result - maced_compare_result;
+        // auto revealed = reveal(ret);
+        // if (pIdx == 0) {
+        //     LOG(INFO) << "Comparison result revealed: \n" << revealed;
+        // }
+        // //end
 
         for (int i = 0; i < depth; ++i) {
             if (pIdx == 0)
@@ -1031,5 +1439,548 @@ namespace mostree {
         LOG(INFO) << "qt ret: " << ret[0];
         LOG(INFO) << "eq ret: " << ret[1];
     }
+
+    //add by jianli
+    // void SS3Dtree::sendDPFKeysFromParty0(uint32_t len, uint32_t rdx)
+    // {
+    //     if (partyIdx() != 0) return;
+
+    //     auto blobs = DPFGen(len, rdx, makeBlock(0, 0x1));
+
+    //     std::cout<< "DPF Key Size to Party1: " << blobs.toParty1.bytes.size() << std::endl;
+    //     std::cout<< "DPF Key Size to Party2: " << blobs.toParty2.bytes.size() << std::endl;
+
+    //     // to party1 (next)
+    //     uint64_t n1 = (uint64_t)blobs.toParty1.bytes.size();
+    //     mNext.send(n1);
+    //     if (n1) mNext.send(blobs.toParty1.bytes);
+
+    //     // to party2 (prev)
+    //     uint64_t n2 = (uint64_t)blobs.toParty2.bytes.size();
+    //     mPrev.send(n2);
+    //     if (n2) mPrev.send(blobs.toParty2.bytes);
+    // }
+
+    DPFKeyBlob SS3Dtree::recvDPFKeyFromParty0()
+    {
+        DPFKeyBlob blob;
+        uint64_t n = 0;
+
+        if (partyIdx() == 1) {
+            mPrev.recv(n);
+            blob.bytes.resize((size_t)n);
+            if (n) mPrev.recv(blob.bytes.data(), n);   // POD recv
+        }
+        else if (partyIdx() == 2) {
+            mNext.recv(n);
+            blob.bytes.resize((size_t)n);
+            if (n) mNext.recv(blob.bytes.data(), n);   // POD recv
+        }
+        else {
+            throw std::runtime_error("party0 should not call recvDPFKeyFromParty0()");
+        }
+
+        return blob;
+    }
+
+
+    void SS3Dtree::sendDPFKeysFromParty0(uint32_t len, uint32_t rdx)
+    {
+        if (partyIdx() != 0) return;
+
+        u8 rdx_pre = rand() % MODEL_BITS;
+        u8 rdx_next = rdx - rdx_pre % MODEL_BITS;
+
+        std::cout << "[DPF] rdx: " << rdx << ", rdx_pre: " << (uint32_t)rdx_pre << ", rdx_next: " << (uint32_t)rdx_next << std::endl;
+
+        // 先广播 alpha/rdx
+        mNext.send(rdx_next);
+        mPrev.send(rdx_pre);
+
+        auto blobs = DPFGen(len, rdx, makeBlock(0, 0x1));
+
+        #ifdef DEBUG_PRINT_DPFKEY
+        //for debugging purpose
+        auto out = DPFGenWithKeys(len, rdx, makeBlock(0, 0x1));
+        debug_print_dpfkey(*out.keyToParty1, "party1 before send");
+        debug_print_dpfkey(*out.keyToParty2, "party2 before send");
+        auto &blobs = out.blobs;
+        #endif
+
+
+        // to party1 (next)
+        uint64_t n1 = (uint64_t)blobs.toParty1.bytes.size();
+        mNext.send(n1);
+        if (n1) mNext.send(blobs.toParty1.bytes.data(), n1);   // ✅ POD send
+
+        // to party2 (prev)
+        uint64_t n2 = (uint64_t)blobs.toParty2.bytes.size();
+        mPrev.send(n2);
+        if (n2) mPrev.send(blobs.toParty2.bytes.data(), n2);   // ✅ POD send
+    }
+
+
+    std::pair<uint32_t, int> SS3Dtree::recvAndEvalDPFfromParty0(uint32_t len, aby3::Ref<aby3::su8> value_share)
+    {
+        if (partyIdx() != 1 && partyIdx() != 2)
+            throw std::runtime_error("only party1/2 should call recvAndEvalDPFfromParty0()");
+
+        u8 rdx = 0;
+        if (partyIdx() == 1) mPrev.recv(rdx);
+        else mNext.recv(rdx);
+        std::cout << "[DPF] party " << partyIdx() << " rdx received: " << (uint32_t)rdx << std::endl;
+
+
+        u8 my_to_peer, peer_to_me;
+        u8 masked_value;
+
+
+        DPFKeyBlob blob;
+        uint64_t n = 0;
+        if (partyIdx() == 1) {
+            mPrev.recv(n);
+            blob.bytes.resize((size_t)n);
+            if (n) mPrev.recv(blob.bytes.data(), n);
+            my_to_peer = (u8)(value_share[1] + rdx);
+            mNext.send(my_to_peer);
+            mNext.recv(peer_to_me);
+        } else {
+            mNext.recv(n);
+            blob.bytes.resize((size_t)n);
+            if (n) mNext.recv(blob.bytes.data(), n);
+            my_to_peer = (u8)(value_share[0] + rdx);
+            mPrev.send(my_to_peer);
+            mPrev.recv(peer_to_me);
+        }
+        std::cout << "[DPF] party " << partyIdx() << " my_to_peer: " << (uint32_t)my_to_peer << ", peer_to_me: " << (uint32_t)peer_to_me << std::endl;
+        masked_value = (u8)(value_share[0] + value_share[1] + peer_to_me + rdx);
+
+        std::cout<< "[DPF] party " << partyIdx() << " masked_value: " << (uint32_t)masked_value << std::endl;
+
+        uint32_t evalId01 = (partyIdx() == 1) ? 0 : 1;
+
+        DPFKEY key(len);
+        deserialization((char*)blob.bytes.data(), &key);
+
+        #ifdef DEBUG_PRINT_DPFKEY
+        //for debugging purpose
+        debug_print_dpfkey(key, "party1 after recv");
+        #endif
+
+        emp::block hash_out[2];
+        int share = dpf_eval_int(evalId01, &key, (uint32_t)masked_value, hash_out);
+
+        return { rdx, share };
+    }
+
+    // only for small depth, in our work, it is 6
+    // party0生成64组DPF keys并且一次性发送，每组key额外将mac的一部分编入
+    void SS3Dtree::sendDPFKeyBatchFromParty0(uint32_t depth, su64 ss_mac_key_for_2to3)
+    {
+        if (partyIdx() != 0) return;
+
+        const uint32_t N = 1u << depth;
+        const uint32_t MOD = 1u << depth;   // split in Z_{2^depth}
+
+        std::vector<uint8_t> buf1, buf2;
+        std::vector<uint32_t> offsets;
+
+        std::vector<u8> rdx_to_p1;
+        std::vector<u8> rdx_to_p2;
+
+        // ===== party0 cache =====
+        dpfDepth = depth;
+        dpfN = N;
+        dpfRdxPreBatch.assign(N, 0);
+        dpfRdxNextBatch.assign(N, 0);
+
+        for (uint32_t i = 0; i < N; ++i) {
+            uint32_t rdx = rand() % MOD;              // rdx in [0, 2^depth)
+            u8 rdx_pre   = (u8)(rand() % MOD);        // pre in same ring
+            u8 rdx_next  = (u8)((rdx + MOD - rdx_pre) % MOD);
+
+            // cache on party0
+            dpfRdxPreBatch[i]  = rdx_pre;
+            dpfRdxNextBatch[i] = rdx_next;
+
+            // send shares
+            rdx_to_p1.push_back(rdx_next); // to party1
+            rdx_to_p2.push_back(rdx_pre);  // to party2
+
+            //DPF generation without MAC key
+            // auto blobs = DPFGen(depth, rdx, makeBlock(0, 1));
+
+            //DPF generation with MAC key
+            u64 tem = u64(ss_mac_key_for_2to3[0] + (u64)ss_mac_key_for_2to3[1] );
+            auto blobs = DPFGenWithMAC(depth, rdx, makeBlock(0, 1), makeBlock(0, tem));
+
+            offsets.push_back((uint32_t)buf1.size());
+
+            buf1.insert(buf1.end(),
+                        blobs.toParty1.bytes.begin(),
+                        blobs.toParty1.bytes.end());
+
+            buf2.insert(buf2.end(),
+                        blobs.toParty2.bytes.begin(),
+                        blobs.toParty2.bytes.end());
+        }
+
+        // ===== meta =====
+        mNext.send(depth); mNext.send(N);
+        mPrev.send(depth); mPrev.send(N);
+
+        // ===== offsets =====
+        uint64_t offsz = (uint64_t)offsets.size() * sizeof(uint32_t);
+        mNext.send(offsz); mNext.send(offsets.data(), offsz);
+        mPrev.send(offsz); mPrev.send(offsets.data(), offsz);
+
+        // ===== rdx shares ===== (still using byte-size field like your current code)
+        uint64_t rdxsz = (uint64_t)rdx_to_p1.size() * sizeof(u8);
+        mNext.send(rdxsz); mNext.send(rdx_to_p1.data(), rdxsz);
+        mPrev.send(rdxsz); mPrev.send(rdx_to_p2.data(), rdxsz);
+
+        // ===== DPF blobs =====
+        uint64_t n1 = (uint64_t)buf1.size();
+        mNext.send(n1); mNext.send(buf1.data(), n1);
+
+        uint64_t n2 = (uint64_t)buf2.size();
+        mPrev.send(n2); mPrev.send(buf2.data(), n2);
+    }
+
+
+
+
+    void SS3Dtree::recvDPFKeyBatch()
+    {
+        if (partyIdx() != 1 && partyIdx() != 2)
+            throw std::runtime_error("only party1/2 should call recvDPFKeyBatch()");
+
+        uint32_t depth = 0, N = 0;
+
+        // ===== meta =====
+        if (partyIdx() == 1) { mPrev.recv(depth); mPrev.recv(N); }
+        else                 { mNext.recv(depth); mNext.recv(N); }
+
+        // 基本 sanity（避免读错包导致后面 resize 爆炸）
+        if (depth == 0 || depth > 20) throw std::runtime_error("bad depth in recvDPFKeyBatch()");
+        if (N != (1u << depth))       throw std::runtime_error("bad N in recvDPFKeyBatch()");
+
+        // ===== offsets =====
+        uint64_t offsz = 0;
+        std::vector<uint32_t> offsets;
+
+        if (partyIdx() == 1) mPrev.recv(offsz);
+        else                 mNext.recv(offsz);
+
+        if (offsz != (uint64_t)N * sizeof(uint32_t))
+            throw std::runtime_error("bad offsz in recvDPFKeyBatch()");
+
+        offsets.resize(N);
+
+        if (partyIdx() == 1) mPrev.recv(offsets.data(), offsz);
+        else                 mNext.recv(offsets.data(), offsz);
+
+        // ===== rdx shares =====
+        uint64_t rdxsz = 0;
+        std::vector<u8> rdxShares;
+
+        if (partyIdx() == 1) mPrev.recv(rdxsz);
+        else                 mNext.recv(rdxsz);
+
+        if (rdxsz != (uint64_t)N * sizeof(u8))
+            throw std::runtime_error("bad rdxsz in recvDPFKeyBatch()");
+
+        rdxShares.resize(N);
+
+        if (partyIdx() == 1) mPrev.recv(rdxShares.data(), rdxsz);
+        else                 mNext.recv(rdxShares.data(), rdxsz);
+
+        // ===== blob =====
+        uint64_t n = 0;
+        std::vector<uint8_t> buf;
+
+        if (partyIdx() == 1) mPrev.recv(n);
+        else                 mNext.recv(n);
+
+        buf.resize((size_t)n);
+
+        if (n) {
+            if (partyIdx() == 1) mPrev.recv(buf.data(), n);
+            else                 mNext.recv(buf.data(), n);
+        }
+
+        // ===== extra sanity：offset 必须落在 buf 范围内 =====
+        for (uint32_t i = 0; i < N; ++i) {
+            if (offsets[i] >= buf.size())
+                throw std::runtime_error("offset out of range in recvDPFKeyBatch()");
+        }
+
+        // ===== cache =====
+        dpfDepth       = depth;
+        dpfN           = N;
+        dpfKeyOffsets  = std::move(offsets);
+        dpfRdxShares   = std::move(rdxShares);
+        dpfKeyBatchBuf = std::move(buf);
+
+        std::cout << "[BATCH-DBG] recv ok: depth=" << dpfDepth
+                << " N=" << dpfN
+                << " offsets=" << dpfKeyOffsets.size()
+                << " rdxShares=" << dpfRdxShares.size()
+                << " buf=" << dpfKeyBatchBuf.size()
+                << std::endl;
+    }
+
+
+    // 输入：alphas[] + ssDGKSchema
+    // 输出：my_to_peer[]
+    void SS3Dtree::prepareMaskedRdxBatch(
+    aby3::su8Matrix& ssDGKSchema,
+    std::vector<u8>& my_to_peer)
+    {
+        if (dpfRdxShares.size() != dpfN)
+            throw std::runtime_error("prepareMaskedRdxBatch: dpfRdxShares not ready");
+
+        // ★ 关键 1：resize
+        my_to_peer.resize(dpfN);
+
+        // ★ 关键 2：用 dpfN，不是 MODEL_BITS
+        for (size_t i = 0; i < dpfN; ++i) {
+            u8 rdx = dpfRdxShares[i];
+
+            if (partyIdx() == 1)
+                //cause ssDGKSchema is 64 * 1
+                my_to_peer[i] = (u8)(ssDGKSchema(i,0)[1] + rdx);
+            else
+                my_to_peer[i] = (u8)(ssDGKSchema(i,0)[0] + rdx);
+        }
+    }
+
+
+    // p0 reveals masked rdx to p1 and p2
+    void SS3Dtree::sendMaskedRdxBatch (aby3::su8Matrix&ssDGKSchema){
+        if (partyIdx() != 0) return;
+
+        uint64_t sz = dpfRdxPreBatch.size();
+        if (dpfRdxPreBatch.size() != dpfRdxNextBatch.size())
+        throw std::runtime_error("sendMaskedRdxBatch: size mismatch");
+        std::vector<u8> masked_rdx_to_next; // send to p1
+        std::vector<u8> masked_rdx_to_pre; // send to p2
+
+        masked_rdx_to_next.resize(dpfN);
+        masked_rdx_to_pre.resize(dpfN);
+        
+        for (size_t i = 0; i < dpfN; ++i) {
+            masked_rdx_to_next[i] = (u8)(ssDGKSchema(i,0)[0] + dpfRdxNextBatch[i]);
+            masked_rdx_to_pre[i] = (u8)(ssDGKSchema(i,0)[1] + dpfRdxPreBatch[i]);
+        }
+        
+        // to party1 
+        mNext.send(sz);
+        mNext.send(masked_rdx_to_pre.data(), sz);
+
+        // to party2
+        mPrev.send(sz);
+        mPrev.send(masked_rdx_to_next.data(), sz);
+    }
+
+    // p1 and p2 receive masked values from p0
+    void SS3Dtree::recvMaskedRdxBatch()
+    {
+        if (partyIdx() == 0)
+            throw std::runtime_error("party0 should not call recvMaskedRevealBatch()");
+
+        uint64_t sz = 0;
+
+        if (partyIdx() == 1) {
+            mPrev.recv(sz);
+        } else { // partyIdx == 2
+            mNext.recv(sz);
+        }
+
+        // ===== 安全检查 =====
+        if (sz > (1ull << 20))
+            throw std::runtime_error("recvMaskedRdxBatch: sz too large");
+
+        if (sz) {
+            if (partyIdx() == 1){
+                dpfRdxNextBatch.resize((size_t)sz);
+                mPrev.recv(dpfRdxNextBatch.data(), sz);
+            }
+                
+            else{
+                dpfRdxPreBatch.resize((size_t)sz);
+                mNext.recv(dpfRdxPreBatch.data(), sz);
+            }
+                
+        }
+    }
+
+
+    void SS3Dtree::maskedRdxCheck(std::vector<u8>& peer_to_me){
+        if (partyIdx() == 1) {
+            for (size_t i = 0; i < dpfN; ++i) {
+                if ( dpfRdxNextBatch[i] != peer_to_me[i]) {
+                    throw std::runtime_error("party1 maskedRdxCheck failed at index " + std::to_string(i));
+                }
+            }
+        } else if (partyIdx() == 2) {
+            for (size_t i = 0; i < dpfN; ++i) {
+                if ( dpfRdxPreBatch[i] != peer_to_me[i]) {
+                    throw std::runtime_error("party2 maskedRdxCheck failed at index " + std::to_string(i));
+                }
+            }
+        }
+        LOG(INFO) << "Party " << partyIdx() << " masked rdx check passed ";
+    };
+
+
+
+
+    void SS3Dtree::exchangeMaskedRdxBatch(
+        std::vector<u8>& my_to_peer,
+        std::vector<u8>& peer_to_me)
+    {
+        peer_to_me.resize(my_to_peer.size());
+
+        uint64_t sz = my_to_peer.size() * sizeof(u8);
+
+        if (partyIdx() == 1) {
+            // P1: send -> recv
+            mNext.send(sz);
+            mNext.send(my_to_peer.data(), sz);
+
+            mNext.recv(sz);
+            mNext.recv(peer_to_me.data(), sz);
+        } else {
+            // P2: recv -> send（避免死锁）
+            mPrev.recv(sz);
+            mPrev.recv(peer_to_me.data(), sz);
+
+            mPrev.send(sz);
+            mPrev.send(my_to_peer.data(), sz);
+        }
+    }
+
+    //single output DPF
+    // int SS3Dtree::evalDPFBatch(
+    //     size_t idx,
+    //     const std::vector<u8>& peer_to_me,
+    //     aby3::su8Matrix& ssDGKSchema)
+    // {
+    //     u8 masked_value =
+    //         (u8)(ssDGKSchema(idx,0)[0]
+    //         + ssDGKSchema(idx,0)[1]
+    //         + peer_to_me[idx]
+    //         + dpfRdxShares[idx]);
+
+    //     // extract key
+    //     uint32_t off = dpfKeyOffsets[idx];
+    //     DPFKEY key(dpfDepth);
+    //     deserialization((char*)(dpfKeyBatchBuf.data() + off), &key);
+
+    //     uint32_t evalId01 = (partyIdx() == 1) ? 0 : 1;
+    //     emp::block hash_out[2];
+
+    //     return dpf_eval_int_two(evalId01, &key, (uint32_t)masked_value, hash_out);
+    // }
+
+    //double output DPF
+    DpfEvalInt2 SS3Dtree::evalDPFBatchWithMAC(
+        size_t idx,
+        const std::vector<u8>& peer_to_me,
+        aby3::su8Matrix& ssDGKSchema)
+    {
+        u8 masked_value =
+            (u8)(ssDGKSchema(idx,0)[0]
+            + ssDGKSchema(idx,0)[1]
+            + peer_to_me[idx]
+            + dpfRdxShares[idx]);
+
+        // extract key
+        uint32_t off = dpfKeyOffsets[idx];
+        DPFKEY key(dpfDepth);
+        deserialization((char*)(dpfKeyBatchBuf.data() + off), &key);
+
+        uint32_t evalId01 = (partyIdx() == 1) ? 0 : 1;
+        emp::block hash_out[2];
+
+        return dpf_eval_int_two(evalId01, &key, (uint32_t)masked_value, hash_out);
+    }
+
+
+
+
+
+
+
+
+
+    //debug only
+    void SS3Dtree::sendDPFShareToParty0(int share)
+    {
+        if (partyIdx() == 1) {
+            // party1 -> party0 via prev
+            mPrev.send(share);
+        }
+        else if (partyIdx() == 2) {
+            // party2 -> party0 via next
+            mNext.send(share);
+        }
+        else {
+            throw std::runtime_error("party0 should not call sendDPFShareToParty0()");
+        }
+    }
+
+    //debug only
+    void SS3Dtree::recvAndCheckDPFShares()
+    {
+        if (partyIdx() != 0)
+            throw std::runtime_error("only party0 should call recvAndCheckDPFShares()");
+
+        int share1 = 0, share2 = 0;
+
+        // from party1
+        mNext.recv(share1);
+
+        // from party2
+        mPrev.recv(share2);
+
+        uint32_t s1 = (uint32_t)share1;
+        uint32_t s2 = (uint32_t)share2;
+        uint32_t sum = s1 + s2;
+
+        std::cout << "[DPF DEBUG]\n";
+        std::cout << "  share1 (int)  = " << share1 << "\n";
+        std::cout << "  share2 (int)  = " << share2 << "\n";
+        std::cout << "  share1 (u32)  = " << s1 << "\n";
+        std::cout << "  share2 (u32)  = " << s2 << "\n";
+        std::cout << "  sum mod 2^32  = " << sum << "\n";
+    }
+
+
+    void debug_print_dpfkey(DPFKEY& key, const std::string& tag)
+    {
+        std::cout << "=== DPFKEY DEBUG (" << tag << ") ===\n";
+        std::cout << "depth = " << key.get_depth() << "\n";
+        std::cout << "rdx_share = " << key.get_share() << "\n";
+
+        auto s = key.get_s();
+        std::cout << "s.low64  = " << _mm_extract_epi64(s, 0) << "\n";
+        std::cout << "s.high64 = " << _mm_extract_epi64(s, 1) << "\n";
+        std::cout << "t        = " << key.get_t() << "\n";
+
+        for (uint32_t i = 1; i <= std::min(2u, key.get_depth()); i++) {
+        auto scw = key.get_s_CW(i);
+        std::cout << "level " << i << " s_CW.low64  = "
+                    << _mm_extract_epi64(scw, 0) << "\n";
+        std::cout << "level " << i << " s_CW.high64 = "
+                    << _mm_extract_epi64(scw, 1) << "\n";
+        std::cout << "level " << i << " t_L=" << key.get_t_L_CW(i)
+                    << " t_R=" << key.get_t_R_CW(i) << "\n";
+        }
+    }
+
+
+
 }
 

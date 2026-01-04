@@ -45,7 +45,8 @@ typedef struct DPFKEY
 
     DPFKEY(uint32_t bit_len)
     {
-        depth = bit_len - 7; // NOTE: log2(128)
+        // NOTE: 7 = log2(128) for early termination, one block for one early termination node
+        depth = bit_len -7; 
         s_CW = new block[depth + 1];
         t_L_CW = new bool[depth];
         t_R_CW = new bool[depth];
@@ -185,6 +186,51 @@ void deserialization(const char *buf, DPFKEY *key)
     memcpy(&key->hash_CW, buf + count, 2 * sizeof(block));
 #endif
 }
+
+// void deserialization(const char *buf, DPFKEY *key)
+// {
+//     uint32_t count = 0;
+//     memcpy(&key->depth, buf + count, sizeof(uint32_t));
+//     count += sizeof(uint32_t);
+
+//     // 释放旧内存，防止 `double free`
+//     if (key->s_CW) {
+//         std::cout << "Already freed or null, skipping delete: " << static_cast<void*>(key->s_CW) << std::endl;
+// } else {
+//     delete[] key->s_CW;
+//     key->s_CW = nullptr;
+// }
+//     if (key->t_L_CW){
+//         std::cout << "Already freed or null, skipping delete: " << static_cast<void*>(key->t_L_CW) << std::endl;
+//     }
+//     else
+//      { delete[] key->t_L_CW; key->t_L_CW = nullptr; }
+//     if (key->t_R_CW){
+//         std::cout << "Already freed or null, skipping delete: " << static_cast<void*>(key->t_R_CW) << std::endl;
+//     }
+//     else { delete[] key->t_R_CW; key->t_R_CW = nullptr; }
+
+//     // 重新分配内存
+//     key->s_CW = new block[key->depth + 1];
+//     key->t_L_CW = new bool[key->depth];
+//     key->t_R_CW = new bool[key->depth];
+
+//     memcpy(&key->rdx_share, buf + count, sizeof(uint32_t));
+//     count += sizeof(uint32_t);
+//     memcpy(&key->s, buf + count, sizeof(block));
+//     count += sizeof(block);
+//     memcpy(&key->t, buf + count, sizeof(key->t));
+//     count += sizeof(bool);
+//     memcpy(key->s_CW, buf + count, (key->depth + 1) * sizeof(block));
+//     count += (key->depth + 1) * sizeof(block);
+//     memcpy(key->t_L_CW, buf + count, sizeof(bool) * key->depth);
+//     count += sizeof(bool) * key->depth;
+//     memcpy(key->t_R_CW, buf + count, sizeof(bool) * key->depth);
+//     count += sizeof(bool) * key->depth;
+// }
+
+
+
 
 bool get_bit(uint32_t rdx, uint len, uint32_t i)
 {

@@ -134,6 +134,30 @@ namespace aby3
         }).getClosure();
     }
 
+    //add by jianli
+    //u64 mul integer
+    Sh3Task Sh3Evaluator::asyncMul(Sh3Task dependency, const su64& A, const su64& B,su64& C){
+        return dependency.then([&](CommPkg& comm, Sh3Task self)
+        {
+            // 1) RSS 乘法本地项
+            C[0]
+                = A[0] * B[0]
+                + A[0] * B[1]
+                + A[1] * B[0]
+                + (u64)mShareGen.getShare();
+
+            // 2) reshare 成 replicated
+            comm.mNext.asyncSendCopy(&C[0], sizeof(u64));
+            auto fu = comm.mPrev.asyncRecv(&C[1], sizeof(u64)).share();
+
+            self.then([fu = std::move(fu)](CommPkg&, Sh3Task&) {
+                fu.get();
+            });
+        }).getClosure();
+    }
+    //end
+
+
 
     Sh3Task Sh3Evaluator::asyncMul(Sh3Task dependency, const si64& A, const si64& B, si64& C)
     {

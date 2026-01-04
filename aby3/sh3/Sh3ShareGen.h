@@ -58,7 +58,7 @@ namespace aby3
 
             mShareIdx += sizeof(i64);
 
-            ret = 0;
+            // ret = 0;
 //            std::cout << "ret: " <<ret << std::endl;
             return ret;
         }

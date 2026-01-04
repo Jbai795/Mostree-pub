@@ -1,5 +1,6 @@
 #include "Sh3Encryptor.h"
 #include <libOTe/Tools/Tools.h>
+#include <iostream>
 
 #include "cryptoTools/Common/Log.h"
 namespace aby3
@@ -87,6 +88,22 @@ namespace aby3
         }).getClosure();
     }
 
+    Sh3Task Sh3Encryptor::localBinary(Sh3Task dep, u8 val, sb8 & ret)
+    {
+        return dep.then([this, val, &ret](CommPkg& comm, Sh3Task& self) {
+            ret[0] = mShareGen.getBinaryShare() ^ val;
+
+            comm.mNext.asyncSendCopy(ret[0]);
+            auto fu = comm.mPrev.asyncRecv(ret[1]);
+
+            self.then([fu = std::move(fu)](CommPkg& comm, Sh3Task& self) mutable {
+                fu.get();
+            });
+
+        }).getClosure();
+    }
+
+
     Sh3Task Sh3Encryptor::remoteBinary(Sh3Task dep, sb64 & dest)
     {
         int64_t val = random();
@@ -97,6 +114,71 @@ namespace aby3
     {
         return localBinary(dep, 0, dest);
     }
+
+
+    //add by jianli
+    // void Sh3Encryptor::localU64(CommPkg& comm, u64 m, std::array<u64, 2>& ret)
+    // {
+    //     // ret[0] = s_i, ret[1] = s_{i+1}
+
+    //     u64 r = static_cast<u64>(mShareGen.getShare());
+
+    //     // 本地 share：s_i = r + m
+    //     ret[0] = r + m;   // mod 2^64
+    //     // ret[1] 将从 prev 收到
+
+    //     comm.mNext.asyncSendCopy(&ret[0], 1);
+    //     comm.mPrev.recv(&ret[1], 1);
+    // }
+
+    // void Sh3Encryptor::remoteU64(CommPkg& comm, std::array<u64, 2>& ret)
+    // {
+    //     u64 r = static_cast<u64>(mShareGen.getShare());
+    //     ret[0] = r;
+
+    //     comm.mNext.asyncSendCopy(&ret[0], 1);
+    //     comm.mPrev.recv(&ret[1], 1);
+    // }
+
+
+    Sh3Task Sh3Encryptor::localU64(Sh3Task dep, u64 m, su64& ret)
+    {
+        return dep.then([this, m, &ret](CommPkg& comm, Sh3Task& self) {
+
+            u64 r = static_cast<u64>(mShareGen.getShare());
+            ret[0] = r + m;
+
+            comm.mNext.asyncSendCopy(&ret[0], 1);
+            auto fu = comm.mPrev.asyncRecv(&ret[1], 1);
+
+            self.then([fu = std::move(fu)](CommPkg&, Sh3Task&) mutable {
+                if (fu.valid()) fu.get();
+            });
+
+        }).getClosure();
+    }
+
+
+    Sh3Task Sh3Encryptor::remoteU64(Sh3Task dep, su64& ret)
+    {
+        return dep.then([this, &ret](CommPkg& comm, Sh3Task& self) {
+
+            ret[0] = static_cast<u64>(mShareGen.getShare());
+
+            comm.mNext.asyncSendCopy(&ret[0], 1);
+            auto fu = comm.mPrev.asyncRecv(&ret[1], 1);
+
+            self.then([fu = std::move(fu)](CommPkg&, Sh3Task&) mutable {
+                fu.get();
+            });
+
+        }).getClosure();
+    }
+
+
+
+
+    //end
 
     //part of FSS delta reveal: p0 the first data to p1 the second data
     Sh3Task Sh3Encryptor::CovertP2NBinary(Sh3Task dep, sb64 &sour, sb64 & dest)
@@ -204,6 +286,83 @@ namespace aby3
             });
         }).getClosure();
     }
+
+    // add by jianli 同步版本
+    void Sh3Encryptor::localU8Matrix(CommPkg& comm, const u8Matrix& m, su8Matrix& ret)
+    {
+        if (ret.cols() != static_cast<u64>(m.cols()) ||
+            ret.size() != static_cast<u64>(m.size()))
+            throw std::runtime_error(LOCATION);
+
+        for (u64 i = 0; i < ret.mShares[0].size(); ++i)
+            ret.mShares[0](i) = static_cast<u8>(mShareGen.getShare()) + m(i); // mod 256
+
+        comm.mNext.asyncSendCopy(ret.mShares[0].data(), ret.mShares[0].size());
+        comm.mPrev.recv(ret.mShares[1].data(), ret.mShares[1].size());
+    }
+
+    void Sh3Encryptor::remoteU8Matrix(CommPkg& comm, su8Matrix& ret)
+    {
+        for (u64 i = 0; i < ret.mShares[0].size(); ++i)
+            ret.mShares[0](i) = static_cast<u8>(mShareGen.getShare());
+
+        comm.mNext.asyncSendCopy(ret.mShares[0].data(), ret.mShares[0].size());
+        comm.mPrev.recv(ret.mShares[1].data(), ret.mShares[1].size());
+    }
+
+
+    //add by jianli 异步版本
+    Sh3Task Sh3Encryptor::localU8Matrix(Sh3Task dep, const u8Matrix& m, su8Matrix& ret)
+    {
+        
+        return dep.then([this, &m, &ret](CommPkg& comm, Sh3Task& self) {
+
+            if (ret.cols() != static_cast<u64>(m.cols()) ||
+                ret.size() != static_cast<u64>(m.size())){
+                    throw std::runtime_error(LOCATION); 
+                }
+            
+
+            for (u64 i = 0; i < ret.mShares[0].size(); ++i)
+            {
+                auto r  = (u8)mShareGen.getShare();
+                auto mi = (u8)m(i);
+                // std::cout << "m(i)=" << (unsigned)mi << "  r=" << (unsigned)r;
+
+                ret.mShares[0](i) = (u8)(r + mi);
+
+                // std::cout << "  share0=" << (unsigned)ret.mShares[0](i) << "  (expect " << (unsigned)((u8)(r + mi)) << ")\n";
+            }
+            
+
+            comm.mNext.asyncSendCopy(ret.mShares[0].data(), ret.mShares[0].size());
+            auto fu = comm.mPrev.asyncRecv(ret.mShares[1].data(), ret.mShares[1].size());
+
+            self.then([fu = std::move(fu)](CommPkg&, Sh3Task&) mutable {
+                if (fu.valid()) fu.get();
+                else std::cout << "==========fu error\n";
+            });
+
+        }).getClosure();
+    }
+
+    Sh3Task Sh3Encryptor::remoteU8Matrix(Sh3Task dep, su8Matrix& ret)
+    {
+        return dep.then([this, &ret](CommPkg& comm, Sh3Task& self) {
+
+            for (u64 i = 0; i < ret.mShares[0].size(); ++i)
+                ret.mShares[0](i) = static_cast<u8>(mShareGen.getShare());
+
+            comm.mNext.asyncSendCopy(ret.mShares[0].data(), ret.mShares[0].size());
+            auto fu = comm.mPrev.asyncRecv(ret.mShares[1].data(), ret.mShares[1].size());
+
+            self.then([fu = std::move(fu)](CommPkg&, Sh3Task&) mutable {
+                fu.get();
+            });
+
+        }).getClosure();
+    }
+
 
 
     void Sh3Encryptor::localBinMatrix(CommPkg & comm, const i64Matrix & m, sbMatrix & ret)
@@ -408,6 +567,7 @@ namespace aby3
         });
     }
 
+
     Sh3Task Sh3Encryptor::revealAll(Sh3Task dep, const sb64& x, i64& dest)
     {
         reveal(dep, (mPartyIdx + 2) % 3, x);
@@ -423,6 +583,62 @@ namespace aby3
                 comm.mPrev.asyncSendCopy(x[0]);
         });
     }
+
+    // add by jianli 
+
+    // reveal sb8 binary value
+    Sh3Task Sh3Encryptor::reveal(Sh3Task dep, const sb8& x, u8& dest)
+    {
+        return dep.then([&x, &dest](CommPkg& comm, Sh3Task& self) {
+            comm.mNext.recv(dest);
+            dest ^= x[0] ^ x[1];
+        });
+    }
+
+    Sh3Task Sh3Encryptor::revealAll(Sh3Task dep, const sb8& x, u8& dest)
+    {
+        reveal(dep, (mPartyIdx + 2) % 3, x);
+        return reveal(dep, x, dest);
+    }
+
+    Sh3Task Sh3Encryptor::reveal(Sh3Task dep, u64 partyIdx, const sb8& x)
+    {
+        //TODO("decide if we can move the if outside the call to then(...)");
+        bool send = ((mPartyIdx + 2) % 3) == partyIdx;
+        return dep.then([send, &x](CommPkg& comm, Sh3Task&) {
+            if (send)
+                comm.mPrev.asyncSendCopy(x[0]);
+        });
+    }
+
+    // reveal su64 integer
+    Sh3Task Sh3Encryptor::reveal(Sh3Task  dep, const su64 & x, u64 & dest)
+    {
+        return dep.then([&x, &dest](CommPkg& comm, Sh3Task& self) {
+            comm.mNext.recv(dest);
+            dest += x[0] + x[1];
+        });
+    }
+
+
+    Sh3Task Sh3Encryptor::revealAll(Sh3Task dep, const su64& x, u64& dest)
+    {
+        reveal(dep, (mPartyIdx + 2) % 3, x);
+        return reveal(dep, x, dest);
+    }
+
+    Sh3Task Sh3Encryptor::reveal(Sh3Task dep, u64 partyIdx, const su64& x)
+    {
+        //TODO("decide if we can move the if outside the call to then(...)");
+        bool send = ((mPartyIdx + 2) % 3) == partyIdx;
+        return dep.then([send, &x](CommPkg& comm, Sh3Task&) {
+            if (send)
+                comm.mPrev.asyncSendCopy(x[0]);
+        });
+    }
+    //end
+
+    
 
     Sh3Task Sh3Encryptor::reveal(Sh3Task dep, const si64Matrix& x, i64Matrix& dest)
     {
@@ -470,6 +686,8 @@ namespace aby3
         reveal(dep, (mPartyIdx + 2) % 3, x);
         return reveal(dep, x, dest);
     }
+
+
     Sh3Task Sh3Encryptor::reveal(Sh3Task dep, u64 partyIdx, const sbMatrix& x)
     {
         //TODO("decide if we can move the if outside the call to then(...)");
@@ -480,11 +698,34 @@ namespace aby3
         });
     }
 
-
-
-
-
-
+    // add by jianli
+    Sh3Task Sh3Encryptor::revealAllU8Value(Sh3Task dep, const su8Matrix& x, u8Matrix& dest)
+    {
+        dep = u8reveal(dep, (mPartyIdx + 2) % 3, x);   // 关键：接住返回值
+        dep = u8reveal(dep, x, dest);                  // 再接下一个阶段
+        return dep;
+    }
+    Sh3Task Sh3Encryptor::u8reveal(Sh3Task dep, u64 partyIdx, const su8Matrix& x)
+    {
+        //TODO("decide if we can move the if outside the call to then(...)");
+        bool send = ((mPartyIdx + 2) % 3) == partyIdx;
+        return dep.then([send, &x](CommPkg& comm, Sh3Task& self) {
+            if (send)
+                comm.mPrev.asyncSendCopy(x.mShares[0].data(), x.mShares[0].size());
+        });
+    }
+    Sh3Task Sh3Encryptor::u8reveal(Sh3Task dep, const su8Matrix& x, u8Matrix& dest)
+    {
+        return dep.then([&x, &dest](CommPkg& comm, Sh3Task& self) {
+            comm.mNext.recv(dest.data(), dest.size());
+            for (i32 i = 0; i < dest.size(); ++i)
+            {
+                dest(i) += x.mShares[0](i);
+                dest(i) += x.mShares[1](i);
+            }
+        });
+    }
+    
 
 
     i64 Sh3Encryptor::reveal(CommPkg & comm, const sb64 & x)

@@ -1,6 +1,11 @@
 #pragma once
 #pragma GCC diagnostic ignored "-Wunused-variable"
 
+// #define CORRET_DPF_TEST
+// #define DEBUG_PRINT_DPFKEY
+// #define DPF_SINGLE
+#define SET_MALICIOUS
+
 #include <fstream>
 #include <iostream>
 #include <cmath>

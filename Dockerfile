@@ -32,7 +32,7 @@ RUN wget --no-check-certificate https://github.com/Kitware/CMake/releases/downlo
 
 ## BOOST
 WORKDIR /tmp/boost
-RUN wget --no-check-certificate https://boostorg.jfrog.io/artifactory/main/release/1.75.0/source/boost_1_75_0.tar.bz2 \
+RUN wget --no-check-certificate https://archives.boost.io/release/1.75.0/source/boost_1_75_0.tar.bz2 \
 && tar -xvf boost_1_75_0.tar.bz2 \
 && cd boost_1_75_0 \
 && ./bootstrap.sh --prefix=/usr/ \
@@ -55,10 +55,10 @@ RUN apt-get install --reinstall ca-certificates -y \
 && git config --global http.sslCAinfo /etc/ssl/certs/ca-certificates.crt
 
 ##ABY3
-RUN git clone https://github.com/ladnir/aby3.git /home/mostree/aby3 
-WORKDIR /home/mostree/aby3
-RUN python3 build.py --setup \
-	&& python3 build.py 
+# RUN git clone https://github.com/ladnir/aby3.git /home/mostree/aby3 
+# WORKDIR /home/mostree/aby3
+# RUN python3 build.py --setup \
+# 	&& python3 build.py 
 
 ##BUILD
 WORKDIR /home/mostree

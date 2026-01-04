@@ -16,6 +16,7 @@
 #include <aby3/sh3/Sh3Piecewise.h>
 #include "aby3/sh3/Sh3FixedPoint.h"
 #include "aby3/Common/NTLHelper.h"
+#include "dpf/dpf.h"
 
 #include "DtreeModel.h"
 
@@ -54,13 +55,23 @@ namespace mostree {
 
         const sbMatrix getShareMACModelBinData(int partIdx, sbMatrix model_data, sbMatrix & dest_data, sb64 key);
 
-        const sb64 getShareMACKeyBinData(int partIdx, i64 MAC_KEY);
+        const sb64 getShareMACKeyBinData(int partIdx, i64 val);
+        //add by jianli
+        const sb64 getShareBinData(int partIdx, u64 val);
+        const sb8 getShareBinData(int partIdx, u8 val);
+        const su64 getShareU64Data(int partIdx, u64 val);
+        
         const sb64 getShareRandBinData();
 
         const sb64 getCovertP2NBinary(sb64 &sour);
         const sb64 getCovertN2PBinary(sb64 &sour);
 
         const sbMatrix shareFeatureSchema(int partIdx, DtreeModel &model);
+
+        //add by jianli
+        const su8Matrix shareValueSchema(int partIdx, u8Matrix plain, DtreeModel &model);
+        const su8Matrix ssDGKFun(int partIdx, DtreeModel &model, u8Matrix &plain);
+
 
         const sb64 shareSelectedIndex(int partIdx, DtreeModel &model, i64 &idx);
 
@@ -85,6 +96,14 @@ namespace mostree {
             return dest;
         }
 
+        su64 rss_u64_mul(const su64& left, const su64& right)
+        {
+            su64 dest;
+            mEval.asyncMul(mRt.noDependencies(), left, right, dest).get();
+            return dest;
+        }
+
+
         sb64 compare_threshold(int pIdx, sb64 &x, sb64 &t);
 
         sb64 compare_threshold(int pIdx, sb64 &x, sb64 &t, sb64 *as, sb64 *bs, sb64 *cs, int val);
@@ -104,14 +123,91 @@ namespace mostree {
         sbMatrix semi_ob_selection_mac_node(int partIdx, sbMatrix &model_table, sb64 selected_node_idx, DtreeModel &model,
                                         bool isFss = false);
 
+        void comparison_DGK(DtreeModel &model, su8Matrix ssValueScheme, u8Matrix y, int value_depth, int pIdx,
+                    su64 &compare_result, su64 &maced_compare_result, su64 ss_mac_key_for_2to3);
+        sb8 bin_xor(sb8 &a, sb8 &b);
+        su64 bit2A(sb8 b_r, su64 a_r, sb8 b_x, int pIdx);
+
         sb64 travelTree(int pIdx, int depth, SSNode &root, DtreeModel &model, sbMatrix &ss_model_data,sbMatrix &ssFeatureSchema);
 
         sb64 travelTree(int pIdx, int depth, SSNode &root, DtreeModel &model, sbMatrix &ss_model_data, sbMatrix &ss_mac_model_data,
                               sbMatrix &ssFeatureSchema, sb64 &ss_mac_key, sb64 gamma, sb64 * rho,sb64 *a,sb64 *b,sb64 *c, sb64 *as,sb64 *bs,sb64 *cs);
+        
+        
+        
+        //add by jianli
+        // DPF key distribution (party0 -> party1,party2)
+        void sendDPFKeysFromParty0(uint32_t len, uint32_t rdx);
+        DPFKeyBlob recvDPFKeyFromParty0();  // party1/2 用
+        std::pair<uint32_t, int> recvAndEvalDPFfromParty0(uint32_t len, aby3::Ref<aby3::su8> value_share);
+
+        //batch DPF keys generation and evaluation
+        //only used for small depth
+        void sendDPFKeyBatchFromParty0(uint32_t depth, su64 ss_mac_key_for_2to3);
+        void recvDPFKeyBatch();
+        // int evalDPFBatch(uint32_t alpha, uint32_t x);
+
+        void prepareMaskedRdxBatch(aby3::su8Matrix& ssDGKSchema, std::vector<u8>& my_to_peer);
+        // p1 and p2 receive masked rdx batch from each other
+        void exchangeMaskedRdxBatch(std::vector<u8>& my_to_peer, std::vector<u8>& peer_to_me);
+        // int evalDPFBatch(size_t idx, const std::vector<u8>& peer_to_me, aby3::su8Matrix& ssDGKSchema);
+        DpfEvalInt2 evalDPFBatchWithMAC(size_t idx, const std::vector<u8>& peer_to_me, aby3::su8Matrix& ssDGKSchema);
+
+        //p0 sends masked rdx batch to p1 and p2
+        void sendMaskedRdxBatch (aby3::su8Matrix&ssDGKSchema);
+        //p1 and p2 receive masked rdx batch from p0
+        void recvMaskedRdxBatch();
+        void maskedRdxCheck(std::vector<u8>& peer_to_me);
+        
+
+        //临时
+        // debug only: send local DPF share back to party0
+        void sendDPFShareToParty0(int share);
+
+        // debug only: party0 recv both shares and print sum
+        void recvAndCheckDPFShares();
+        // debug only
+        void debug_print_dpfkey(DPFKEY& key, const std::string& tag);
+    private:
+        // party0 only (cache for debugging / later use)
+        std::vector<u8> dpfRdxPreBatch;   // size N, sent to party2
+        std::vector<u8> dpfRdxNextBatch;  // size N, sent to party1
+        // === DPF batch cache ===
+        std::vector<uint8_t>  dpfKeyBatchBuf;  // 拼接后的所有 DPF key 字节
+        std::vector<uint32_t> dpfKeyOffsets;   // offsets[alpha] = 起始字节位置
+        uint32_t              dpfDepth = 0;    // 当前 batch 的 depth
+        std::vector<u8>       dpfRdxShares;     // rdxShares[alpha] = 本 party 的 rdx share (u8)
+        uint32_t              dpfN = 0;         // = 1<<depth
+
+    public:
+        uint32_t getDPFN() const {
+            return dpfN;
+        }
+        vector<u8> getDPFRdxPreBatch() const {
+            return dpfRdxPreBatch;
+        }
+        vector<u8> getDPFRdxNextBatch() const {
+            return dpfRdxNextBatch;
+        }
+
+
 
     public:
         sb64 localBinary(i64 val) {
             sb64 dest;
+            mEnc.localBinary(mRt, val, dest).get();
+            return dest;
+        }
+
+        sb64 localBinary(u64 val) {
+            sb64 dest;
+            mEnc.localBinary(mRt, val, dest).get();
+            return dest;
+        }
+
+
+        sb8 localBinary(u8 val) {
+            sb8 dest;
             mEnc.localBinary(mRt, val, dest).get();
             return dest;
         }
@@ -127,6 +223,28 @@ namespace mostree {
             mEnc.remoteZeroBinary(mRt, dest).get();
             return dest;
         }
+
+
+        //add by jianli
+        su64 localU64(u64 val) {
+            su64 dest;
+            mEnc.localU64(mRt, val, dest).get();
+            return dest;
+        }
+
+        su64 remoteU64() {
+            su64 dest;
+            mEnc.remoteU64(mRt, dest).get();
+            return dest;
+        }
+
+        // su64 remoteZeroU64() {
+        //     su64 dest;
+        //     mEnc.remoteZeroU64(mRt, dest).get();
+        //     return dest;
+        // }
+
+        //end
 
         void CovertP2NBinary(sb64 &sour, sb64 &dest) {
             mEnc.CovertP2NBinary(mRt, sour, dest).get();
@@ -144,6 +262,18 @@ namespace mostree {
         // generates a binary sharing of the matrix input by the remote party and places the result in dest
         void remoteBinMatrix(sbMatrix &dest) {
             mEnc.remoteBinMatrix(mRt, dest).get();
+        }
+
+        // add by jianli
+        // generates an arithmatic sharing of the matrix m and places the result in dest
+        void localU8Matrix(const u8Matrix &m, su8Matrix &dest) {
+            mEnc.localU8Matrix(mRt, m, dest).get();
+        }
+
+        // add by jianli
+        // generates an arithmatic sharing of the matrix input by the remote party and places the result in dest
+        void remoteU8Matrix(su8Matrix &dest) {
+            mEnc.remoteU8Matrix(mRt, dest).get();
         }
 
         template<Decimal D>
@@ -207,9 +337,32 @@ namespace mostree {
             return static_cast<i64>(dest);
         }
 
+
+        // add by jianli
+        //reveal u8 binary value
+        u8 reveal(const sb8 &val) {
+            u8 dest;
+            mEnc.revealAll(mRt.noDependencies(), val, dest).get();
+            return static_cast<u8>(dest);
+        }
+
+        // add by jianli
+        u64 reveal(const su64 &val) {
+            u64 dest;
+            mEnc.revealAll(mRt.noDependencies(), val, dest).get();
+            return static_cast<u64>(dest);
+        }
+        //end
+
         i64Matrix reveal(const sbMatrix &val) {
             i64Matrix dest(val.rows(), val.i64Cols());
             mEnc.revealAll(mRt.noDependencies(), val, dest).get();
+            return dest;
+        }
+
+        u8Matrix reveal(const su8Matrix &val) {
+            u8Matrix dest(val.rows(), val.cols());
+            mEnc.revealAllU8Value(mRt.noDependencies(), val, dest).get();
             return dest;
         }
 

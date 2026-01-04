@@ -78,6 +78,21 @@
         "typeindex": "cpp",
         "typeinfo": "cpp",
         "valarray": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "fft": "cpp",
+        "matrixfunctions": "cpp",
+        "*.ipp": "cpp",
+        "filesystem": "cpp",
+        "coroutine": "cpp",
+        "source_location": "cpp",
+        "__nullptr": "cpp",
+        "csetjmp": "cpp",
+        "regex": "cpp",
+        "rope": "cpp",
+        "slist": "cpp",
+        "scoped_allocator": "cpp",
+        "shared_mutex": "cpp",
+        "span": "cpp",
+        "tensor": "cpp"
     }
 }

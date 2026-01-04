@@ -5,10 +5,10 @@
 int main(int argc, char **argv)
 {
 
-    uint32_t len = 20;
+    uint32_t len = 12;
     DPFKEY key0(len), key1(len);
 
-    uint32_t rdx = 15;
+    uint32_t rdx = 15;// number of block
 
     // for(uint32_t i = 1; i <= 32; i++) {
     //     bool bit = get_bit(rdx, 32, i); 
@@ -16,10 +16,10 @@ int main(int argc, char **argv)
     // } 
 
     // bool a =  true, b = false;
-    // std::cout<< (a ^ b) << std::endl;
-
-    block beta = makeBlock(0, 0xFFFF);
-    gen_dpf_key_pair(rdx, len, beta, &key0, &key1); 
+    std::cout<< key0.get_depth() << std::endl;
+    
+    block beta = makeBlock(0, 0x1);
+    gen_dpf_key_pair(rdx, len-7, beta, &key0, &key1); 
     
     uint32_t buf_size = key0.get_buf_size(); 
     char* buf0 = new char[buf_size];
@@ -36,6 +36,10 @@ int main(int argc, char **argv)
     block share0 = dpf_eval(0, &key0, rdx, hash_out0);
     block share1 = dpf_eval(1, &key1, rdx, hash_out1);
 
+    uint64_t s0 = _mm_extract_epi64(share0, 0); // low 64 bits
+    uint64_t s1 = _mm_extract_epi64(share1, 0);
+    std::cout<< "share is : "  << (s0 ^ s1) << std::endl;
+
     std::cout<< "share: "  << (share0 ^ share1) <<std::endl;
     std::cout<< "hash_out 0: "  << (hash_out0[0] ^ hash_out1[0]) <<std::endl;
     std::cout<< "hash_out 1: "  << (hash_out0[1] ^ hash_out1[1]) <<std::endl;
@@ -50,11 +54,11 @@ int main(int argc, char **argv)
     std::cout<< "proof: "  << (proof0[1] ^ proof1[1]) <<std::endl;
 
 
-    // for(uint32_t i = 0; i < 1 << key0.get_depth(); i++) {
-    //     std::cout<< "i = " << i << " : " << (vec0[i] ^ vec1[i]) << std::endl;  
-    // }
+    for(uint32_t i = 0; i < 1 << key0.get_depth(); i++) {
+        std::cout<< "i = " << i << " : " << (vec0[i] ^ vec1[i]) << std::endl;  
+    }
 
-    // this part for VDPF 
+    //this part for VDPF 
 
 
     delete[] buf0;

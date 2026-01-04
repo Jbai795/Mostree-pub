@@ -1,0 +1,816 @@
+1. Address already in use
+lsof -i :1212 
+kill -9 PID
+
+
+rm -rf out/build/linux
+python3 build.py
+
+
+Test if the value/Matrix revealed correctly.
+
+//test if it is shared correctly.
+    // auto opened = ss3dtree.reveal(ssValueScheme);
+    // if (pIdx == 0) {
+    //     LOG(INFO) <<"pIdx is " << pIdx;
+    //     LOG(INFO) <<"-------- ssValueScheme -----------" << ssValueScheme;
+    //     LOG(INFO) << "Model feature schema: \n" << opened;
+
+    //     std::cout << "opened rows=" << opened.rows()
+    //       << " cols=" << opened.cols()
+    //       << " size=" << opened.size() << "\n";
+
+    // }
+
+    // if (pIdx == 1) {
+    //     LOG(INFO) <<"pIdx is " << pIdx;
+    //     LOG(INFO) <<"-------- ssValueScheme -----------" << ssValueScheme;
+    //     LOG(INFO) << "Model feature schema: \n" << opened;
+    // }
+
+    // if (pIdx == 2) {
+    //     LOG(INFO) <<"pIdx is " << pIdx;
+    //     LOG(INFO) <<"-------- ssValueScheme -----------" << ssValueScheme;
+    //     LOG(INFO) << "Model feature schema: \n" << opened;
+    // }
+
+
+
+    if (pIdx == 1 || pIdx == 2) {
+
+        // ========= step 1: 接收 batch DPF keys + rdx shares =========
+        ss3dtree.recvDPFKeyBatch();
+        std::cout << "[BATCH-TEST] party" << pIdx
+                << " batch received.\n";
+
+        // ========= step 2: 准备要 eval 的 alphas =========
+        const uint32_t rounds = 20;
+        std::vector<uint32_t> alphas(rounds);
+
+        for (uint32_t r = 0; r < rounds; ++r) {
+            alphas[r] = r;   // 简单测试：alpha = 0,1,2,...
+        }
+
+        // ========= step 3: 本地准备 reveal batch =========
+        std::vector<u8> my_to_peer;
+        ss3dtree.prepareMaskedRevealBatch(
+            alphas,
+            ssDGKSchema,     // su8Matrix
+            my_to_peer
+        );
+
+        // ========= step 4: 一次性交换 reveal =========
+        std::vector<u8> peer_to_me;
+        ss3dtree.exchangeMaskedRevealBatch(
+            my_to_peer,
+            peer_to_me
+        );
+
+        // ========= step 5: 本地 batch eval =========
+        for (size_t i = 0; i < alphas.size(); ++i) {
+            uint32_t alpha = alphas[i];
+
+            int share = ss3dtree.evalDPFBatchWithReveal(
+                alpha,
+                i,              // 对应 peer_to_me 的 index
+                peer_to_me,
+                ssDGKSchema
+            );
+
+            std::cout << "[BATCH-TEST] party" << pIdx
+                    << " idx=" << i
+                    << " alpha=" << alpha
+                    << " share=" << share
+                    << "\n";
+
+            // 可选：发回 party0 做 correctness check
+            // ss3dtree.sendDPFBatchShareToParty0(i, alpha, share);
+        }
+    }
+
+
+
+    void SS3Dtree::prepareMaskedRevealBatch(
+    const std::vector<uint32_t>& alphas,
+    aby3::su8Matrix& ssDGKSchema,
+    std::vector<u8>& my_to_peer)
+    {
+        if (dpfRdxShares.size() != dpfN)
+            throw std::runtime_error("prepareMaskedRevealBatch: dpfRdxShares not ready");
+
+        my_to_peer.resize(alphas.size());
+
+        for (size_t i = 0; i < alphas.size(); ++i) {
+            uint32_t alpha = alphas[i];
+            if (alpha >= dpfN)
+                throw std::runtime_error("prepareMaskedRevealBatch: alpha out of range");
+
+            u8 rdx = dpfRdxShares[alpha];
+
+            if (partyIdx() == 1) my_to_peer[i] = (u8)(ssDGKSchema(0,0)[1] + rdx);
+            else                 my_to_peer[i] = (u8)(ssDGKSchema(0,0)[0] + rdx);
+        }
+    }
+
+
+
+    // ================= party 1/2: recv batch =================
+    // if (pIdx == 1 || pIdx == 2) {
+    //     ss3dtree.recvDPFKeyBatch();
+    //     std::cout << "[BATCH-TEST] party" << pIdx << " batch received.\n";
+
+    //     // ============ local evaluation (no party0 involved) ============
+    //     const uint32_t rounds = 20;
+    //     for (uint32_t r = 0; r < rounds; ++r) {
+    //         uint32_t alpha = r;   // 选第 alpha 把 key（命中点）
+    //         uint32_t x     = 5;   // eval 输入点
+
+    //         int share = ss3dtree.evalDPFBatch(alpha, x);
+
+    //         std::cout << "[BATCH-TEST] party" << pIdx
+    //                   << " r=" << r
+    //                   << " alpha=" << alpha
+    //                   << " x=" << x
+    //                   << " share=" << share << "\n";
+
+    //         // 可选：把 share 发回 party0 做 correctness check
+    //         // ss3dtree.sendDPFBatchShareToParty0(r, alpha, x, share);
+    //     }
+    // }
+
+
+    void sendMaskedRevealBatch (aby3::su8Matrix&ssDGKSchema, const std::vector<u8> rdx_to_p1, const std::vector<u8> rdx_to_p2);
+
+    // p0 reveals masked values to p1 and p2
+    void SS3Dtree::sendMaskedRevealBatch (aby3::su8Matrix&ssDGKSchema, const std::vector<u8> rdx_to_pre, const std::vector<u8> rdx_to_next){
+        if (partyIdx() != 0) return;
+
+        uint64_t sz = rdx_to_pre.size();
+        if (rdx_to_pre.size() != rdx_to_next.size())
+        throw std::runtime_error("sendMaskedRevealBatch: size mismatch");
+        std::vector<u8> send_to_next; // send to p1
+        std::vector<u8> send_to_pre; // send to p2
+
+        send_to_next.resize(dpfN);
+        send_to_pre.resize(dpfN);
+        
+        for (size_t i = 0; i < dpfN; ++i) {
+            send_to_next[i] = (u8)(ssDGKSchema(i,0)[0] + rdx_to_next[i]);
+            send_to_pre[i] = (u8)(ssDGKSchema(i,0)[1] + rdx_to_pre[i]);
+        }
+        
+        // to party1 
+        mNext.send(sz);
+        mNext.send(rdx_to_pre.data(), sz);
+
+        // to party2
+        mPrev.send(sz);
+        mPrev.send(rdx_to_next.data(), sz);
+    }
+
+
+
+    // void SS3Dtree::sendDPFKeysFromParty0(uint32_t len, uint32_t rdx)
+    // {
+    //     if (partyIdx() != 0) return;
+
+    //     // 先广播 alpha/rdx
+    //     mNext.send(rdx);
+    //     mPrev.send(rdx);
+
+    //     auto blobs = DPFGen(len, rdx, makeBlock(0, 0x1));
+
+    //     #ifdef DEBUG_PRINT_DPFKEY
+    //     //for debugging purpose
+    //     auto out = DPFGenWithKeys(len, rdx, makeBlock(0, 0x1));
+    //     debug_print_dpfkey(*out.keyToParty1, "party1 before send");
+    //     debug_print_dpfkey(*out.keyToParty2, "party2 before send");
+    //     auto &blobs = out.blobs;
+    //     #endif
+
+
+    //     // to party1 (next)
+    //     uint64_t n1 = (uint64_t)blobs.toParty1.bytes.size();
+    //     mNext.send(n1);
+    //     if (n1) mNext.send(blobs.toParty1.bytes.data(), n1);   // ✅ POD send
+
+    //     // to party2 (prev)
+    //     uint64_t n2 = (uint64_t)blobs.toParty2.bytes.size();
+    //     mPrev.send(n2);
+    //     if (n2) mPrev.send(blobs.toParty2.bytes.data(), n2);   // ✅ POD send
+    // }
+
+
+    // std::pair<uint32_t, int> SS3Dtree::recvAndEvalDPFfromParty0(uint32_t len)
+    // {
+    //     if (partyIdx() != 1 && partyIdx() != 2)
+    //         throw std::runtime_error("only party1/2 should call recvAndEvalDPFfromParty0()");
+
+    //     uint32_t rdx = 0;
+    //     if (partyIdx() == 1) mPrev.recv(rdx);
+    //     else mNext.recv(rdx);
+
+    //     DPFKeyBlob blob;
+    //     uint64_t n = 0;
+    //     if (partyIdx() == 1) {
+    //         mPrev.recv(n);
+    //         blob.bytes.resize((size_t)n);
+    //         if (n) mPrev.recv(blob.bytes.data(), n);
+    //     } else {
+    //         mNext.recv(n);
+    //         blob.bytes.resize((size_t)n);
+    //         if (n) mNext.recv(blob.bytes.data(), n);
+    //     }
+
+    //     uint32_t evalId01 = (partyIdx() == 1) ? 0 : 1;
+
+    //     // 用你单机 main 里验证过的 eval 路径
+    //     DPFKEY key(len);
+    //     deserialization((char*)blob.bytes.data(), &key);
+
+    //     #ifdef DEBUG_PRINT_DPFKEY
+    //     //for debugging purpose
+    //     debug_print_dpfkey(key, "party1 after recv");
+    //     #endif
+
+    //     emp::block hash_out[2];
+    //     int share = dpf_eval_int(evalId01, &key, rdx, hash_out);
+
+    //     return { rdx, share };
+    // }
+
+
+
+
+
+    // int SS3Dtree::evalDPFBatch(uint32_t alpha, uint32_t x)
+    // {
+    //     uint32_t off = dpfKeyOffsets[alpha];
+    //     DPFKEY key(dpfDepth);
+    //     deserialization(
+    //         (char*)(dpfKeyBatchBuf.data() + off),
+    //         &key
+    //     );
+
+    //     emp::block h[2];
+    //     return dpf_eval_int(
+    //         partyIdx() == 1 ? 0 : 1,
+    //         &key,
+    //         x,
+    //         h
+    //     );
+    // }
+
+
+
+
+
+    // BATCH DPF test offline phase
+    // party0 sends 2^depth DPF keys to party1 and party2 respectively
+    const uint32_t N = 1u << depth;  
+    // ================= party 0: keygen + send =================
+    if (pIdx == 0) {
+        std::cout << "[BATCH-TEST] party0 sending " << N << " DPF keys (depth=" << depth << ")\n";
+
+        ss3dtree.sendDPFKeyBatchFromParty0(depth);
+
+        // 可选：做 correctness check，需要 party1/2 把 shares 发回来
+        // ss3dtree.recvAndCheckDPFBatchShares(/*rounds=*/20, depth);
+    }
+    
+    // ========= 接收 batch DPF keys + rdx shares =========
+    if (pIdx == 1 || pIdx == 2) ss3dtree.recvDPFKeyBatch();
+    std::cout << "[BATCH-TEST] party" << pIdx << " batch received.\n";
+    
+    #ifdef SET_MALICIOUS 
+    //BATCH DPF test online phase
+    // ================= party 0: send batch =================
+    if(pIdx == 0){
+        ss3dtree.sendMaskedRdxBatch(ssDGKSchema); // u8 vector
+    }
+    #endif
+
+
+    // ================= party 1/2: recv batch =================
+    if (pIdx == 1 || pIdx == 2) {
+        #ifdef SET_MALICIOUS 
+        // ========= step 接收来自party0的 masked rdx batch =========
+        ss3dtree.recvMaskedRdxBatch(); // u8 vector
+        std::cout << "[BATCH-TEST] party" << pIdx << " masked rdx batch received.\n";
+        #endif
+        // ========= step 1: 本地准备 masked rdx batch =========
+        std::vector<u8> my_to_peer;
+        ss3dtree.prepareMaskedRdxBatch(ssDGKSchema, my_to_peer);    // su8Matrix
+
+        // ========= step 2: 一次性交换 masked rdx =========
+        std::vector<u8> peer_to_me;
+        ss3dtree.exchangeMaskedRdxBatch(
+            my_to_peer,
+            peer_to_me
+        );
+
+        #ifdef SET_MALICIOUS
+        ss3dtree.maskedRdxCheck(peer_to_me);
+        #endif
+
+        // ========= step 3: 本地 batch eval =========
+        vector <int32_t> dpfShares;
+        dpfShares.resize(ss3dtree.getDPFN());
+        int64_t dpfSharesSum = 0;
+        for (size_t i = 0; i < ss3dtree.getDPFN(); ++i) {
+
+            dpfShares[i] = ss3dtree.evalDPFBatchWithReveal(i, peer_to_me, ssDGKSchema); // 对应 peer_to_me 的 index
+
+            dpfSharesSum += dpfShares[i];
+
+            std::cout << "[BATCH-TEST] party" << pIdx << " idx=" << i << " share=" << dpfShares[i] << "\n";
+            // 可选：发回 party0 做 correctness check
+            // ss3dtree.sendDPFBatchShareToParty0(i, alpha, dpfShares[i]);
+        }
+        std::cout << "[BATCH-TEST] party" << pIdx << " total share sum=" << dpfSharesSum << "\n";
+
+    }
+
+
+
+// void party0_gen_and_send(int pIdx, uint32_t len, uint32_t rdx) {
+//     if (pIdx != 0) return;
+
+//     emp::block beta = makeBlock(0, 0x1);
+//     std::cout<< "Generating DPF keys..." << std::endl;
+//     auto blobs = DPFGen(len, rdx, beta);
+//     std::cout<< "DPF keys generated." << std::endl;
+
+//     // TODO: 把 blobs.toParty1.bytes 发给 party1
+//     // TODO: 把 blobs.toParty2.bytes 发给 party2
+// }
+
+// void party0_gen_and_send(int pIdx, uint32_t len, uint32_t rdx, CommPkg& comm) {
+//     if (pIdx != 0) return;
+
+//     emp::block beta = makeBlock(0, 0x1);
+
+//     std::cout << "Generating DPF keys..." << std::endl;
+//     auto blobs = DPFGen(len, rdx, beta);
+//     std::cout << "DPF keys generated." << std::endl;
+
+//     // party0: mNext -> party1, mPrev -> party2
+//     sendDPFKeyBlob(comm.mNext, blobs.toParty1);
+//     sendDPFKeyBlob(comm.mPrev, blobs.toParty2);
+// }
+
+
+// void party1_recv_and_eval(int pIdx, uint32_t len, uint32_t x, CommPkg& comm)
+// {
+//     if (pIdx != 1) return;
+
+//     DPFKeyBlob blobFrom0;
+//     recvDPFKeyBlob(comm.mPrev, blobFrom0);   // party1 的 prev 是 party0
+
+//     DPFBlock h[2];
+//     int y = DPFEvalInt(/*evalId01=*/0, len, blobFrom0, x, h); // evalId 你自己按协议定：0/1
+//     (void)y;
+// }
+
+// void party2_recv_and_eval(int pIdx, uint32_t len, uint32_t x, CommPkg& comm)
+// {
+//     if (pIdx != 2) return;
+
+//     DPFKeyBlob blobFrom0;
+//     recvDPFKeyBlob(comm.mNext, blobFrom0);   // party2 的 next 是 party0
+
+//     DPFBlock h[2];
+//     int y = DPFEvalInt(/*evalId01=*/1, len, blobFrom0, x, h);
+//     (void)y;
+// }
+
+
+
+
+/*
+     * test steps, to see how to share a 64*1 matrix, each element is 8 bits. 
+     * x < y
+     */
+
+    //  假设party0 准备 x
+    
+    u8Matrix x;
+    if (pIdx == 0) {
+        x.resize(MODEL_BITS, 1);
+        for (u64 i = 0; i < x.size(); ++i) x(i) = 0;
+    }
+    su8Matrix ssValueScheme = ss3dtree.shareValueSchema(pIdx, x, model);
+
+    // prepare a plaintext y
+    u8Matrix y;
+    y.resize(MODEL_BITS, 1);
+    for (u64 i = 0; i < y.size(); ++i) y(i) = 1;
+
+    /*
+     * Step 2.5  compute DGK vector dgkScheme
+     */
+
+    su8Matrix ssDGKSchema = ss3dtree.ssDGKSchema(pIdx, model, y);
+
+    u8 a0 = ssDGKSchema(0,0)[0];
+    u8 a1 = ssDGKSchema(0,0)[1];
+    std::cout << "pIdx=" << pIdx << " ssDGKSchema(0,0)=(" << (unsigned)a0 << "," << (unsigned)a1 << ")" << std::endl;
+
+
+
+    //DPF tests if there is only one 0 in the vector f
+    //suppose party0 is DPF key generator and party1,party2 are DPF evaluators.
+    //party 0 generates two DPF keys for a random value alpha and sends the keys to party1 and party2 respectively.
+    //party1 and party2 evaluate the DPF keys to see whether there is only one 0 in the vector f.
+    //u64 alpha = 5; //randomly select an index where f_alpha = 0
+    // if(pIdx == 0){
+    //     u64 alpha = rand() % MODEL_BITS; //randomly select an index where f_alpha = 1
+    //     std::cout << "DPF test, randomly selected alpha index is: " << alpha << std::endl;
+    //     // party0_gen_and_send(0, ceil(log(MODEL_BITS)/log(2)), alpha);
+    //     ss3dtree.sendDPFKeysFromParty0(ceil(log(MODEL_BITS)/log(2)), alpha);
+    // }
+
+    // if(pIdx == 1 || pIdx == 2){
+    //     ss3dtree.recvDPFKeyFromParty0();
+    // }
+
+    uint32_t depth = (uint32_t)std::ceil(std::log2((double)MODEL_BITS));
+
+    #ifdef DPF_SINGLE
+    // ssDGKSchema(0,0)
+    if (pIdx == 0) {
+        uint32_t alpha = rand() % (1 << depth); //randomly select an small index  < 2^depth where f_alpha = 1
+        // std::cout << "DPF test, randomly selected alpha index is: " << alpha << std::endl;
+
+        ss3dtree.sendDPFKeysFromParty0(depth, alpha);
+
+        #ifdef CORRET_DPF_TEST
+        // 临时 debug： party0接收来自p1和p2的DPF计算后的结果，检查正确性
+        ss3dtree.recvAndCheckDPFShares();
+        #endif
+    }
+
+    if (pIdx == 1 || pIdx == 2) {
+        auto [alpha_recv, share] = ss3dtree.recvAndEvalDPFfromParty0(depth, ssDGKSchema(0,0));
+        // std::cout << "P" << pIdx << " recv alpha=" << alpha_recv << " share=" << share << std::endl;
+
+        #ifdef CORRET_DPF_TEST
+        // 临时 debug：把 share 发回 party0
+        ss3dtree.sendDPFShareToParty0(share);
+        #endif
+    }
+    #endif // DPF_SINGLE
+
+
+    // BATCH DPF test offline phase
+    // party0 sends 2^depth DPF keys to party1 and party2 respectively
+    const uint32_t N = 1u << depth;  
+    // ================= party 0: keygen + send =================
+    if (pIdx == 0) {
+        std::cout << "[BATCH-TEST] party0 sending " << N << " DPF keys (depth=" << depth << ")\n";
+
+        ss3dtree.sendDPFKeyBatchFromParty0(depth);//party0生成f(x) = (1,beta2) if x == alpha, else f(x) = (0,0) DPF keys，并发送给party1和party2
+
+        // 可选：做 correctness check，需要 party1/2 把 shares 发回来
+        // ss3dtree.recvAndCheckDPFBatchShares(/*rounds=*/20, depth);
+    }
+    
+    // ========= 接收 batch DPF keys + rdx shares =========
+    if (pIdx == 1 || pIdx == 2) ss3dtree.recvDPFKeyBatch();
+    std::cout << "[BATCH-TEST] party" << pIdx << " batch received.\n";
+    
+    #ifdef SET_MALICIOUS 
+    //BATCH DPF test online phase
+    // ================= party 0: send batch =================
+    if(pIdx == 0){
+        ss3dtree.sendMaskedRdxBatch(ssDGKSchema); // u8 vector
+    }
+    #endif
+
+
+    // ================= party 1/2: recv batch =================
+    if (pIdx == 1 || pIdx == 2) {
+        #ifdef SET_MALICIOUS 
+        // ========= step 接收来自party0的 masked rdx batch =========
+        ss3dtree.recvMaskedRdxBatch(); // u8 vector
+        std::cout << "[BATCH-TEST] party" << pIdx << " masked rdx batch received.\n";
+        #endif
+        // ========= step 1: 本地准备 masked rdx batch =========
+        std::vector<u8> my_to_peer;
+        ss3dtree.prepareMaskedRdxBatch(ssDGKSchema, my_to_peer);    // su8Matrix
+
+        // ========= step 2: 一次性交换 masked rdx =========
+        std::vector<u8> peer_to_me;
+        ss3dtree.exchangeMaskedRdxBatch(
+            my_to_peer,
+            peer_to_me
+        );
+
+        #ifdef SET_MALICIOUS
+        ss3dtree.maskedRdxCheck(peer_to_me);
+        #endif
+
+        // ========= step 3: 本地 batch eval =========
+        vector <int32_t> dpfShares;
+        dpfShares.resize(ss3dtree.getDPFN());
+        vector <int32_t> dpfMACShares;
+        dpfMACShares.resize(ss3dtree.getDPFN());
+        DpfEvalInt2 dpfOutput;
+        int64_t dpfSharesSum = 0;
+        int64_t dpfMACSharesSum = 0;
+        for (size_t i = 0; i < ss3dtree.getDPFN(); ++i) {
+
+            dpfOutput = ss3dtree.evalDPFBatchWithMAC(i, peer_to_me, ssDGKSchema); // 对应 peer_to_me 的 index
+            dpfShares[i] = dpfOutput.v1;
+            dpfMACShares[i] = dpfOutput.v2;
+            dpfSharesSum += dpfShares[i];
+            dpfMACSharesSum += dpfMACShares[i];
+
+            std::cout << "[BATCH-TEST] party" << pIdx << " idx=" << i << " share=" << dpfShares[i] << "\n";
+            std::cout << "[BATCH-TEST] party" << pIdx << " idx=" << i << " MAC share=" << dpfMACShares[i] << "\n";
+            // 可选：发回 party0 做 correctness check
+            // ss3dtree.sendDPFBatchShareToParty0(i, alpha, dpfShares[i]);
+        }
+        std::cout << "[BATCH-TEST] party" << pIdx << " total share sum=" << dpfSharesSum << "\n";
+        std::cout << "[BATCH-TEST] party" << pIdx << " total MAC share sum=" << dpfMACSharesSum << "\n";
+
+    }
+
+
+
+
+/*
+     * test steps, to see how to share a 64*1 matrix, each element is 8 bits. 
+     * x < y
+     */
+
+    //  假设party0 准备 x
+    
+    u8Matrix x;
+    if (pIdx == 0) {
+        x.resize(MODEL_BITS, 1);
+        for (u64 i = 0; i < x.size(); ++i) x(i) = 0;
+    }
+    su8Matrix ssValueScheme = ss3dtree.shareValueSchema(pIdx, x, model);
+
+    // prepare a plaintext y
+    u8Matrix y;
+    y.resize(MODEL_BITS, 1);
+    for (u64 i = 0; i < y.size(); ++i) y(i) = 1;
+
+    /*
+     * Step 2.5  compute DGK vector dgkScheme
+     */
+
+    su8Matrix ssDGKSchema = ss3dtree.ssDGKSchema(pIdx, model, y);
+
+    // u8 a0 = ssDGKSchema(0,0)[0];
+    // u8 a1 = ssDGKSchema(0,0)[1];
+    // std::cout << "pIdx=" << pIdx << " ssDGKSchema(0,0)=(" << (unsigned)a0 << "," << (unsigned)a1 << ")" << std::endl;
+
+
+
+    //DPF tests if there is only one 0 in the vector f
+    //suppose party0 is DPF key generator and party1,party2 are DPF evaluators.
+    //party 0 generates two DPF keys for a random value alpha and sends the keys to party1 and party2 respectively.
+    //party1 and party2 evaluate the DPF keys to see whether there is only one 0 in the vector f.
+    //u64 alpha = 5; //randomly select an index where f_alpha = 0
+    // if(pIdx == 0){
+    //     u64 alpha = rand() % MODEL_BITS; //randomly select an index where f_alpha = 1
+    //     std::cout << "DPF test, randomly selected alpha index is: " << alpha << std::endl;
+    //     // party0_gen_and_send(0, ceil(log(MODEL_BITS)/log(2)), alpha);
+    //     ss3dtree.sendDPFKeysFromParty0(ceil(log(MODEL_BITS)/log(2)), alpha);
+    // }
+
+    // if(pIdx == 1 || pIdx == 2){
+    //     ss3dtree.recvDPFKeyFromParty0();
+    // }
+
+    uint32_t depth = (uint32_t)std::ceil(std::log2((double)MODEL_BITS));
+
+    #ifdef DPF_SINGLE
+    // ssDGKSchema(0,0)
+    if (pIdx == 0) {
+        uint32_t alpha = rand() % (1 << depth); //randomly select an small index  < 2^depth where f_alpha = 1
+        // std::cout << "DPF test, randomly selected alpha index is: " << alpha << std::endl;
+
+        ss3dtree.sendDPFKeysFromParty0(depth, alpha);
+
+        #ifdef CORRET_DPF_TEST
+        // 临时 debug： party0接收来自p1和p2的DPF计算后的结果，检查正确性
+        ss3dtree.recvAndCheckDPFShares();
+        #endif
+    }
+
+    if (pIdx == 1 || pIdx == 2) {
+        auto [alpha_recv, share] = ss3dtree.recvAndEvalDPFfromParty0(depth, ssDGKSchema(0,0));
+        // std::cout << "P" << pIdx << " recv alpha=" << alpha_recv << " share=" << share << std::endl;
+
+        #ifdef CORRET_DPF_TEST
+        // 临时 debug：把 share 发回 party0
+        ss3dtree.sendDPFShareToParty0(share);
+        #endif
+    }
+    #endif // DPF_SINGLE
+
+
+    // BATCH DPF test offline phase
+    // party0 sends 2^depth DPF keys to party1 and party2 respectively
+    const uint32_t N = 1u << depth;  
+    // ================= party 0: keygen + send =================
+    if (pIdx == 0) {
+        std::cout << "[BATCH-TEST] party0 sending " << N << " DPF keys (depth=" << depth << ")\n";
+        std::cout<< "P0 mac key is " << uint64_t(ss_mac_key_for_2to3[0]+ss_mac_key_for_2to3[1]) << std::endl;
+
+        ss3dtree.sendDPFKeyBatchFromParty0(depth, ss_mac_key_for_2to3);//party0生成f(x) = (1,beta2) if x == alpha, else f(x) = (0,0) DPF keys，并发送给party1和party2
+
+        // 可选：做 correctness check，需要 party1/2 把 shares 发回来
+        // ss3dtree.recvAndCheckDPFBatchShares(/*rounds=*/20, depth);
+    }
+    
+    // ========= 接收 batch DPF keys + rdx shares =========
+    if (pIdx == 1 || pIdx == 2) ss3dtree.recvDPFKeyBatch();
+    std::cout << "[BATCH-TEST] party" << pIdx << " batch received.\n";
+    
+    #ifdef SET_MALICIOUS 
+    //BATCH DPF test online phase
+    // ================= party 0: send batch =================
+    if(pIdx == 0){
+        ss3dtree.sendMaskedRdxBatch(ssDGKSchema); // u8 vector
+    }
+    #endif
+
+    su64 compare_result;
+    su64 maced_compare_result;
+    // ================= party 1/2: recv batch =================
+    if (pIdx == 1 || pIdx == 2) {
+        #ifdef SET_MALICIOUS 
+        // ========= step 接收来自party0的 masked rdx batch =========
+        ss3dtree.recvMaskedRdxBatch(); // u8 vector
+        std::cout << "[BATCH-TEST] party" << pIdx << " masked rdx batch received.\n";
+        #endif
+        // ========= step 1: 本地准备 masked rdx batch =========
+        std::vector<u8> my_to_peer;
+        ss3dtree.prepareMaskedRdxBatch(ssDGKSchema, my_to_peer);    // su8Matrix
+
+        // ========= step 2: 一次性交换 masked rdx =========
+        std::vector<u8> peer_to_me;
+        ss3dtree.exchangeMaskedRdxBatch(
+            my_to_peer,
+            peer_to_me
+        );
+
+        #ifdef SET_MALICIOUS
+        ss3dtree.maskedRdxCheck(peer_to_me);
+        #endif
+
+        // ========= step 3: 本地 batch eval =========
+        vector <uint64_t> dpfShares;
+        dpfShares.resize(ss3dtree.getDPFN());
+        vector <uint64_t> dpfMACShares;
+        dpfMACShares.resize(ss3dtree.getDPFN());
+        DpfEvalInt2 dpfOutput;
+        uint64_t dpfSharesSum = 0;
+        uint64_t dpfMACSharesSum = 0;
+        for (size_t i = 0; i < ss3dtree.getDPFN(); ++i) {
+
+            dpfOutput = ss3dtree.evalDPFBatchWithMAC(i, peer_to_me, ssDGKSchema); // 对应 peer_to_me 的 index
+            dpfShares[i] = dpfOutput.v1;
+            dpfMACShares[i] = dpfOutput.v2;
+            dpfSharesSum += dpfShares[i];
+            dpfMACSharesSum += dpfMACShares[i];
+
+            std::cout << "[BATCH-TEST] party" << pIdx << " idx=" << i << " share=" << dpfShares[i] << "\n";
+            std::cout << "[BATCH-TEST] party" << pIdx << " idx=" << i << " MAC share=" << dpfMACShares[i] << "\n";
+            // 可选：发回 party0 做 correctness check
+            // ss3dtree.sendDPFBatchShareToParty0(i, alpha, dpfShares[i]);
+        }
+
+        if(pIdx==1)
+            dpfMACSharesSum = dpfSharesSum * ss_mac_key_for_2to3[0] + dpfMACSharesSum;
+        else//pIdx==2
+            dpfMACSharesSum = dpfSharesSum * ss_mac_key_for_2to3[1] + dpfMACSharesSum;
+        
+        //p1 and p2 reshare comparison result and maced comparison result
+        compare_result = ss3dtree.getShareMACKeyU64Data(pIdx, dpfSharesSum);
+        maced_compare_result = ss3dtree.getShareMACKeyU64Data(pIdx, dpfMACSharesSum);  
+
+        
+        std::cout << "[BATCH-TEST] party" << pIdx << " total share sum= " << dpfSharesSum << "\n";
+        std::cout << "[BATCH-TEST] party" << pIdx << " total MAC share sum= " << dpfMACSharesSum << "\n";
+        // std::cout << "test output is " << u64(7198098717934757398+ 11248645355774794219) << std::endl;
+        // std::cout << "test output is " << u64(2592748365871554613+ 15853995707837997012) << std::endl;    
+    }
+
+    if(pIdx == 0){
+        //p0 reshare
+        compare_result = ss3dtree.getShareMACKeyU64Data(pIdx, u64(0));
+        maced_compare_result = ss3dtree.getShareMACKeyU64Data(pIdx, u64(0));
+    }
+    // std::cout << "reveal compare_result compare_result[0] is " << compare_result[0] << " compare_result[0] is " << compare_result[1] << std::endl;
+    // std::cout << "test output is " << u64(10082085126823338503+ 13175973558201821505+13635429462393943225) << std::endl;    
+    
+    // //reveal to check
+    // auto revealed1 = ss3dtree.reveal(compare_result);
+    // auto revealed2 = ss3dtree.reveal(maced_compare_result);
+    // if (pIdx == 0) {
+    //     LOG(INFO) << "Comparison result revealed: \n" << revealed1;
+    //     LOG(INFO) << "MACed Comparison result revealed: \n" << revealed2;
+    // }
+
+    //check reshare
+    su64 mac_multi_compare_result;
+    mac_multi_compare_result = ss3dtree.rss_u64_mul(ss_mac_key_for_2to3, compare_result);
+
+
+    su64 ret = mac_multi_compare_result - maced_compare_result;
+    auto revealed = ss3dtree.reveal(ret);
+    if (pIdx == 0) {
+        LOG(INFO) << "Comparison result revealed: \n" << revealed;
+    }
+
+
+
+    // u8 s;
+        // sb8 b_s;
+
+        // if (pIdx == 0) {// 0 = 0 xor 1 xor 1
+        //     s = 0;
+        //     b_s = getShareBinData(pIdx, s);
+        // }else if(pIdx == 1){
+        //     s = 1;
+        //     b_s = getShareBinData(pIdx, s);
+        // }else{
+        //     s = 1;
+        //     b_s = getShareBinData(pIdx, s);
+        // }
+
+        sb8 b_s;
+        u64 thre = 214;
+        sb64 ss_thre = getShareBinData(pIdx, thre);// u64 RSS shared
+        su64 tem = su64::zero();
+        for(int i = 0; i < MODEL_BITS; i++){
+            b_s = ss_thre.getBitShare(i);
+            tem = tem + (1ULL << i) * bit2A(b_r, a_r, b_s, pIdx);
+        }
+        auto result = reveal(tem);
+        if (pIdx == 0) {
+            LOG(INFO) << "converted value in arithematic is : " << result;
+        }
+
+        // su64 b2a_a_r = bit2A(b_r, a_r, b_s, pIdx);
+        // auto re = reveal(b2a_a_r);
+        // if (pIdx == 0) {
+        //     LOG(INFO) << "Revealed a_tr share : \n" << int64_t(re);
+        // }
+
+        // if (pIdx == 0) {// 1 = 6 xor 11 xor 12
+        //     b_r[0] = u8(6);
+        //     b_r[1] = u8(11);
+        // }else if(pIdx == 1){
+        //     b_r[0] = u8(12);
+        //     b_r[1] = u8(6);
+        // }else{
+        //     b_r[0] = u8(11);
+        //     b_r[1] = u8(12);
+        // }
+        
+        // u64 tr = 2;
+        // sb64 b2a_b_tr = getShareBinData(pIdx, tr);// 2 binary RSS shared
+
+        // sb64 b2a_b_c = bin_xor(b2a_b_r, b2a_b_tr);
+        // u64 reveal_c = reveal(b2a_b_c);
+        // if (pIdx == 0) {
+        //     LOG(INFO) << "Revealed arithematic share : \n" << reveal_c;
+        // }
+        // su64 a_tr;
+        // if(pIdx == 0){
+        //     a_tr[0] = b2a_a_r[0] + reveal_c - b2a_a_r[0] * reveal_c;
+        //     a_tr[1] = b2a_a_r[1] - b2a_a_r[1] * reveal_c;
+        // }else if(pIdx == 1){
+        //     a_tr[0] = b2a_a_r[0] - b2a_a_r[0] * reveal_c;
+        //     a_tr[1] = b2a_a_r[1] + reveal_c - b2a_a_r[1] * reveal_c;
+        // }else if(pIdx == 2){
+        //     a_tr[0] = b2a_a_r[0] - b2a_a_r[0] * reveal_c;
+        //     a_tr[1] = b2a_a_r[1] - b2a_a_r[1] * reveal_c;
+        // }
+
+
+        // auto revealed1 = reveal(a_tr);
+        // if (pIdx == 0) {
+        //     LOG(INFO) << "Revealed a_tr share : \n" << int64_t(revealed1);
+        // }
+
+
+        
+
+
+        // auto revealed1 = reveal(b2a_ar);
+        // if (pIdx == 0) {
+        //     LOG(INFO) << "Revealed arithematic share : \n" << revealed1;
+        // }
+
+        // auto revealed2 = reveal(b2a_br);
+        // if (pIdx == 0) {
+        //     LOG(INFO) << "Revealed binary share : \n" << revealed2;
+        // }

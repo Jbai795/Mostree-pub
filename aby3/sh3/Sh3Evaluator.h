@@ -53,6 +53,9 @@ namespace aby3
                 const sb64& A,
                 const sb64& B,
                 sb64& C);
+		//add by jianli
+		Sh3Task asyncMul(Sh3Task dependency, const su64& A, const su64& B,su64& C);
+		//end
 
 		Sh3Task asyncMul(
 			Sh3Task dependency,

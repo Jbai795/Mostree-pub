@@ -52,7 +52,7 @@ make install
 
 - install boost
 ```
-wget https://boostorg.jfrog.io/artifactory/main/release/1.75.0/source/boost_1_75_0.tar.bz2
+wget https://archives.boost.io/release/1.75.0/source/boost_1_75_0.tar.bz2
 tar -xvf boost_1_75_0.tar.bz2
 cd boost_1_75_0
 ./bootstrap.sh --prefix=/usr/
@@ -70,13 +70,6 @@ make
 make install
 ```
 
-- ABY3 
-```
-git clone https://github.com/ladnir/aby3.git
-cd aby3 
-python3 build.py --setup 
-python3 build.py 
-```
 
 - [emp-toolkit](https://github.com/emp-toolkit/emp-tool) (for offline preprocessing)
 ```

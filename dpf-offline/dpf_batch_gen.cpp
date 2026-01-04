@@ -62,8 +62,8 @@ int main(int argc, char **argv)
     init_network(io_pre, io_next, party, port);
     // std::cout << "io setted up" << std::endl;
 
-    uint32_t depth = atoi(argv[3]);
-    uint32_t dimension = atoi(argv[4]);
+    uint32_t depth = atoi(argv[3]);//the number of DPF
+    uint32_t dimension = atoi(argv[4]);//the nodes number of a tree
     if (dimension <= 128)
     {
         std::cout << "NOTE: dimension > 128" << std::endl;

@@ -8,6 +8,7 @@ CMakeFiles/
 Makefile
 bin/
 build/
+out/
 cmake_install.cmake
 install_manifest.txt
 # Compiled Object files

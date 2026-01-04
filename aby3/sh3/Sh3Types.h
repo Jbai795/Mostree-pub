@@ -20,6 +20,12 @@ namespace aby3 {
     using eMatrix = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
     using i64Matrix = eMatrix<i64>;
 
+    //add by Jianli
+    template<typename T>
+    using eMatrix = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
+    using u8Matrix = eMatrix<u8>;
+
+
     namespace details {
 
         bool areEqualImpl(
@@ -120,6 +126,54 @@ namespace aby3 {
         const value_type &operator[](u64 i) const { return mData[i]; }
     };
 
+    //add by Jianli
+    // a shared 64 bit unsigned integer 
+    struct su64 {
+        using value_type = u64;
+        std::array<value_type, 2> mData;
+
+        su64() = default;
+
+        su64(const su64 &) = default;
+
+        su64(su64 &&) = default;
+        su64(const std::array<value_type, 2> &d) : mData(d) {}
+        static su64 zero() {
+            return {{0, 0}};
+        }
+
+
+        value_type &operator[](u64 i) { return mData[i]; }
+
+        const value_type &operator[](u64 i) const { return mData[i]; }
+
+
+        su64 &operator=(const su64 &copy) = default;
+
+        su64 operator+(const su64& x) const {
+            return {{ (value_type)(mData[0] + x.mData[0]),
+                    (value_type)(mData[1] + x.mData[1]) }};
+        }
+        su64 operator-(const su64& x) const {
+            return {{ (value_type)(mData[0] - x.mData[0]),
+                    (value_type)(mData[1] - x.mData[1]) }};
+        }
+        friend su64 operator*(u64 c, const su64& x) {
+            return {{
+                (value_type)(c * x.mData[0]),
+                (value_type)(c * x.mData[1])
+            }};
+        }
+
+        friend std::ostream& operator<<(std::ostream& os, const su64& x) {
+        os << "("
+        << x.mData[0] << ", "
+        << x.mData[1]
+        << ")";
+        return os;
+        }
+    };
+
     // a shared 8 binary value
     struct sb8 {
         using value_type = i8;
@@ -145,6 +199,45 @@ namespace aby3 {
         friend std::ostream &operator<<(std::ostream &os, const sb8 &sb8) {
             os << "(" << (int)sb8.mData[0] << ", " <<  (int)sb8.mData[1] << ")";
             return os;
+        }
+
+    };
+
+    // a shared 8 bit unsigned integer //add by Jianli
+    struct su8 {
+        using value_type = u8;
+        std::array<value_type, 2> mData;
+
+        su8() = default;
+
+        su8(const su8 &) = default;
+
+        su8(su8 &&) = default;
+
+        su8(const std::array<value_type, 2> &d) : mData(d) {}
+
+        value_type &operator[](u8 i) { return mData[i]; }
+
+        const value_type &operator[](u8 i) const { return mData[i]; }
+
+
+        su8 &operator=(const su8 &copy) = default;
+
+        su8 operator+(const su8& x) const {
+            return {{ (value_type)(mData[0] + x.mData[0]),
+                    (value_type)(mData[1] + x.mData[1]) }};
+        }
+        su8 operator-(const su8& x) const {
+            return {{ (value_type)(mData[0] - x.mData[0]),
+                    (value_type)(mData[1] - x.mData[1]) }};
+        }
+
+        friend std::ostream& operator<<(std::ostream& os, const su8& x) {
+        os << "("
+        << static_cast<unsigned>(x.mData[0]) << ", "
+        << static_cast<unsigned>(x.mData[1])
+        << ")";
+        return os;
         }
 
     };
@@ -345,6 +438,199 @@ namespace aby3 {
             return ret;
         }
     };
+
+    // add by Jianli
+    struct su8Matrix {
+        std::array<eMatrix<aby3::u8>, 2> mShares;
+
+        struct ConstRow {
+            const su8Matrix& mMtx;
+            const aby3::u64 mIdx;
+        };
+
+        struct Row {
+            su8Matrix& mMtx;
+            const aby3::u64 mIdx;
+
+            const Row& operator=(const Row& row);
+            const ConstRow& operator=(const ConstRow& row);
+        };
+
+        struct ConstCol {
+            const su8Matrix& mMtx;
+            const aby3::u64 mIdx;
+        };
+
+        struct Col {
+            su8Matrix& mMtx;
+            const aby3::u64 mIdx;
+
+            const Col& operator=(const Col& col);
+            const ConstCol& operator=(const ConstCol& col);
+        };
+
+        su8Matrix() = default;
+
+        su8Matrix(aby3::u64 xSize, aby3::u64 ySize) {
+            resize(xSize, ySize);
+        }
+
+        void resize(aby3::u64 xSize, aby3::u64 ySize) {
+            mShares[0].resize(xSize, ySize);
+            mShares[1].resize(xSize, ySize);
+        }
+
+        aby3::u64 rows() const { return (aby3::u64)mShares[0].rows(); }
+        aby3::u64 cols() const { return (aby3::u64)mShares[0].cols(); }
+        aby3::u64 size() const { return (aby3::u64)mShares[0].size(); }
+
+        // element view (like si64Matrix)
+        Ref<su8> operator()(aby3::u64 x, aby3::u64 y) const;
+        Ref<su8> operator()(aby3::u64 xy) const;
+
+        // linear ops in Z_256 are share-wise
+        su8Matrix operator+(const su8Matrix& B) const;
+        su8Matrix operator-(const su8Matrix& B) const;
+
+        su8Matrix transpose() const;
+        void transposeInPlace();
+
+        Row row(aby3::u64 i);
+        Col col(aby3::u64 i);
+        ConstRow row(aby3::u64 i) const;
+        ConstCol col(aby3::u64 i) const;
+
+        bool operator!=(const su8Matrix& b) const { return !(*this == b); }
+
+        bool operator==(const su8Matrix& b) const {
+            return (rows() == b.rows() &&
+                    cols() == b.cols() &&
+                    mShares == b.mShares);
+        }
+
+        eMatrix<aby3::u8>& operator[](aby3::u64 i) { return mShares[i]; }
+        const eMatrix<aby3::u8>& operator[](aby3::u64 i) const { return mShares[i]; }
+
+        // pretty printing: show which party holds which additive share (mod 256)
+        std::string prettyShare(aby3::u64 partyIdx, const su8& v) const {
+            // Use int with sentinel -1 for missing share
+            std::array<int, 3> shares;
+            shares[partyIdx] = (int)static_cast<unsigned>(v[0]);
+            shares[(partyIdx + 2) % 3] = (int)static_cast<unsigned>(v[1]);
+            shares[(partyIdx + 1) % 3] = -1;
+
+            std::stringstream ss;
+            ss << "(";
+            if (shares[0] == -1) ss << "_, ";
+            else ss << shares[0] << ", ";
+            if (shares[1] == -1) ss << "_, ";
+            else ss << shares[1] << ", ";
+            if (shares[2] == -1) ss << "_) ";
+            else ss << shares[2] << ") ";
+            return ss.str();
+        }
+
+        std::string prettyShareMat(aby3::u64 partyIdx) const {
+            std::string ret;
+            for (aby3::u64 i = 0; i < size(); ++i) {
+                if ((i % cols() == 0) && (i != 0))
+                    ret += "\n";
+                auto s0 = mShares[0](i);
+                auto s1 = mShares[1](i);
+
+                // Build a Ref<su8> view or a concrete su8
+                // If you have Ref<su8>(u8&,u8&) ctor like Ref<si64>(s0,s1), use that.
+                su8 vv{{ s0, s1 }};
+                ret += prettyShare(partyIdx, vv);
+            }
+            return ret;
+        }
+        // 打印：三方视角（_,_,_) 形式 + 原始 share0/share1 数值
+        // void printAllShares(aby3::u64 partyIdx, std::ostream& os = std::cout) const
+        // {
+        //     os << "==== su8Matrix (Party " << partyIdx << ") ====\n";
+        //     os << "rows=" << rows() << ", cols=" << cols() << ", size=" << size() << "\n\n";
+
+        //     // 1) 按三方视角打印：每个元素显示 (s0,s1,s2)，本方未知的用 _
+        //     os << "[pretty (replicated 3pc view)]\n";
+        //     os << prettyShareMat(partyIdx) << "\n\n";
+
+        //     // 2) 打印本地持有的两份 share（原始数值）
+        //     os << "[local share0]\n";
+        //     for (aby3::u64 i = 0; i < rows(); ++i) {
+        //         for (aby3::u64 j = 0; j < cols(); ++j) {
+        //             os << (unsigned)mShares[0](i, j) << " ";
+        //         }
+        //         os << "\n";
+        //     }
+        //     os << "\n";
+
+        //     os << "[local share1]\n";
+        //     for (aby3::u64 i = 0; i < rows(); ++i) {
+        //         for (aby3::u64 j = 0; j < cols(); ++j) {
+        //             os << (unsigned)mShares[1](i, j) << " ";
+        //         }
+        //         os << "\n";
+        //     }
+        //     os << std::flush;
+        // }
+
+        void printAllShares(aby3::u64 partyIdx, std::ostream& os = std::cout) const
+        {
+            os << "==== su8Matrix (Party " << partyIdx << ") ====\n";
+            os << "rows=" << rows() << ", cols=" << cols() << ", size=" << size() << "\n\n";
+
+            // 1) 按三方视角打印：每个元素显示 (s0,s1,s2)，本方未知的用 _
+            os << "[pretty (replicated 3pc view)]\n";
+            os << prettyShareMat(partyIdx) << "\n\n";
+
+            // 2) 打印本地持有的两份 share（原始数值）
+            os << "[local share0]\n";
+            for (aby3::u64 i = 0; i < rows(); ++i) {
+                for (aby3::u64 j = 0; j < cols(); ++j) {
+                    os << (unsigned)mShares[0](i, j) << " ";
+                }
+                os << "\n";
+            }
+            os << "\n";
+
+            os << "[local share1]\n";
+            for (aby3::u64 i = 0; i < rows(); ++i) {
+                for (aby3::u64 j = 0; j < cols(); ++j) {
+                    os << (unsigned)mShares[1](i, j) << " ";
+                }
+                os << "\n";
+            }
+            os << std::flush;
+        }
+
+
+        friend std::ostream &operator<<(std::ostream &os, const su8Matrix &m) {
+//            os << "mShares: " << matrix.mShares[0];
+            os << "su8Matrix\n";
+            os << "rows=" << m.rows() << ", cols=" << m.cols() << "\n";
+
+            os << "[share0]\n";
+            for (u64 i = 0; i < m.rows(); ++i) {
+                for (u64 j = 0; j < m.cols(); ++j)
+                    os << (unsigned)m.mShares[0](i, j) << " ";
+                os << "\n";
+            }
+
+            os << "[share1]\n";
+            for (u64 i = 0; i < m.rows(); ++i) {
+                for (u64 j = 0; j < m.cols(); ++j)
+                    os << (unsigned)m.mShares[1](i, j) << " ";
+                os << "\n";
+            }
+
+            return os;
+        }
+    };
+
+
+
+
 
     //template<Decimal D>
     //struct sf64Matrix
@@ -852,6 +1138,21 @@ inline Ref <si64> si64Matrix::operator()(u64 xy) const {
             (i64 &) mShares[1](xy));
 }
 
+// add by jianli
+inline Ref<su8> su8Matrix::operator()(aby3::u64 x, aby3::u64 y) const {
+    return Ref<su8>(
+        (u8 &) mShares[0](x, y), 
+        (u8 &) mShares[1](x, y));
+}
+
+// add by jianli
+inline Ref<su8> su8Matrix::operator()(aby3::u64 xy) const {
+    return Ref<su8>(
+        (u8 &)  mShares[0](xy), 
+        (u8 &)  mShares[1](xy));
+}
+
+
 inline si64Matrix si64Matrix::operator+(const si64Matrix &B) const {
     si64Matrix ret;
     ret.mShares[0] = mShares[0] + B.mShares[0];
@@ -918,6 +1219,92 @@ inline const si64Matrix::ConstCol &si64Matrix::Col::operator=(const ConstCol &co
     mMtx.mShares[0].col(mIdx) = col.mMtx.mShares[0].col(col.mIdx);
     mMtx.mShares[1].col(mIdx) = col.mMtx.mShares[1].col(col.mIdx);
     return col;
+}
+
+// add by Jianli
+inline su8Matrix su8Matrix::operator+(const su8Matrix& B) const {
+    if (rows() != B.rows() || cols() != B.cols()) throw std::runtime_error("su8Matrix + dim mismatch");
+    su8Matrix C(rows(), cols());
+    C.mShares[0] = mShares[0] + B.mShares[0];
+    C.mShares[1] = mShares[1] + B.mShares[1];
+    return C;
+}
+
+// add by Jianli
+inline su8Matrix su8Matrix::operator-(const su8Matrix& B) const {
+    if (rows() != B.rows() || cols() != B.cols()) throw std::runtime_error("su8Matrix - dim mismatch");
+    su8Matrix C(rows(), cols());
+    C.mShares[0] = mShares[0] - B.mShares[0];
+    C.mShares[1] = mShares[1] - B.mShares[1];
+    return C;
+}
+
+// add by Jianli
+//u8上的密文矩阵加明文矩阵
+inline su8Matrix addPlain(const su8Matrix& X, const u8Matrix& P, aby3::u64 partyIdx)
+{
+    if (X.mShares[0].rows() != P.rows() || X.mShares[0].cols() != P.cols())
+        throw std::runtime_error("subPlain: dim mismatch");
+
+    su8Matrix Z = X;
+
+    // 约定：只有 party 0/1 注入常数
+    if (partyIdx == 0) {
+        Z.mShares[0] = Z.mShares[0] + P;   // u8 自动 mod 256
+    }
+
+    if (partyIdx == 1) {
+        Z.mShares[1] = Z.mShares[1] + P;   // u8 自动 mod 256
+    }
+
+    return Z;
+}
+
+// add by Jianli
+//u8上的密文矩阵减明文矩阵
+inline su8Matrix subPlain(const su8Matrix& X, const u8Matrix& P, aby3::u64 partyIdx)
+{
+    if (X.mShares[0].rows() != P.rows() || X.mShares[0].cols() != P.cols())
+        throw std::runtime_error("subPlain: dim mismatch");
+
+    su8Matrix Z = X;
+
+    // 约定：只有 party 0/1 注入常数
+    if (partyIdx == 0) {
+        Z.mShares[0] = Z.mShares[0] - P;   // u8 自动 mod 256
+    }
+    if (partyIdx == 1) {
+        Z.mShares[1] = Z.mShares[1] - P;   // u8 自动 mod 256
+    }
+
+    return Z;
+}
+
+
+// add by Jianli
+//u8上的密文矩阵乘以明文矩阵
+inline su8Matrix mulPlainElemwise(const su8Matrix& X, const u8Matrix& P)
+{
+    if (X.mShares[0].rows() != P.rows() || X.mShares[0].cols() != P.cols())
+        throw std::runtime_error("mulPlainElemwise: dim mismatch");
+
+    su8Matrix Z = X;
+
+    // Eigen: Matrix<u8> -> array() 支持逐元素运算
+    Z.mShares[0] = (Z.mShares[0].array() * P.array()).matrix();
+    Z.mShares[1] = (Z.mShares[1].array() * P.array()).matrix();
+
+    return Z;
+}
+
+// add by Jianli
+//u8上的密文矩阵乘以u8的常量
+inline su8Matrix mulPlainScalar(const su8Matrix& X, u8 c)
+{
+    su8Matrix Z = X;
+    Z.mShares[0] = (Z.mShares[0].array() * c).matrix();
+    Z.mShares[1] = (Z.mShares[1].array() * c).matrix();
+    return Z;
 }
 
 

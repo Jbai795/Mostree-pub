@@ -16,5 +16,8 @@ target_link_directories(${TARGET}  PUBLIC ${NTL_ROOT}/lib)
 #target_link_libraries(${TARGET} aby3 Backward::Backward ntl m pthread)
 target_link_libraries(${TARGET} aby3 ${NTL_ROOT}/lib/ntl.a m pthread)
 #target_compile_definitions(${TARGET} PUBLIC )
+# ss3-dtree/CMakeLists.txt
+target_link_libraries(${TARGET} dpf_lib)
+
 
 

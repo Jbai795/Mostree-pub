@@ -38,6 +38,16 @@ namespace aby3
         Sh3Task remoteBinary(Sh3Task dep, sb64& dest);
         Sh3Task remoteZeroBinary(Sh3Task dep, sb64& dest);
 
+        //add by jianli
+        
+        //define u64 sharing
+        // void localU64(CommPkg& comm, u64 m, std::array<u64, 2>& ret);
+        // void remoteU64(CommPkg& comm, std::array<u64, 2>& ret);
+        Sh3Task localU64(Sh3Task dep, u64 m, su64& ret);
+        Sh3Task remoteU64(Sh3Task dep, su64& ret);
+        Sh3Task localBinary(Sh3Task dep, u8 val, sb8 & ret);
+        //end
+
         // Sh3Task CovertP2NBinary(Sh3Task dep, sb64 & ret);
         // Sh3Task CovertN2PBinary(Sh3Task dep, sb64 & ret);
 
@@ -51,6 +61,17 @@ namespace aby3
         // generates a integer sharing of the matrix input by the remote party and places the result in dest
         void remoteIntMatrix(CommPkg& comm, si64Matrix& dest);
         Sh3Task remoteIntMatrix(Sh3Task dep, si64Matrix& dest);
+
+        // add by jianli
+        //同步
+        void localU8Matrix(CommPkg& comm, const u8Matrix& m, su8Matrix& ret);
+        void remoteU8Matrix(CommPkg& comm, su8Matrix& ret);
+
+        //异步
+        Sh3Task localU8Matrix(Sh3Task dep, const u8Matrix& m, su8Matrix& ret);
+        Sh3Task remoteU8Matrix(Sh3Task dep, su8Matrix& ret);
+
+
 
 		template<Decimal D>
 		Sh3Task localFixedMatrix(Sh3Task dep, const f64Matrix<D>& m, sf64Matrix<D>& dest);
@@ -84,6 +105,21 @@ namespace aby3
         Sh3Task reveal(Sh3Task dep, const si64& x, i64& dest);
         Sh3Task revealAll(Sh3Task dep, const si64& x, i64& dest);
         Sh3Task reveal(Sh3Task dep, u64 partyIdx, const si64& x);
+
+        // add by jianli
+        Sh3Task reveal(Sh3Task dep, const sb8& x, u8& dest);
+        Sh3Task revealAll(Sh3Task dep, const sb8& x, u8& dest);
+        Sh3Task reveal(Sh3Task dep, u64 partyIdx, const sb8& x);
+
+        Sh3Task reveal(Sh3Task dep, const su64& x, u64& dest);
+        Sh3Task revealAll(Sh3Task dep, const su64& x, u64& dest);
+        Sh3Task reveal(Sh3Task dep, u64 partyIdx, const su64& x);
+
+        Sh3Task revealAllU8Value(Sh3Task dep, const su8Matrix& x, u8Matrix& dest);
+        Sh3Task u8reveal(Sh3Task dep, u64 partyIdx, const su8Matrix& x);
+        Sh3Task u8reveal(Sh3Task dep, const su8Matrix& x, u8Matrix& dest);
+        //end
+
 
         template<Decimal D>
         Sh3Task reveal(Sh3Task dep, const sf64<D>& x, f64<D>& dest);

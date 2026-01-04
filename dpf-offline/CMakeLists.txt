@@ -14,6 +14,8 @@ target_link_libraries(dpf_batch_gen ${EMP-TOOL_LIBRARIES})
 add_executable(ohv_batch_gen "ohv_batch_gen.cpp")
 target_link_libraries(ohv_batch_gen ${EMP-TOOL_LIBRARIES})
 
+add_executable(fss_main "fss_main.cpp")
+target_link_libraries(fss_main ${EMP-TOOL_LIBRARIES})
 
 add_executable(offline_batch_gen "offline_batch_gen.cpp")
 
